@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "services": "Servicios",
+    "growth": "Crecimiento",
+    "retainers": "Planes",
+    "contact": "Contacto",
+    "join": "Únete como freelancer",
+    "backToStore": "Volver a la tienda"
+  },
+  "hero": {
+    "eyebrow": "Ingeniería de ecommerce y SaaS",
+    "headline1": "Tiendas que se lanzan,",
+    "headline2": "y que siguen evolucionando.",
+    "subhead": "Magento, Shopify, WordPress y plataformas SaaS a medida — construidas, protegidas y mantenidas por Interquark.",
+    "browseServices": "Ver servicios",
+    "getInTouch": "Contáctanos",
+    "platformsLabel": "Plataformas con las que trabajamos"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "Cuéntanos sobre tu proyecto y te responderemos pronto.",
+    "namePlaceholder": "Tu nombre",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "messagePlaceholder": "Cuéntanos sobre tu proyecto...",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "sent": "Gracias — te contactaremos pronto.",
+    "error": "No se pudo enviar — verifica que tu backend tenga un endpoint /contact configurado."
+  },
+  "cart": {
+    "cart": "Carrito",
+    "addToCart": "Añadir al carrito",
+    "added": "Añadido ✓"
+  },
+  "checkout": {
+    "title": "Pago",
+    "subtitle": "Revisa tu pedido y confirma para enviarlo a Interquark.",
+    "orderSummary": "Resumen del pedido",
+    "yourDetails": "Tus datos",
+    "signInPrompt": "Inicia sesión para realizar tu pedido.",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signIn": "Iniciar sesión",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "payByCard": "Pagar con tarjeta de débito/crédito",
+    "payByPaypal": "Pagar con PayPal",
+    "emptyCart": "Tu carrito está vacío.",
+    "browseServices": "Ver servicios"
+  }
+}

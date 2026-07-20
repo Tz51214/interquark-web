@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+Disallow: /customer
+Disallow: /freelancer
+
+Sitemap: https://www.interquark.co.uk/sitemap.xml

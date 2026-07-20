@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "services": "Services",
+    "growth": "Growth",
+    "retainers": "Retainers",
+    "contact": "Contact",
+    "join": "Join as freelancer",
+    "backToStore": "Back to store"
+  },
+  "hero": {
+    "eyebrow": "Ecommerce & SaaS engineering",
+    "headline1": "Storefronts that ship,",
+    "headline2": "and keep shipping.",
+    "subhead": "Magento, Shopify, WordPress, and custom SaaS platforms — built, secured, and maintained by Interquark.",
+    "browseServices": "Browse services",
+    "getInTouch": "Get in touch",
+    "platformsLabel": "Platforms we build on"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Tell us about your project and we'll get back to you.",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "you@example.com",
+    "messagePlaceholder": "Tell us about your project...",
+    "send": "Send message",
+    "sending": "Sending...",
+    "sent": "Thanks — we'll be in touch shortly.",
+    "error": "Couldn't send that — check your backend has a /contact endpoint set up."
+  },
+  "cart": {
+    "cart": "Cart",
+    "addToCart": "Add to cart",
+    "added": "Added ✓"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "subtitle": "Review your order and confirm to submit it to Interquark.",
+    "orderSummary": "Order summary",
+    "yourDetails": "Your details",
+    "signInPrompt": "Sign in to place your order.",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "payByCard": "Pay with debit/credit card",
+    "payByPaypal": "Pay with PayPal",
+    "emptyCart": "Your cart is empty.",
+    "browseServices": "Browse services"
+  }
+}

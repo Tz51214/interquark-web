@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b1120;
+  --color-ink-light: #161f36;
+  --color-paper: #f7f8fa;
+  --color-signal: #5b5fef;
+  --color-signal-dark: #4347c9;
+  --color-mint: #34d399;
+  --color-line: #23283a;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  font-family: var(--font-body);
+}
+
+/* Glassmorphic panel — translucent, blurred, subtle glow border */
+.glass-panel {
+  background: rgba(22, 31, 54, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(91, 95, 239, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(91, 95, 239, 0.5);
+  box-shadow: 0 8px 40px rgba(91, 95, 239, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Glowing icon badge */
+.glow-badge {
+  box-shadow: 0 0 24px rgba(91, 95, 239, 0.35);
+}
+
+/* Infinite horizontal marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
