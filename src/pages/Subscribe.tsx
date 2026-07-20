@@ -1,5 +1,5 @@
-import { useState, lazy, Suspense } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import JoinModal from "../components/JoinModal";
@@ -45,11 +45,21 @@ const tiers = [
 
 export default function Subscribe() {
   const { token, user } = useAuth();
+  const [searchParams] = useSearchParams();
   const authedFetch = useAuthedFetch();
   const { showToast } = useToast();
   const [busyTier, setBusyTier] = useState<string | null>(null);
   const [busyMethod, setBusyMethod] = useState<"stripe" | "paypal" | null>(null);
   const [joinOpen, setJoinOpen] = useState(false);
+
+  useEffect(() => {
+    const autopay = searchParams.get("autopay");
+    const tierParam = searchParams.get("tier");
+    if (autopay === "1" && tierParam && token && user) {
+      payWithStripe(tierParam);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, user]);
 
   async function payWithStripe(tier: string) {
     if (!token || !user) {
