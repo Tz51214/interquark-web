@@ -132,7 +132,7 @@ export default function JoinModal({ open, onClose }: JoinModalProps) {
     timeoutRef.current = setTimeout(() => {
       reset();
       onClose();
-      navigate(`/subscribe?tier=${selectedTier}&autopay=1`);
+      navigate(`/subscribe?tier=${selectedTier}`);
     }, 1500);
   }
 
