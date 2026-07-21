@@ -3,7 +3,7 @@ import logo from "../assets/interquark-wordmark-navy.png";
 import { useAuth } from "../context/AuthContext";
 import { useAuthedFetch } from "../lib/useAuthedFetch";
 import { useToast } from "../context/ToastContext";
-import { apiFetch } from "../lib/api";
+import { apiFetch, API_BASE } from "../lib/api";
 import DashboardHeader from "../components/layout/DashboardHeader";
 import MessageThread from "../components/MessageThread";
 import ChatWidget from "../components/ChatWidget";
@@ -100,6 +100,25 @@ export default function Customer() {
   useEffect(() => {
     if (token) load();
   }, [token, load]);
+
+  async function downloadInvoice(id: string, invoiceNumber: string) {
+    const res = await fetch(`${API_BASE}/invoices/${id}/pdf`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) {
+      showToast("Could not download invoice.", "error");
+      return;
+    }
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${invoiceNumber}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }
 
   async function handleLogin() {
     if (!email || !password) {
@@ -244,13 +263,21 @@ export default function Customer() {
                         : ""}
                     </p>
                   </div>
-                  <span
-                    className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-                      statusColors[inv.status] || "bg-slate-100 text-slate-500"
-                    }`}
-                  >
-                    {inv.status}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                        statusColors[inv.status] || "bg-slate-100 text-slate-500"
+                      }`}
+                    >
+                      {inv.status}
+                    </span>
+                    <button
+                      onClick={() => downloadInvoice(inv.id, inv.invoiceNumber)}
+                      className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                    >
+                      Download
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

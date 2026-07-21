@@ -3,6 +3,7 @@ import logo from "../assets/interquark-wordmark-navy.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAuthedFetch } from "../lib/useAuthedFetch";
+import { API_BASE } from "../lib/api";
 import { useToast } from "../context/ToastContext";
 import DashboardHeader from "../components/layout/DashboardHeader";
 import MessageThread from "../components/MessageThread";
@@ -33,6 +34,14 @@ interface Payout {
   createdAt: string;
 }
 
+interface PaymentRecord {
+  id: string;
+  amount: number;
+  method: string;
+  status: string;
+  createdAt: string;
+}
+
 const statusOptions = ["in_progress", "review", "completed", "on_hold"];
 
 const statusColors: Record<string, string> = {
@@ -51,6 +60,7 @@ export default function Freelancer() {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [billingHistory, setBillingHistory] = useState<PaymentRecord[]>([]);
   const [payouts, setPayouts] = useState<Payout[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,11 +76,35 @@ export default function Freelancer() {
     ]);
     if (projectsRes.ok && Array.isArray(projectsRes.data)) setProjects(projectsRes.data);
     if (subRes.ok && Array.isArray(subRes.data) && subRes.data.length > 0) {
-      setSubscription(subRes.data[0]);
+      const sub = subRes.data[0];
+      setSubscription(sub);
+      const historyRes = await authedFetch<PaymentRecord[]>(
+        `/subscriptions/${sub.id}/billing-history`,
+      );
+      if (historyRes.ok && Array.isArray(historyRes.data)) setBillingHistory(historyRes.data);
     }
     if (payoutsRes.ok && Array.isArray(payoutsRes.data)) setPayouts(payoutsRes.data);
     setLoading(false);
   }, [authedFetch]);
+
+  async function downloadReceipt(id: string) {
+    const res = await fetch(`${API_BASE}/ledger/${id}/receipt`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) {
+      showToast("Could not download receipt.", "error");
+      return;
+    }
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `receipt-${id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }
 
   useEffect(() => {
     if (token) load();
@@ -221,6 +255,40 @@ export default function Freelancer() {
               >
                 Choose a plan
               </Link>
+            </div>
+          )}
+        </section>
+
+        {/* Billing history */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
+            Billing history
+          </h2>
+          {billingHistory.length === 0 ? (
+            <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
+              No payments yet.
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {billingHistory.map((rec) => (
+                <div
+                  key={rec.id}
+                  className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+                >
+                  <div>
+                    <b className="text-sm">£{Number(rec.amount).toFixed(2)}</b>
+                    <p className="text-xs text-slate-400">
+                      {new Date(rec.createdAt).toLocaleDateString()} · {rec.method} · {rec.status}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => downloadReceipt(rec.id)}
+                    className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                  >
+                    Download
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </section>
