@@ -7,17 +7,17 @@ export default function TermsOfService() {
       <Navbar />
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-16">
         <h1 className="mb-2 font-display text-3xl font-bold text-ink">Terms of Service</h1>
-        <p className="mb-10 font-body text-sm text-slate-500">Last updated: [DATE]</p>
+
 
         <div className="flex flex-col gap-8 font-body text-sm leading-relaxed text-slate-700">
           <section>
             <h2 className="mb-2 font-display text-lg font-semibold text-ink">1. Who we are</h2>
             <p>
               These Terms of Service govern your use of the Interquark website and services,
-              operated by <strong>[COMPANY LEGAL NAME]</strong>, a company registered in England
-              and Wales under company number <strong>[COMPANY NUMBER]</strong>, with its
-              registered office at <strong>[REGISTERED ADDRESS]</strong> ("we", "us", "our").
-              You can contact us at <strong>[CONTACT EMAIL]</strong>.
+              operated by <strong>Interquark Ltd</strong>, a company registered in England
+              and Wales, with its registered office at <strong>23 Abbot Street, Wrexham,
+              LL11 1TA</strong> ("we", "us", "our"). You can contact us at{" "}
+              <strong>hello@interquark.co.uk</strong>.
             </p>
           </section>
 
@@ -106,7 +106,8 @@ export default function TermsOfService() {
           <section>
             <h2 className="mb-2 font-display text-lg font-semibold text-ink">10. Contact</h2>
             <p>
-              Questions about these Terms can be sent to <strong>[CONTACT EMAIL]</strong>.
+              Questions about these Terms can be sent to{" "}
+              <strong>hello@interquark.co.uk</strong>.
             </p>
           </section>
         </div>
