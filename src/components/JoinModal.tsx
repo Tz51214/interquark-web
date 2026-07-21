@@ -122,18 +122,46 @@ export default function JoinModal({ open, onClose }: JoinModalProps) {
       return;
     }
 
-    // Registration succeeded — log them straight in, then send them
-    // to payment. The subscription only gets created once they pay,
-    // so we can't skip this step.
-    await login(joinEmail, joinPassword);
+    // Registration succeeded — log them straight in, then immediately
+    // start a real PayPal checkout for the selected tier. No extra
+    // page, no extra click — payment starts right as they join.
+    const loginResult = await login(joinEmail, joinPassword);
 
     const tier = freelancerTiers.find((t) => t.id === selectedTier)!;
-    setSuccess(`Your account was created on the ${tier.name} plan. Redirecting to payment...`);
-    timeoutRef.current = setTimeout(() => {
-      reset();
-      onClose();
-      navigate(`/subscribe?tier=${selectedTier}`);
-    }, 1500);
+    setSuccess(`Your account was created on the ${tier.name} plan. Redirecting to PayPal...`);
+
+    if (!loginResult.ok || !loginResult.accessToken) {
+      // Account was created but auto-login failed for some reason —
+      // fall back to sending them to the pricing page to pay manually.
+      timeoutRef.current = setTimeout(() => {
+        reset();
+        onClose();
+        navigate(`/subscribe?tier=${selectedTier}`);
+      }, 1500);
+      return;
+    }
+
+    const paypalRes = await apiFetch<{ approveUrl?: string; message?: string }>(
+      "/payments/paypal/create-order",
+      {
+        method: "POST",
+        token: loginResult.accessToken,
+        body: JSON.stringify({ tier: selectedTier }),
+      },
+    );
+
+    if (paypalRes.ok && paypalRes.data.approveUrl) {
+      window.location.href = paypalRes.data.approveUrl;
+    } else {
+      // PayPal checkout failed to start — still fall back to the
+      // pricing page rather than leaving them stuck with no next step.
+      setJoinNote(paypalRes.data.message || "Could not start PayPal checkout. Choose a plan below.");
+      timeoutRef.current = setTimeout(() => {
+        reset();
+        onClose();
+        navigate(`/subscribe?tier=${selectedTier}`);
+      }, 1500);
+    }
   }
 
   return (
