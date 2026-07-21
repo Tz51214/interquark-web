@@ -13,7 +13,7 @@ interface AuthContextValue {
   token: string | null;
   user: AuthUser | null;
   ready: boolean;
-  login: (email: string, password: string) => Promise<{ ok: boolean; message?: string }>;
+  login: (email: string, password: string) => Promise<{ ok: boolean; message?: string; user?: AuthUser }>;
   logout: () => void;
   refresh: () => Promise<string | null>;
   // Directly injects a session — used by the impersonation ("login as
@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setToken(data.accessToken);
     setUser(data.user ?? null);
-    return { ok: true };
+    return { ok: true, user: data.user };
   }, []);
 
   const logout = useCallback(() => {

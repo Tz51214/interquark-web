@@ -84,7 +84,14 @@ export default function JoinModal({ open, onClose }: JoinModalProps) {
     }
 
     setSuccess("Welcome back!");
-    timeoutRef.current = setTimeout(handleClose, 1200);
+    const role = result.user?.role;
+    timeoutRef.current = setTimeout(() => {
+      reset();
+      onClose();
+      if (role === "freelancer") navigate("/freelancer");
+      else if (role === "client") navigate("/customer");
+      else if (role === "admin") navigate("/admin");
+    }, 1200);
   }
 
   async function handleJoin() {
