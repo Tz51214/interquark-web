@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/interquark-wordmark-navy.png";
 
 interface NavItem {
   label: string;
-  href: string;
+  to: string;
 }
 
 interface PortalSidebarProps {
@@ -39,14 +40,21 @@ export default function PortalSidebar({ portalName, navItems }: PortalSidebarPro
 
       <nav className="flex flex-1 flex-col gap-1">
         {navItems.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end
             onClick={() => setMobileOpen(false)}
-            className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className={({ isActive }) =>
+              `rounded-lg px-3 py-2 text-sm font-medium ${
+                isActive
+                  ? "bg-signal/10 text-signal"
+                  : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+              }`
+            }
           >
             {item.label}
-          </a>
+          </NavLink>
         ))}
       </nav>
 
@@ -77,7 +85,6 @@ export default function PortalSidebar({ portalName, navItems }: PortalSidebarPro
 
   return (
     <>
-      {/* Mobile top bar */}
       <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden dark:border-slate-700 dark:bg-slate-900">
         <img src={logo} alt="Interquark" className="h-5 w-auto dark:invert" />
         <button
@@ -94,7 +101,6 @@ export default function PortalSidebar({ portalName, navItems }: PortalSidebarPro
         </div>
       )}
 
-      {/* Desktop sidebar */}
       <aside className="hidden w-56 shrink-0 flex-col border-r border-slate-200 bg-white p-4 md:flex dark:border-slate-700 dark:bg-slate-900">
         {content}
       </aside>

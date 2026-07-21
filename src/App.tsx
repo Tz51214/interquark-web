@@ -5,7 +5,12 @@ import { ToastProvider } from "./context/ToastContext";
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
 import Customer from "./pages/Customer";
-import Freelancer from "./pages/Freelancer";
+import FreelancerLayout from "./pages/freelancer/FreelancerLayout";
+import FreelancerOverview from "./pages/freelancer/Overview";
+import FreelancerMembership from "./pages/freelancer/Membership";
+import FreelancerBilling from "./pages/freelancer/Billing";
+import FreelancerPayouts from "./pages/freelancer/Payouts";
+import FreelancerProjects from "./pages/freelancer/FreelancerProjects";
 import Subscribe from "./pages/Subscribe";
 import Admin from "./pages/Admin";
 import ServiceDetail from "./pages/ServiceDetail";
@@ -35,7 +40,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/customer" element={<Customer />} />
-              <Route path="/freelancer" element={<Freelancer />} />
+              <Route path="/freelancer" element={<FreelancerLayout />}>
+                <Route index element={<FreelancerOverview />} />
+                <Route path="membership" element={<FreelancerMembership />} />
+                <Route path="billing" element={<FreelancerBilling />} />
+                <Route path="payouts" element={<FreelancerPayouts />} />
+                <Route path="projects" element={<FreelancerProjects />} />
+              </Route>
               <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/services/:serviceId" element={<ServiceDetail />} />
