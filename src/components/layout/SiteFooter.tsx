@@ -60,8 +60,6 @@ export default function SiteFooter() {
               <li><Link to="/guide" className="hover:text-signal">Interquark Guide</Link></li>
               <li><Link to="/help" className="hover:text-signal">Interquark Answers</Link></li>
               <li><Link to="/#contact" className="hover:text-signal">Contact</Link></li>
-              <li><Link to="/checkout" className="hover:text-signal">Checkout</Link></li>
-              <li><Link to="/customer" className="hover:text-signal">Customer portal</Link></li>
             </ul>
           </div>
           <div>
