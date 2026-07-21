@@ -5,7 +5,15 @@ import { useAuth } from "../context/AuthContext";
 import { useAuthedFetch } from "../lib/useAuthedFetch";
 import { API_BASE } from "../lib/api";
 import { useToast } from "../context/ToastContext";
-import DashboardHeader from "../components/layout/DashboardHeader";
+import PortalSidebar from "../components/layout/PortalSidebar";
+
+const freelancerNavItems = [
+  { label: "Overview", href: "#overview" },
+  { label: "Membership", href: "#membership" },
+  { label: "Billing history", href: "#billing" },
+  { label: "Payouts", href: "#payouts" },
+  { label: "Projects", href: "#freelancer-projects" },
+];
 import MessageThread from "../components/MessageThread";
 import ChatWidget from "../components/ChatWidget";
 
@@ -194,10 +202,12 @@ export default function Freelancer() {
   const totalValue = projects.reduce((sum, p) => sum + (p.value || 0), 0);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 dark:text-slate-100">
-      <DashboardHeader portalName="Freelancer" />
-      <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
-        <h1 className="mb-8 text-2xl font-bold">Welcome back, {user.fullName || user.email}</h1>
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 dark:text-slate-100">
+      <PortalSidebar portalName="Freelancer" navItems={freelancerNavItems} />
+      <main className="mx-auto max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
+        <h1 id="overview" className="mb-8 scroll-mt-6 text-2xl font-bold">
+          Welcome back, {user.fullName || user.email}
+        </h1>
 
         {/* Stats */}
         <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -218,7 +228,7 @@ export default function Freelancer() {
         </div>
 
         {/* Subscription / payments card */}
-        <section className="mb-10">
+        <section id="membership" className="mb-10 scroll-mt-6">
           <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
             Your membership & payments
           </h2>
@@ -260,7 +270,7 @@ export default function Freelancer() {
         </section>
 
         {/* Billing history */}
-        <section className="mb-10">
+        <section id="billing" className="mb-10 scroll-mt-6">
           <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
             Billing history
           </h2>
@@ -294,7 +304,7 @@ export default function Freelancer() {
         </section>
 
         {/* Payouts */}
-        <section className="mb-10">
+        <section id="payouts" className="mb-10 scroll-mt-6">
           <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
             Your payouts
           </h2>
@@ -335,7 +345,7 @@ export default function Freelancer() {
         </section>
 
         {/* Projects */}
-        <section>
+        <section id="freelancer-projects" className="scroll-mt-6">
           <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
             My projects
           </h2>

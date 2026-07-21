@@ -284,7 +284,7 @@ export default function Customer() {
           )}
         </section>
 
-        <section>
+        <section id="projects" className="scroll-mt-6">
           <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
             Your projects
           </h2>
