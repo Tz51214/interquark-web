@@ -7,17 +7,17 @@ export default function PrivacyPolicy() {
       <Navbar />
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-16">
         <h1 className="mb-2 font-display text-3xl font-bold text-ink">Privacy Policy</h1>
-        <p className="mb-10 font-body text-sm text-slate-500">Last updated: [DATE]</p>
+
 
         <div className="flex flex-col gap-8 font-body text-sm leading-relaxed text-slate-700">
           <section>
             <h2 className="mb-2 font-display text-lg font-semibold text-ink">1. Who we are</h2>
             <p>
-              This Privacy Policy explains how <strong>[COMPANY LEGAL NAME]</strong> ("we", "us",
-              "our"), registered in England and Wales under company number{" "}
-              <strong>[COMPANY NUMBER]</strong>, collects, uses, and protects your personal data
-              when you use the Interquark website and services. We are the data controller for
-              the purposes of the UK GDPR and Data Protection Act 2018.
+              This Privacy Policy explains how <strong>Interquark Ltd</strong> ("we", "us",
+              "our"), registered in England and Wales with its registered office at{" "}
+              <strong>23 Abbot Street, Wrexham, LL11 1TA</strong>, collects, uses, and protects
+              your personal data when you use the Interquark website and services. We are the
+              data controller for the purposes of the UK GDPR and Data Protection Act 2018.
             </p>
           </section>
 
@@ -114,7 +114,8 @@ export default function PrivacyPolicy() {
               <li>Withdraw consent at any time, where processing is based on consent</li>
             </ul>
             <p className="mt-2">
-              To exercise any of these rights, contact us at <strong>[CONTACT EMAIL]</strong>. You
+              To exercise any of these rights, contact us at{" "}
+              <strong>hello@interquark.co.uk</strong>. You
               also have the right to lodge a complaint with the Information Commissioner's Office
               (ICO) at ico.org.uk.
             </p>
@@ -145,7 +146,7 @@ export default function PrivacyPolicy() {
             <h2 className="mb-2 font-display text-lg font-semibold text-ink">11. Contact</h2>
             <p>
               Questions about this Privacy Policy or your data can be sent to{" "}
-              <strong>[CONTACT EMAIL]</strong>.
+              <strong>hello@interquark.co.uk</strong>.
             </p>
           </section>
         </div>
