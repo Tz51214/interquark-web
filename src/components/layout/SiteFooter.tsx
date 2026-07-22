@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import NewsletterModal from "../NewsletterModal";
 import logo from "../../assets/interquark-wordmark-white.png";
 
-const categories = [
-  { label: "AI Development", href: "/#ai" },
-  { label: "Custom Software", href: "/#software" },
-  { label: "Web Development", href: "/#webdev" },
-  { label: "SaaS Platforms", href: "/#saas" },
+const categoriesA = [
+  { label: "AI Development", href: "/ai-development" },
+  { label: "Custom Software", href: "/custom-software-development" },
+  { label: "Web Development", href: "/web-application-development" },
+  { label: "SaaS Platforms", href: "/saas-development" },
+];
+
+const categoriesB = [
   { label: "Cybersecurity", href: "/#security" },
   { label: "Cloud & Migrations", href: "/#cloud" },
   { label: "Website Maintenance", href: "/#maintenance" },
@@ -35,7 +38,7 @@ export default function SiteFooter() {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-6">
           <div className="col-span-2 sm:col-span-1">
             <img src={logo} alt="Interquark" className="mb-3 h-6 w-auto" />
             <div className="font-body text-xs leading-relaxed text-slate-500">
@@ -56,7 +59,21 @@ export default function SiteFooter() {
               SERVICES
             </h4>
             <ul className="flex flex-col gap-2 font-body text-sm text-slate-400">
-              {categories.map((c) => (
+              {categoriesA.map((c) => (
+                <li key={c.href}>
+                  <Link to={c.href} className="hover:text-signal">
+                    {c.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="mb-3 font-mono text-[11px] font-semibold tracking-wide text-slate-500 sm:invisible">
+              SERVICES
+            </h4>
+            <ul className="flex flex-col gap-2 font-body text-sm text-slate-400">
+              {categoriesB.map((c) => (
                 <li key={c.href}>
                   <Link to={c.href} className="hover:text-signal">
                     {c.label}
