@@ -37,23 +37,20 @@ export default function SiteFooter() {
           </button>
         </div>
 
-        <div className="mb-10 flex flex-col gap-4 border-b border-line pb-10 sm:flex-row sm:items-start sm:justify-between">
-          <div>
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-5">
+          <div className="col-span-2 sm:col-span-1">
             <img src={logo} alt="Interquark" className="mb-3 h-6 w-auto" />
-            <p className="font-body text-xs text-slate-500">Interquark</p>
+            <div className="font-body text-xs leading-relaxed text-slate-500">
+              <p>23 Abbot Street</p>
+              <p>Wrexham, LL11 1TA</p>
+              <p className="mt-2">+44 7438 269993</p>
+              <p>
+                <a href="mailto:hello@interquark.co.uk" className="hover:text-signal">
+                  hello@interquark.co.uk
+                </a>
+              </p>
+            </div>
           </div>
-          <div className="font-body text-xs leading-relaxed text-slate-500">
-            <p>23 Abbot Street, Wrexham, LL11 1TA</p>
-            <p>+44 7438 269993</p>
-            <p>
-              <a href="mailto:hello@interquark.co.uk" className="hover:text-signal">
-                hello@interquark.co.uk
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div>
             <h4 className="mb-3 font-mono text-[11px] font-semibold tracking-wide text-slate-500">
               CATEGORIES
