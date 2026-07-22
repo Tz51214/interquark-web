@@ -41,7 +41,7 @@ export default function SiteFooter() {
             <div className="font-body text-xs leading-relaxed text-slate-500">
               <p>📍 Wrexham, United Kingdom</p>
               <p className="mt-2">
-                
+                <a
                   href="mailto:hello@interquark.co.uk"
                   className="font-semibold text-signal hover:underline"
                 >
