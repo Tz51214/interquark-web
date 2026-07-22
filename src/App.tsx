@@ -23,6 +23,7 @@ import CookieBanner from "./components/CookieBanner";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import PaypalReturn from "./pages/PaypalReturn";
 import ErrorBoundary from "./components/ErrorBoundary";
 import HashScroll from "./components/HashScroll";
 import About from "./pages/About";
@@ -65,6 +66,7 @@ function App() {
               <Route path="/help" element={<HelpCenter />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/guide" element={<Guide />} />
+              <Route path="/paypal/return" element={<PaypalReturn />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
