@@ -1,7 +1,13 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 export default function TermsOfService() {
+  useDocumentHead(
+    "Terms of Service — Interquark",
+    "Terms governing your use of the Interquark website and services.",
+  );
+
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar />

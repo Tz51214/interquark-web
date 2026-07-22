@@ -8,6 +8,7 @@ import JoinModal from "../components/JoinModal";
 import ChatWidget from "../components/ChatWidget";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import { useCart } from "../context/CartContext";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 export default function ServiceDetail() {
   const { t } = useTranslation();
@@ -38,6 +39,11 @@ export default function ServiceDetail() {
 
   const tierNames = item ? Object.keys(item.tiers) : [];
   const [tier, setTier] = useState(tierNames[0] || "");
+
+  useDocumentHead(
+    item ? `${item.name} — Interquark` : "Service not found — Interquark",
+    item ? item.desc : "This service could not be found.",
+  );
 
   // Related services: prefer others in the same category, then fill
   // from adjacent categories if the current one is small.

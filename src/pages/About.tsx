@@ -3,6 +3,7 @@ import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Reveal from "../components/Reveal";
 import Button from "../components/ui/Button";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 const solutions = [
   {
@@ -35,6 +36,11 @@ const values = [
 ];
 
 export default function About() {
+  useDocumentHead(
+    "About Interquark — Ecommerce & SaaS, built properly",
+    "Interquark connects businesses with vetted developers and agencies who build and maintain ecommerce stores and custom software.",
+  );
+
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar />

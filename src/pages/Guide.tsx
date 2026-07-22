@@ -1,6 +1,7 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Reveal from "../components/Reveal";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 const steps = [
   {
@@ -26,6 +27,11 @@ const steps = [
 ];
 
 export default function Guide() {
+  useDocumentHead(
+    "Interquark Guide — How we work",
+    "Every service is priced upfront, every freelancer is verified, and every project runs through direct developer access.",
+  );
+
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar />

@@ -1,7 +1,13 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 export default function PrivacyPolicy() {
+  useDocumentHead(
+    "Privacy Policy — Interquark",
+    "How Interquark collects, uses, and protects your personal data.",
+  );
+
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar />

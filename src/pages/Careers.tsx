@@ -3,6 +3,7 @@ import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Button from "../components/ui/Button";
 import Reveal from "../components/Reveal";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 const points = [
   {
@@ -20,6 +21,11 @@ const points = [
 ];
 
 export default function Careers() {
+  useDocumentHead(
+    "Careers — Interquark",
+    "Interquark works with a network of vetted freelance developers, matched to real client projects.",
+  );
+
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar />

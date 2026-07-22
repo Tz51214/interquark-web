@@ -1,6 +1,7 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Reveal from "../components/Reveal";
+import { useDocumentHead } from "../hooks/useDocumentHead";
 
 const faqs = [
   {
@@ -30,6 +31,11 @@ const faqs = [
 ];
 
 export default function HelpCenter() {
+  useDocumentHead(
+    "Help Center — Interquark",
+    "Frequently asked questions about pricing, projects, payments, and becoming a freelancer on Interquark.",
+  );
+
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar />
