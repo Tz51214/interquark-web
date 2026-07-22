@@ -4,14 +4,12 @@ import NewsletterModal from "../NewsletterModal";
 import logo from "../../assets/interquark-wordmark-white.png";
 
 const categories = [
-  { label: "Web Development", href: "/#webdev" },
   { label: "AI Development", href: "/#ai" },
-  { label: "Software Development", href: "/#software" },
-  { label: "Security", href: "/#security" },
-  { label: "Cloud & Cybersecurity", href: "/#cloud" },
-  { label: "Migrations", href: "/#migrations" },
-  { label: "Growth", href: "/#growth" },
-  { label: "SaaS & Platforms", href: "/#saas" },
+  { label: "Custom Software", href: "/#software" },
+  { label: "Web Development", href: "/#webdev" },
+  { label: "SaaS Platforms", href: "/#saas" },
+  { label: "Cybersecurity", href: "/#security" },
+  { label: "Cloud & Migrations", href: "/#cloud" },
   { label: "Website Maintenance", href: "/#maintenance" },
   { label: "Retainers", href: "/#retainer" },
 ];
