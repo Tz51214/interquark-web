@@ -24,6 +24,11 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import PaypalReturn from "./pages/PaypalReturn";
+import SaasDevelopment from "./pages/pillars/SaasDevelopment";
+import CustomSoftwareDevelopment from "./pages/pillars/CustomSoftwareDevelopment";
+import AiDevelopment from "./pages/pillars/AiDevelopment";
+import WebApplicationDevelopment from "./pages/pillars/WebApplicationDevelopment";
+import MvpDevelopment from "./pages/pillars/MvpDevelopment";
 import ErrorBoundary from "./components/ErrorBoundary";
 import HashScroll from "./components/HashScroll";
 import About from "./pages/About";
@@ -67,6 +72,11 @@ function App() {
               <Route path="/careers" element={<Careers />} />
               <Route path="/guide" element={<Guide />} />
               <Route path="/paypal/return" element={<PaypalReturn />} />
+              <Route path="/saas-development" element={<SaasDevelopment />} />
+              <Route path="/custom-software-development" element={<CustomSoftwareDevelopment />} />
+              <Route path="/ai-development" element={<AiDevelopment />} />
+              <Route path="/web-application-development" element={<WebApplicationDevelopment />} />
+              <Route path="/mvp-development" element={<MvpDevelopment />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
