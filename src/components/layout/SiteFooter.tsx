@@ -98,9 +98,12 @@ export default function SiteFooter() {
             </ul>
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-line pt-8 sm:flex-row">
+          <span className="font-mono text-xs font-semibold tracking-wide text-signal">
+            AI • SaaS • Custom Software
+          </span>
           <span className="font-mono text-xs text-slate-500">
-            © {new Date().getFullYear()} Interquark. All rights reserved.
+            © {new Date().getFullYear()} Interquark. All rights reserved. UK registered company.
           </span>
         </div>
       </div>
