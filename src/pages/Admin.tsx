@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import logo from "../assets/interquark-wordmark-navy.png";
 import { useAuth } from "../context/AuthContext";
 import { useAuthedFetch } from "../lib/useAuthedFetch";
+import { API_BASE } from "../lib/api";
 import { useToast } from "../context/ToastContext";
 import { useTableControls } from "../lib/useTableControls";
 import { exportToCsv } from "../lib/csv";
@@ -176,6 +177,22 @@ function money(n: number) {
 
 export default function Admin() {
   const { token, user, login, ready } = useAuth();
+
+  async function downloadInvoice(id: string, invoiceNumber: string) {
+    const res = await fetch(`${API_BASE}/invoices/${id}/pdf`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return;
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${invoiceNumber}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [note, setNote] = useState("");
@@ -1798,17 +1815,25 @@ export default function Admin() {
                                 {new Date(i.createdAt).toLocaleDateString()} · {money(i.amount)}
                               </p>
                             </div>
-                            <span
-                              className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-                                i.status === "paid"
-                                  ? "bg-green-100 text-green-700"
-                                  : i.status === "overdue"
-                                    ? "bg-red-100 text-red-600"
-                                    : "bg-slate-100 text-slate-500"
-                              }`}
-                            >
-                              {i.status}
-                            </span>
+                            <div className="flex items-center gap-3">
+                              <span
+                                className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                                  i.status === "paid"
+                                    ? "bg-green-100 text-green-700"
+                                    : i.status === "overdue"
+                                      ? "bg-red-100 text-red-600"
+                                      : "bg-slate-100 text-slate-500"
+                                }`}
+                              >
+                                {i.status}
+                              </span>
+                              <button
+                                onClick={() => downloadInvoice(i.id, i.invoiceNumber)}
+                                className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                              >
+                                Download
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>
