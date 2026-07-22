@@ -20,7 +20,7 @@ export default function Checkout() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authNote, setAuthNote] = useState("");
-  const [placing, setPlacing] = useState(false);
+
   const [payingPaypal, setPayingPaypal] = useState(false);
   const [placeNote, setPlaceNote] = useState<{ text: string; error?: boolean } | null>(null);
 
@@ -81,45 +81,6 @@ export default function Checkout() {
       return null;
     }
     return orderRes.data.id ?? null;
-  }
-
-  async function placeOrder() {
-    if (!token) {
-      setPlaceNote({ text: "Please sign in above before placing your order.", error: true });
-      return;
-    }
-
-    setPlacing(true);
-    setPlaceNote(null);
-
-    const orderId = await createOrder();
-    if (!orderId) {
-      setPlacing(false);
-      return;
-    }
-
-    const sessionRes = await apiFetch<{ url?: string; message?: string }>(
-      "/payments/checkout-session",
-      {
-        method: "POST",
-        token,
-        body: JSON.stringify({ orderId }),
-      },
-    );
-
-    if (!sessionRes.ok || !sessionRes.data.url) {
-      setPlaceNote({
-        text:
-          sessionRes.data.message ||
-          "Order was placed, but we could not start payment. Please contact us.",
-        error: true,
-      });
-      setPlacing(false);
-      return;
-    }
-
-    clear();
-    window.location.href = sessionRes.data.url;
   }
 
   async function placeOrderWithPaypal() {
@@ -375,7 +336,7 @@ export default function Checkout() {
               <div className="rounded-xl border border-slate-200 bg-white p-6">
                 <h2 className="mb-1 text-sm font-semibold">{t("checkout.total")}</h2>
                 <p className="mb-4 text-xs text-slate-400">
-                  Card payments are handled securely by Stripe or PayPal.
+                  Card and PayPal payments are handled securely by PayPal.
                 </p>
                 <div className="flex justify-between py-1.5 text-[13.5px] text-slate-500">
                   <span>{t("checkout.subtotal")}</span>
@@ -386,16 +347,9 @@ export default function Checkout() {
                   <span className="font-mono text-signal">{money(total)}</span>
                 </div>
                 <button
-                  onClick={placeOrder}
-                  disabled={placing || payingPaypal}
-                  className="mt-4 w-full rounded-lg bg-signal py-3.5 text-sm font-semibold text-white hover:bg-signal-dark disabled:opacity-60"
-                >
-                  {placing ? "Redirecting..." : t("checkout.payByCard")}
-                </button>
-                <button
                   onClick={placeOrderWithPaypal}
-                  disabled={placing || payingPaypal}
-                  className="mt-2 w-full rounded-lg border border-slate-300 bg-white py-3.5 text-sm font-semibold text-slate-900 hover:border-signal hover:text-signal disabled:opacity-60"
+                  disabled={payingPaypal}
+                  className="mt-4 w-full rounded-lg bg-signal py-3.5 text-sm font-semibold text-white hover:bg-signal-dark disabled:opacity-60"
                 >
                   {payingPaypal ? "Redirecting..." : t("checkout.payByPaypal")}
                 </button>

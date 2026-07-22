@@ -44,7 +44,7 @@
     "total": "Total",
     "subtotal": "Sous-total",
     "payByCard": "Payer par carte bancaire",
-    "payByPaypal": "Payer avec PayPal",
+    "payByPaypal": "Payer maintenant (carte ou PayPal)",
     "emptyCart": "Votre panier est vide.",
     "browseServices": "Voir les services"
   }

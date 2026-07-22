@@ -44,7 +44,7 @@
     "total": "Total",
     "subtotal": "Subtotal",
     "payByCard": "Pay with debit/credit card",
-    "payByPaypal": "Pay with PayPal",
+    "payByPaypal": "Pay now (card or PayPal)",
     "emptyCart": "Your cart is empty.",
     "browseServices": "Browse services"
   }
