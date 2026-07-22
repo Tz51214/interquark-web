@@ -1,7 +1,7 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Reveal from "../components/Reveal";
-import { useDocumentHead } from "../hooks/useDocumentHead";
+import PageMeta from "../components/PageMeta";
 
 const faqs = [
   {
@@ -31,13 +31,11 @@ const faqs = [
 ];
 
 export default function HelpCenter() {
-  useDocumentHead(
-    "Help Center — Interquark",
-    "Frequently asked questions about pricing, projects, payments, and becoming a freelancer on Interquark.",
-  );
+  const pageMeta = <PageMeta title="Help Center — Interquark" description="Frequently asked questions about pricing, projects, payments, and becoming a freelancer on Interquark." path="/help" />;
 
   return (
     <div className="min-h-screen bg-paper text-ink">
+      {pageMeta}
       <Navbar />
 
       <section className="border-b border-slate-200 bg-ink">

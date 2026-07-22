@@ -3,7 +3,7 @@ import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Button from "../components/ui/Button";
 import Reveal from "../components/Reveal";
-import { useDocumentHead } from "../hooks/useDocumentHead";
+import PageMeta from "../components/PageMeta";
 
 const points = [
   {
@@ -21,13 +21,11 @@ const points = [
 ];
 
 export default function Careers() {
-  useDocumentHead(
-    "Careers — Interquark",
-    "Interquark works with a network of vetted freelance developers, matched to real client projects.",
-  );
+  const pageMeta = <PageMeta title="Careers — Interquark" description="Interquark works with a network of vetted freelance developers, matched to real client projects." path="/careers" />;
 
   return (
     <div className="min-h-screen bg-paper text-ink">
+      {pageMeta}
       <Navbar />
 
       <section className="border-b border-slate-200 bg-ink">

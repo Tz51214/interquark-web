@@ -1,7 +1,7 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import Reveal from "../components/Reveal";
-import { useDocumentHead } from "../hooks/useDocumentHead";
+import PageMeta from "../components/PageMeta";
 
 const steps = [
   {
@@ -27,13 +27,11 @@ const steps = [
 ];
 
 export default function Guide() {
-  useDocumentHead(
-    "Interquark Guide — How we work",
-    "Every service is priced upfront, every freelancer is verified, and every project runs through direct developer access.",
-  );
+  const pageMeta = <PageMeta title="Interquark Guide — How we work" description="Every service is priced upfront, every freelancer is verified, and every project runs through direct developer access." path="/guide" />;
 
   return (
     <div className="min-h-screen bg-paper text-ink">
+      {pageMeta}
       <Navbar />
 
       <section className="border-b border-slate-200 bg-ink">

@@ -1,15 +1,13 @@
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
-import { useDocumentHead } from "../hooks/useDocumentHead";
+import PageMeta from "../components/PageMeta";
 
 export default function PrivacyPolicy() {
-  useDocumentHead(
-    "Privacy Policy — Interquark",
-    "How Interquark collects, uses, and protects your personal data.",
-  );
+  const pageMeta = <PageMeta title="Privacy Policy — Interquark" description="How Interquark collects, uses, and protects your personal data." path="/privacy" />;
 
   return (
     <div className="min-h-screen bg-paper text-ink">
+      {pageMeta}
       <Navbar />
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-16">
         <h1 className="mb-2 font-display text-3xl font-bold text-ink">Privacy Policy</h1>
