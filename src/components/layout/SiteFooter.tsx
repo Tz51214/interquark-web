@@ -39,14 +39,16 @@ export default function SiteFooter() {
           <div className="col-span-2 sm:col-span-1">
             <img src={logo} alt="Interquark" className="mb-3 h-6 w-auto" />
             <div className="font-body text-xs leading-relaxed text-slate-500">
-              <p>23 Abbot Street</p>
-              <p>Wrexham, LL11 1TA</p>
-              <p className="mt-2">+44 7438 269993</p>
-              <p>
-                <a href="mailto:hello@interquark.co.uk" className="hover:text-signal">
-                  hello@interquark.co.uk
+              <p>📍 Wrexham, United Kingdom</p>
+              <p className="mt-2">
+                
+                  href="mailto:hello@interquark.co.uk"
+                  className="font-semibold text-signal hover:underline"
+                >
+                  📧 hello@interquark.co.uk
                 </a>
               </p>
+              <p className="mt-2">📞 +44 7438 269993</p>
             </div>
           </div>
           <div>
