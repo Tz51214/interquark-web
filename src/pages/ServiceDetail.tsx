@@ -8,7 +8,7 @@ import JoinModal from "../components/JoinModal";
 import ChatWidget from "../components/ChatWidget";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import { useCart } from "../context/CartContext";
-import { useDocumentHead } from "../hooks/useDocumentHead";
+import PageMeta from "../components/PageMeta";
 
 export default function ServiceDetail() {
   const { t } = useTranslation();
@@ -40,9 +40,12 @@ export default function ServiceDetail() {
   const tierNames = item ? Object.keys(item.tiers) : [];
   const [tier, setTier] = useState(tierNames[0] || "");
 
-  useDocumentHead(
-    item ? `${item.name} — Interquark` : "Service not found — Interquark",
-    item ? item.desc : "This service could not be found.",
+  const pageMeta = (
+    <PageMeta
+      title={item ? `${item.name} — Interquark` : "Service not found — Interquark"}
+      description={item ? item.desc : "This service could not be found."}
+      path={`/services/${serviceId}`}
+    />
   );
 
   // Related services: prefer others in the same category, then fill
@@ -59,6 +62,7 @@ export default function ServiceDetail() {
   if (!item || !section) {
     return (
       <div className="min-h-screen bg-paper text-ink">
+        {pageMeta}
         <Navbar onCartClick={() => setCartOpen(true)} onJoinClick={() => setJoinOpen(true)} />
         <div className="mx-auto max-w-3xl px-6 py-24 text-center">
           <h1 className="mb-3 font-display text-2xl font-bold">Service not found</h1>
@@ -87,6 +91,7 @@ export default function ServiceDetail() {
 
   return (
     <div className="min-h-screen bg-paper text-ink">
+      {pageMeta}
       <Navbar onCartClick={() => setCartOpen(true)} onJoinClick={() => setJoinOpen(true)} />
 
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
