@@ -16,22 +16,37 @@
     <meta name="robots" content="index, follow" />
     <meta name="google-site-verification" content="QbapOjCQigT4zplN4Rl5_9m4t1epWv8EKAo96lMwRiY" />
 
-    <!-- Structured data — helps Google understand who Interquark is -->
+    <!-- Structured data — helps Google understand who Interquark is and what it offers -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Interquark",
-      "url": "https://www.interquark.co.uk",
-      "logo": "https://www.interquark.co.uk/og-image.png",
-      "email": "hello@interquark.co.uk",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "23 Abbot Street",
-        "addressLocality": "Wrexham",
-        "postalCode": "LL11 1TA",
-        "addressCountry": "GB"
-      }
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://www.interquark.co.uk/#organization",
+          "name": "Interquark",
+          "url": "https://www.interquark.co.uk",
+          "logo": "https://www.interquark.co.uk/og-image.png",
+          "image": "https://www.interquark.co.uk/og-image.png",
+          "email": "hello@interquark.co.uk",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "23 Abbot Street",
+            "addressLocality": "Wrexham",
+            "postalCode": "LL11 1TA",
+            "addressCountry": "GB"
+          },
+          "areaServed": "GB",
+          "priceRange": "££"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.interquark.co.uk/#website",
+          "name": "Interquark",
+          "url": "https://www.interquark.co.uk",
+          "publisher": { "@id": "https://www.interquark.co.uk/#organization" }
+        }
+      ]
     }
     </script>
     <meta
