@@ -84,6 +84,19 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-slate-200 bg-ink">
+        <div className="hero-grid opacity-40" />
+        <div
+          className="hero-blob h-72 w-72 bg-signal/30"
+          style={{ top: "10%", left: "5%" }}
+        />
+        <div
+          className="hero-blob h-96 w-96 bg-mint/20"
+          style={{ bottom: "5%", right: "10%", animationDelay: "3s" }}
+        />
+        <div
+          className="hero-glow h-64 w-64 bg-signal/40"
+          style={{ top: "40%", left: "50%", animationDelay: "1.5s" }}
+        />
         <div className="pointer-events-none absolute inset-0 opacity-60">
           <Suspense fallback={null}>
             <HeroSphere />
