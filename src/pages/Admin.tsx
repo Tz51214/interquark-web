@@ -177,6 +177,7 @@ function money(n: number) {
 
 export default function Admin() {
   const { token, user, login, ready } = useAuth();
+  const [emailDiag, setEmailDiag] = useState<string | null>(null);
 
   async function downloadInvoice(id: string, invoiceNumber: string) {
     const res = await fetch(`${API_BASE}/invoices/${id}/pdf`, {
@@ -811,21 +812,43 @@ export default function Admin() {
         ) : (
           <>
             {tab === "Overview" && (
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {[
-                  { label: "Freelancers", value: freelancers.length },
-                  { label: "Active subscriptions", value: activeSubs },
-                  { label: "Monthly recurring revenue", value: money(mrr) },
-                  { label: "Total projects", value: projects.length },
-                ].map((s) => (
-                  <div
-                    key={s.label}
-                    className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+              <div>
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  {[
+                    { label: "Freelancers", value: freelancers.length },
+                    { label: "Active subscriptions", value: activeSubs },
+                    { label: "Monthly recurring revenue", value: money(mrr) },
+                    { label: "Total projects", value: projects.length },
+                  ].map((s) => (
+                    <div
+                      key={s.label}
+                      className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+                    >
+                      <div className="text-2xl font-bold">{s.value}</div>
+                      <div className="text-xs text-slate-400">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                  <button
+                    onClick={async () => {
+                      const res = await fetch(`${API_BASE}/contact/email-diagnostics`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                      });
+                      const data = await res.json();
+                      setEmailDiag(JSON.stringify(data, null, 2));
+                    }}
+                    className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
                   >
-                    <div className="text-2xl font-bold">{s.value}</div>
-                    <div className="text-xs text-slate-400">{s.label}</div>
-                  </div>
-                ))}
+                    Check email config
+                  </button>
+                  {emailDiag && (
+                    <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-slate-50 p-3 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                      {emailDiag}
+                    </pre>
+                  )}
+                </div>
               </div>
             )}
 
