@@ -221,7 +221,14 @@ export default function Home() {
       </section>
 
       {/* Stats */}
-      <section className="border-b border-slate-200 bg-ink">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-ink">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 20% 20%, rgba(91,95,239,0.15), transparent 50%), radial-gradient(circle at 80% 80%, rgba(52,211,153,0.1), transparent 50%)",
+          }}
+        />
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 px-6 py-14 sm:grid-cols-3">
           <div className="text-center">
             <div className="font-display text-4xl font-bold text-signal">
