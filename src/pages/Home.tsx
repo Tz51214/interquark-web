@@ -274,7 +274,7 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-white p-6 font-mono text-sm shadow-sm">
+            <div className="animated-gradient-glow rounded-xl border border-slate-200 bg-white p-6 font-mono text-sm shadow-sm">
               <div className="mb-4 text-slate-400">freelancer.status</div>
               <div className="flex flex-col gap-3">
                 {[

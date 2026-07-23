@@ -42,6 +42,35 @@ body {
 }
 
 /* Infinite horizontal marquee */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animated-gradient-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-gradient-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    var(--color-signal) 0%,
+    var(--color-mint) 25%,
+    var(--color-signal-dark) 50%,
+    var(--color-mint) 75%,
+    var(--color-signal) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+  opacity: 0.15;
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
