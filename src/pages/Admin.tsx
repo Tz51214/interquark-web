@@ -831,18 +831,33 @@ export default function Admin() {
                 </div>
 
                 <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
-                  <button
-                    onClick={async () => {
-                      const res = await fetch(`${API_BASE}/contact/email-diagnostics`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                      });
-                      const data = await res.json();
-                      setEmailDiag(JSON.stringify(data, null, 2));
-                    }}
-                    className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
-                  >
-                    Check email config
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={async () => {
+                        const res = await fetch(`${API_BASE}/contact/email-diagnostics`, {
+                          headers: { Authorization: `Bearer ${token}` },
+                        });
+                        const data = await res.json();
+                        setEmailDiag(JSON.stringify(data, null, 2));
+                      }}
+                      className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                    >
+                      Check email config
+                    </button>
+                    <button
+                      onClick={async () => {
+                        setEmailDiag("Testing TCP connection (up to 10s)...");
+                        const res = await fetch(`${API_BASE}/contact/email-tcp-test`, {
+                          headers: { Authorization: `Bearer ${token}` },
+                        });
+                        const data = await res.json();
+                        setEmailDiag(JSON.stringify(data, null, 2));
+                      }}
+                      className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                    >
+                      Test raw TCP connection
+                    </button>
+                  </div>
                   {emailDiag && (
                     <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-slate-50 p-3 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                       {emailDiag}
