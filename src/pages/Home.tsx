@@ -109,7 +109,7 @@ export default function Home() {
             <span className="mb-5 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
               {t("hero.eyebrow").toUpperCase()}
             </span>
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl sm:leading-[1] lg:text-7xl lg:leading-[0.98]">
+            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl sm:leading-[1] lg:text-7xl lg:leading-[0.98] xl:text-8xl">
               {t("hero.headline1")}
               <br />
               {t("hero.headline2")}
@@ -193,7 +193,7 @@ export default function Home() {
               <span className="mb-4 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
                 YOUR ADMIN DASHBOARD
               </span>
-              <h2 className="font-display text-3xl font-bold text-ink">
+              <h2 className="font-display text-4xl font-bold text-ink">
                 Real visibility into every project
               </h2>
             </div>
@@ -254,7 +254,7 @@ export default function Home() {
       {/* How it works */}
       <section id="how-it-works" className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20">
-          <h2 className="mb-12 text-center font-display text-3xl font-bold text-ink">
+          <h2 className="mb-12 text-center font-display text-4xl font-bold text-ink">
             How it works
           </h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -297,7 +297,7 @@ export default function Home() {
               <span className="mb-3 block font-mono text-[11px] font-semibold tracking-wide text-signal">
                 WHO BUILDS YOUR PROJECT
               </span>
-              <h2 className="mb-5 font-display text-3xl font-bold leading-tight text-ink">
+              <h2 className="mb-5 font-display text-4xl font-bold leading-tight text-ink">
                 A vetted network, not a single team.
               </h2>
               <p className="mb-8 font-body text-base leading-relaxed text-slate-600">
@@ -366,7 +366,7 @@ export default function Home() {
       {/* Catalog sections */}
       {sectionOrder.map((section) => (
         <section key={section} id={section} className="mx-auto max-w-7xl px-6 py-10">
-          <h2 className="mb-8 font-display text-2xl font-bold text-ink">
+          <h2 className="mb-8 font-display text-3xl font-bold text-ink">
             {sectionTitles[section]}
           </h2>
           <RevealStagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -380,7 +380,7 @@ export default function Home() {
       {/* Contact */}
       <section id="contact" className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-2xl px-6 py-20">
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">{t("contact.title")}</h2>
+          <h2 className="mb-2 font-display text-3xl font-bold text-ink">{t("contact.title")}</h2>
           <p className="mb-8 font-body text-sm text-slate-500">
             {t("contact.subtitle")}
           </p>
@@ -431,7 +431,7 @@ export default function Home() {
             <span className="mb-3 block font-mono text-[11px] font-semibold tracking-wide text-signal">
               GETTING STARTED
             </span>
-            <h2 className="mb-8 font-display text-3xl font-bold leading-tight text-ink">
+            <h2 className="mb-8 font-display text-4xl font-bold leading-tight text-ink">
               Working with us is simple.
             </h2>
             <div className="flex flex-col gap-6">
@@ -497,7 +497,7 @@ export default function Home() {
           <span className="mb-3 block font-mono text-[11px] font-semibold tracking-wide text-signal">
             WHY INTERQUARK
           </span>
-          <h2 className="mb-16 max-w-xl font-display text-3xl font-bold leading-tight text-white">
+          <h2 className="mb-16 max-w-xl font-display text-4xl font-bold leading-tight text-white">
             Built like a product team, not a freelance marketplace.
           </h2>
 
@@ -622,7 +622,7 @@ export default function Home() {
       <section className="bg-ink">
         <div className="mx-auto max-w-3xl px-6 pb-24 text-center">
           <div className="rounded-2xl bg-signal/10 border border-signal/20 px-8 py-14">
-            <h2 className="mb-3 font-display text-2xl font-bold text-white">
+            <h2 className="mb-3 font-display text-3xl font-bold text-white">
               Not sure which service fits?
             </h2>
             <p className="mb-7 font-body text-sm text-slate-300">
