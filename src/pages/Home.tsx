@@ -14,6 +14,7 @@ import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import AnimatedCounter from "../components/AnimatedCounter";
 import MagneticButton from "../components/MagneticButton";
 import RevealStagger from "../components/RevealStagger";
+import BrowserMockup, { AnimatedBarChart } from "../components/BrowserMockup";
 import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import SupportWidget from "../components/SupportWidget";
@@ -183,6 +184,41 @@ export default function Home() {
       </section>
 
       <PlatformMarquee />
+
+      {/* Product mockup */}
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-4xl px-6 py-16 sm:py-20">
+          <Reveal>
+            <div className="mb-10 text-center">
+              <span className="mb-4 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
+                YOUR ADMIN DASHBOARD
+              </span>
+              <h2 className="font-display text-3xl font-bold text-ink">
+                Real visibility into every project
+              </h2>
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <BrowserMockup url="admin.interquark.co.uk">
+              <h3 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Services by specialization
+              </h3>
+              <AnimatedBarChart
+                data={[
+                  { label: "Web", value: 4 },
+                  { label: "Security", value: 3 },
+                  { label: "Migrat.", value: 2 },
+                  { label: "Growth", value: 4 },
+                  { label: "SaaS", value: 3 },
+                  { label: "AI", value: 2 },
+                  { label: "Cloud", value: 2 },
+                  { label: "Maint.", value: 3 },
+                ]}
+              />
+            </BrowserMockup>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Stats */}
       <section className="border-b border-slate-200 bg-ink">
