@@ -12,6 +12,7 @@ import JoinModal from "../components/JoinModal";
 import Button from "../components/ui/Button";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import AnimatedCounter from "../components/AnimatedCounter";
+import MagneticButton from "../components/MagneticButton";
 import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import SupportWidget from "../components/SupportWidget";
@@ -102,17 +103,21 @@ export default function Home() {
               {t("hero.subhead")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#webdev">
-                <Button>{t("hero.browseServices")}</Button>
-              </a>
-              <a href="#contact">
-                <Button
-                  variant="secondary"
-                  className="!border-slate-600 !bg-transparent !text-white hover:!border-signal hover:!text-signal"
-                >
-                  {t("hero.getInTouch")}
-                </Button>
-              </a>
+              <MagneticButton>
+                <a href="#webdev">
+                  <Button>{t("hero.browseServices")}</Button>
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a href="#contact">
+                  <Button
+                    variant="secondary"
+                    className="!border-slate-600 !bg-transparent !text-white hover:!border-signal hover:!text-signal"
+                  >
+                    {t("hero.getInTouch")}
+                  </Button>
+                </a>
+              </MagneticButton>
             </div>
           </div>
 
