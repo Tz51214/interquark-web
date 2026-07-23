@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import type { MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import type { CatalogItem } from "../data/catalog";
 import { useCart } from "../context/CartContext";
@@ -9,6 +10,25 @@ export default function ServiceCard({ item }: { item: CatalogItem }) {
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50 });
+
+  function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    // Subtle tilt — max ~4 degrees, enough to feel like depth without
+    // being distracting or gimmicky.
+    setTilt({ x: (py - 0.5) * -8, y: (px - 0.5) * 8 });
+    setSpotlight({ x: px * 100, y: py * 100 });
+  }
+
+  function handleMouseLeave() {
+    setTilt({ x: 0, y: 0 });
+  }
 
   useEffect(() => {
     return () => {
@@ -29,7 +49,17 @@ export default function ServiceCard({ item }: { item: CatalogItem }) {
   }
 
   return (
-    <div className="flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-signal/40 hover:shadow-lg hover:shadow-signal/10">
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        backgroundImage: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(91,95,239,0.06), transparent 60%)`,
+        transition: "transform 0.15s ease-out",
+      }}
+      className="relative flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:border-signal/40 hover:shadow-lg hover:shadow-signal/10 [transform-style:preserve-3d]"
+    >
       <div className="mb-3 flex items-center justify-between">
         <span className="font-mono text-[11px] text-slate-400">{item.sku}</span>
         <span
