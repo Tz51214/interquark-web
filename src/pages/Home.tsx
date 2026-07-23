@@ -185,6 +185,26 @@ export default function Home() {
 
       <PlatformMarquee />
 
+      {/* Problem */}
+      <section className="border-b border-slate-200 bg-paper">
+        <div className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
+          <Reveal>
+            <span className="mb-4 inline-block rounded-full border border-slate-300 bg-white px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-slate-500">
+              THE PROBLEM
+            </span>
+            <h2 className="mb-6 font-display text-4xl font-bold leading-tight text-ink">
+              Agencies overcharge. Marketplaces are a lottery.
+            </h2>
+            <p className="mx-auto max-w-xl font-body text-base leading-relaxed text-slate-600">
+              Hire an agency and you're paying for account managers relaying messages, not the
+              developer doing the work. Post on an open marketplace and you're gambling on an
+              anonymous bid with no real vetting. Neither gets you a straight line to someone who
+              actually knows your platform.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Product mockup */}
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-4xl px-6 py-16 sm:py-20">
