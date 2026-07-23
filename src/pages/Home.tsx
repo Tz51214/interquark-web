@@ -13,6 +13,7 @@ import Button from "../components/ui/Button";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
+import SupportWidget from "../components/SupportWidget";
 const HeroSphere = lazy(() => import("../components/HeroSphere"));
 
 const sectionOrder: CatalogSection[] = [
@@ -549,6 +550,7 @@ export default function Home() {
 
       {/* Footer */}
       <SiteFooter />
+      <SupportWidget audience="public" />
 
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <JoinModal open={joinOpen} onClose={() => setJoinOpen(false)} />

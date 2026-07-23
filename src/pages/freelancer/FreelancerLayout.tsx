@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { FreelancerProvider } from "../../context/FreelancerContext";
 import PortalSidebar from "../../components/layout/PortalSidebar";
 import FreelancerSignIn from "./FreelancerSignIn";
+import SupportWidget from "../../components/SupportWidget";
 
 const navItems = [
   { label: "Overview", to: "/freelancer" },
@@ -40,6 +41,7 @@ export default function FreelancerLayout() {
         <PortalSidebar portalName="Freelancer" navItems={navItems} />
         <main className="mx-auto max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
           <Outlet />
+          <SupportWidget audience="freelancer" />
         </main>
       </div>
     </FreelancerProvider>

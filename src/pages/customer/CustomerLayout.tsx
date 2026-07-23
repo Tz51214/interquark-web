@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { CustomerProvider } from "../../context/CustomerContext";
 import PortalSidebar from "../../components/layout/PortalSidebar";
 import CustomerSignIn from "./CustomerSignIn";
+import SupportWidget from "../../components/SupportWidget";
 
 const navItems = [
   { label: "Overview", to: "/customer" },
@@ -39,6 +40,7 @@ export default function CustomerLayout() {
         <PortalSidebar portalName="Customer" navItems={navItems} />
         <main className="mx-auto max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
           <Outlet />
+          <SupportWidget audience="customer" />
         </main>
       </div>
     </CustomerProvider>
