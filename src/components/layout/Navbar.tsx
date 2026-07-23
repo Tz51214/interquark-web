@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollSpy } from "../../hooks/useScrollSpy";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import Button from "../ui/Button";
@@ -17,11 +18,12 @@ export default function Navbar({ onCartClick, onJoinClick }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "/#webdev", label: t("nav.services") },
-    { href: "/#growth", label: t("nav.growth") },
-    { href: "/#retainer", label: t("nav.retainers") },
-    { href: "/#contact", label: t("nav.contact") },
+    { href: "/#webdev", label: t("nav.services"), id: "webdev" },
+    { href: "/#growth", label: t("nav.growth"), id: "growth" },
+    { href: "/#retainer", label: t("nav.retainers"), id: "retainer" },
+    { href: "/#contact", label: t("nav.contact"), id: "contact" },
   ];
+  const activeSection = useScrollSpy(navLinks.map((l) => l.id));
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur-md">
@@ -32,7 +34,13 @@ export default function Navbar({ onCartClick, onJoinClick }: NavbarProps) {
 
         <nav className="hidden items-center gap-8 font-body text-sm font-medium text-slate-600 md:flex">
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="transition-colors hover:text-signal">
+            <a
+              key={link.href}
+              href={link.href}
+              className={`transition-colors hover:text-signal ${
+                activeSection === link.id ? "font-semibold text-signal" : ""
+              }`}
+            >
               {link.label}
             </a>
           ))}
