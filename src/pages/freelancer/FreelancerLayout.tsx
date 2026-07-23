@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { FreelancerProvider } from "../../context/FreelancerContext";
 import PortalSidebar from "../../components/layout/PortalSidebar";
-import ChatWidget from "../../components/ChatWidget";
 import FreelancerSignIn from "./FreelancerSignIn";
 
 const navItems = [
@@ -42,7 +41,6 @@ export default function FreelancerLayout() {
         <main className="mx-auto max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
           <Outlet />
         </main>
-        <ChatWidget />
       </div>
     </FreelancerProvider>
   );

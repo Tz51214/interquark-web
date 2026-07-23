@@ -7,7 +7,6 @@ import { useToast } from "../context/ToastContext";
 import { useTableControls } from "../lib/useTableControls";
 import { exportToCsv } from "../lib/csv";
 import DashboardHeader from "../components/layout/DashboardHeader";
-import ChatWidget from "../components/ChatWidget";
 import Toolbar from "../components/admin/Toolbar";
 import Pagination from "../components/admin/Pagination";
 import RevenueChart from "../components/admin/RevenueChart";
@@ -2021,7 +2020,6 @@ export default function Admin() {
           </>
         )}
       </main>
-      <ChatWidget />
     </div>
   );
 }

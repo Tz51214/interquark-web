@@ -8,7 +8,6 @@ import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import CartDrawer from "../components/CartDrawer";
 import ServiceCard from "../components/ServiceCard";
-import ChatWidget from "../components/ChatWidget";
 import JoinModal from "../components/JoinModal";
 import Button from "../components/ui/Button";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
@@ -554,7 +553,6 @@ export default function Home() {
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <JoinModal open={joinOpen} onClose={() => setJoinOpen(false)} />
       <NewsletterModal open={newsletterOpen} onClose={() => setNewsletterOpen(false)} />
-      <ChatWidget />
     </div>
   );
 }

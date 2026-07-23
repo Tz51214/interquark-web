@@ -5,7 +5,6 @@ import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import CartDrawer from "../components/CartDrawer";
 import JoinModal from "../components/JoinModal";
-import ChatWidget from "../components/ChatWidget";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import { useCart } from "../context/CartContext";
 import PageMeta from "../components/PageMeta";
@@ -215,7 +214,6 @@ export default function ServiceDetail() {
 
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <JoinModal open={joinOpen} onClose={() => setJoinOpen(false)} />
-      <ChatWidget />
       <SiteFooter />
     </div>
   );

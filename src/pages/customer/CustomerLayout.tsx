@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { CustomerProvider } from "../../context/CustomerContext";
 import PortalSidebar from "../../components/layout/PortalSidebar";
-import ChatWidget from "../../components/ChatWidget";
 import CustomerSignIn from "./CustomerSignIn";
 
 const navItems = [
@@ -41,7 +40,6 @@ export default function CustomerLayout() {
         <main className="mx-auto max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
           <Outlet />
         </main>
-        <ChatWidget />
       </div>
     </CustomerProvider>
   );
