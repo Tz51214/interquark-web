@@ -11,6 +11,7 @@ import ServiceCard from "../components/ServiceCard";
 import JoinModal from "../components/JoinModal";
 import Button from "../components/ui/Button";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
+import AnimatedCounter from "../components/AnimatedCounter";
 import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import SupportWidget from "../components/SupportWidget";
@@ -163,6 +164,30 @@ export default function Home() {
       </section>
 
       <PlatformMarquee />
+
+      {/* Stats */}
+      <section className="border-b border-slate-200 bg-ink">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 px-6 py-14 sm:grid-cols-3">
+          <div className="text-center">
+            <div className="font-display text-4xl font-bold text-signal">
+              <AnimatedCounter end={27} suffix="+" />
+            </div>
+            <p className="mt-1 font-body text-sm text-slate-400">Services offered</p>
+          </div>
+          <div className="text-center">
+            <div className="font-display text-4xl font-bold text-signal">
+              <AnimatedCounter end={10} />
+            </div>
+            <p className="mt-1 font-body text-sm text-slate-400">Areas of specialization</p>
+          </div>
+          <div className="text-center">
+            <div className="font-display text-4xl font-bold text-signal">
+              <AnimatedCounter end={7} suffix="+" />
+            </div>
+            <p className="mt-1 font-body text-sm text-slate-400">Years of experience</p>
+          </div>
+        </div>
+      </section>
 
       {/* How it works */}
       <section id="how-it-works" className="border-b border-slate-200 bg-white">
