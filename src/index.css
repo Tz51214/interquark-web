@@ -90,6 +90,36 @@ body {
   50% { background-position: 100% 50%; }
 }
 
+.card-gradient-border {
+  position: relative;
+}
+
+.card-gradient-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    120deg,
+    var(--color-signal) 0%,
+    var(--color-mint) 50%,
+    var(--color-signal) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-gradient-border:hover::after {
+  opacity: 1;
+  animation: gradient-shift 3s ease infinite;
+}
+
 .animated-gradient-glow {
   position: relative;
   overflow: hidden;

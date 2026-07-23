@@ -58,7 +58,7 @@ export default function ServiceCard({ item }: { item: CatalogItem }) {
         backgroundImage: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(91,95,239,0.06), transparent 60%)`,
         transition: "transform 0.15s ease-out",
       }}
-      className="relative flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:border-signal/40 hover:shadow-lg hover:shadow-signal/10 [transform-style:preserve-3d]"
+      className="card-gradient-border relative flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:border-signal/40 hover:shadow-lg hover:shadow-signal/10 [transform-style:preserve-3d]"
     >
       <div className="mb-3 flex items-center justify-between">
         <span className="font-mono text-[11px] text-slate-400">{item.sku}</span>
