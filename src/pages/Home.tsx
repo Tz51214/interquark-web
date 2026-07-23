@@ -13,6 +13,7 @@ import Button from "../components/ui/Button";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import AnimatedCounter from "../components/AnimatedCounter";
 import MagneticButton from "../components/MagneticButton";
+import RevealStagger from "../components/RevealStagger";
 import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import SupportWidget from "../components/SupportWidget";
@@ -325,11 +326,11 @@ export default function Home() {
           <h2 className="mb-8 font-display text-2xl font-bold text-ink">
             {sectionTitles[section]}
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <RevealStagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {catalog[section].map((item) => (
               <ServiceCard key={item.id} item={item} />
             ))}
-          </div>
+          </RevealStagger>
         </section>
       ))}
 
