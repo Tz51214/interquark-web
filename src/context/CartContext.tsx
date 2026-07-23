@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { trackAddToCart } from "../lib/analytics";
 
 export interface CartItem {
   cartId: string;
@@ -40,6 +41,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     });
+    trackAddToCart({ name: item.name, sku: item.sku, tier: item.tier, price: item.price });
   }, []);
 
   const removeItem = useCallback((cartId: string) => {

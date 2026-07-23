@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAuthedFetch } from "../lib/useAuthedFetch";
 import { useToast } from "../context/ToastContext";
+import { trackPurchase } from "../lib/analytics";
 
 // PayPal redirects here after the user approves (or cancels) payment
 // on PayPal's site — for both freelancer subscriptions and customer
@@ -48,12 +49,24 @@ export default function PaypalReturn() {
         return;
       }
 
-      const orderRes = await authedFetch<{ message?: string }>(
-        "/payments/paypal/order/capture",
-        { method: "POST", body: JSON.stringify({ orderId }) },
-      );
+      const orderRes = await authedFetch<{
+        message?: string;
+        orderId?: number;
+        totalAmount?: number;
+        items?: { name: string; sku: string; tier: string; price: number }[];
+      }>("/payments/paypal/order/capture", {
+        method: "POST",
+        body: JSON.stringify({ orderId }),
+      });
 
       if (orderRes.ok) {
+        if (orderRes.data.orderId && orderRes.data.items) {
+          trackPurchase({
+            transactionId: String(orderRes.data.orderId),
+            value: orderRes.data.totalAmount || 0,
+            items: orderRes.data.items,
+          });
+        }
         showToast("Payment successful!", "success");
         navigate("/customer/orders");
         return;
