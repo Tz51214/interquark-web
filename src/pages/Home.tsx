@@ -205,6 +205,82 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Comparison */}
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
+          <Reveal>
+            <h2 className="mb-10 text-center font-display text-4xl font-bold text-ink">
+              How it compares
+            </h2>
+          </Reveal>
+          <RevealStagger className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {[
+              {
+                title: "Traditional agency",
+                points: [
+                  { label: "Direct developer access", ok: false },
+                  { label: "Transparent tier pricing", ok: false },
+                  { label: "Vetted before assignment", ok: true },
+                  { label: "No account manager relay", ok: false },
+                ],
+              },
+              {
+                title: "Open marketplace",
+                points: [
+                  { label: "Direct developer access", ok: true },
+                  { label: "Transparent tier pricing", ok: false },
+                  { label: "Vetted before assignment", ok: false },
+                  { label: "No account manager relay", ok: true },
+                ],
+              },
+              {
+                title: "Interquark",
+                highlight: true,
+                points: [
+                  { label: "Direct developer access", ok: true },
+                  { label: "Transparent tier pricing", ok: true },
+                  { label: "Vetted before assignment", ok: true },
+                  { label: "No account manager relay", ok: true },
+                ],
+              },
+            ].map((col) => (
+              <div
+                key={col.title}
+                className={`rounded-xl border p-6 ${
+                  col.highlight
+                    ? "border-signal bg-signal/5 shadow-lg"
+                    : "border-slate-200 bg-white"
+                }`}
+              >
+                <h3
+                  className={`mb-4 font-display text-base font-semibold ${
+                    col.highlight ? "text-signal" : "text-ink"
+                  }`}
+                >
+                  {col.title}
+                </h3>
+                <ul className="flex flex-col gap-3">
+                  {col.points.map((p) => (
+                    <li key={p.label} className="flex items-start gap-2 text-sm">
+                      <span
+                        className={
+                          p.ok ? "text-mint" : "text-slate-300"
+                        }
+                      >
+                        {p.ok ? "✓" : "✕"}
+                      </span>
+                      <span className={p.ok ? "text-slate-700" : "text-slate-400"}>
+                        {p.label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </RevealStagger>
+        </div>
+      </section>
+
       {/* Product mockup */}
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-4xl px-6 py-16 sm:py-20">
