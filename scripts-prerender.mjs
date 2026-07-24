@@ -27,8 +27,17 @@ const ROUTES = [
 ];
 
 async function main() {
-  // Serve the built `dist` folder locally so Puppeteer can load real pages
-  const server = createServer((req, res) => handler(req, res, { public: DIST_DIR }));
+  // Serve the built `dist` folder locally so Puppeteer can load real pages.
+  // Client-side routes (everything except real static files) need to fall
+  // back to index.html so React Router can render them — otherwise the
+  // static server 404s before React ever boots.
+  const spaRewrites = ROUTES
+    .filter((r) => r !== '/')
+    .map((r) => ({ source: r, destination: '/index.html' }));
+
+  const server = createServer((req, res) =>
+    handler(req, res, { public: DIST_DIR, rewrites: spaRewrites })
+  );
   await new Promise((resolve) => server.listen(PORT, resolve));
 
   const browser = await puppeteer.launch();
