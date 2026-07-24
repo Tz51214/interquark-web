@@ -104,15 +104,14 @@ export default function Home() {
             <HeroSphere />
           </Suspense>
         </div>
-        <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.3fr_1fr] lg:py-24">
           <div>
             <span className="mb-5 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
               {t("hero.eyebrow").toUpperCase()}
             </span>
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl sm:leading-[1] lg:text-7xl lg:leading-[0.98] xl:text-8xl">
-              {t("hero.headline1")}
-              <br />
-              {t("hero.headline2")}
+            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl sm:leading-[1] lg:text-6xl lg:leading-[1.05] xl:text-7xl">
+              <span className="block whitespace-nowrap">{t("hero.headline1")}</span>
+              <span className="block whitespace-nowrap">{t("hero.headline2")}</span>
             </h1>
             <p className="mt-6 max-w-lg font-body text-lg text-slate-400">
               {t("hero.subhead")}
