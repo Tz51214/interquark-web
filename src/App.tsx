@@ -9,12 +9,14 @@ import CustomerOverview from "./pages/customer/Overview";
 import CustomerOrders from "./pages/customer/Orders";
 import CustomerInvoices from "./pages/customer/Invoices";
 import CustomerProjects from "./pages/customer/CustomerProjects";
+import CustomerNotifications from "./pages/customer/Notifications";
 import FreelancerLayout from "./pages/freelancer/FreelancerLayout";
 import FreelancerOverview from "./pages/freelancer/Overview";
 import FreelancerMembership from "./pages/freelancer/Membership";
 import FreelancerBilling from "./pages/freelancer/Billing";
 import FreelancerPayouts from "./pages/freelancer/Payouts";
 import FreelancerProjects from "./pages/freelancer/FreelancerProjects";
+import FreelancerNotifications from "./pages/freelancer/Notifications";
 import Subscribe from "./pages/Subscribe";
 import Admin from "./pages/Admin";
 import ServiceDetail from "./pages/ServiceDetail";
@@ -54,6 +56,7 @@ function App() {
                 <Route path="orders" element={<CustomerOrders />} />
                 <Route path="invoices" element={<CustomerInvoices />} />
                 <Route path="projects" element={<CustomerProjects />} />
+                <Route path="notifications" element={<CustomerNotifications />} />
               </Route>
               <Route path="/freelancer" element={<FreelancerLayout />}>
                 <Route index element={<FreelancerOverview />} />
@@ -61,6 +64,7 @@ function App() {
                 <Route path="billing" element={<FreelancerBilling />} />
                 <Route path="payouts" element={<FreelancerPayouts />} />
                 <Route path="projects" element={<FreelancerProjects />} />
+                <Route path="notifications" element={<FreelancerNotifications />} />
               </Route>
               <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/admin" element={<Admin />} />

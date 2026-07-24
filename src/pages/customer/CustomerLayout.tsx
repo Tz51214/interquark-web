@@ -10,6 +10,7 @@ const navItems = [
   { label: "Orders", to: "/customer/orders" },
   { label: "Invoices", to: "/customer/invoices" },
   { label: "Projects", to: "/customer/projects" },
+  { label: "Notifications", to: "/customer/notifications" },
 ];
 
 export default function CustomerLayout() {

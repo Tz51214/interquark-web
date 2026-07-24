@@ -11,6 +11,7 @@ const navItems = [
   { label: "Billing history", to: "/freelancer/billing" },
   { label: "Payouts", to: "/freelancer/payouts" },
   { label: "Projects", to: "/freelancer/projects" },
+  { label: "Notifications", to: "/freelancer/notifications" },
 ];
 
 export default function FreelancerLayout() {
