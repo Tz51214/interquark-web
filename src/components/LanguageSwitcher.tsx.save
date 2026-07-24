@@ -1,0 +1,11 @@
+import { useTranslation } from "react-i18next";
+
+const languages = [
+  { code: "en", label: "EN" },
+  { code: "fr", label: "FR" },
+  { code: "es", label: "ES" },
+];
+
+export default function LanguageSwitcher() {
+  cons
+}

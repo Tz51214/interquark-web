@@ -47,5 +47,31 @@
     "payByPaypal": "Payer maintenant (carte ou PayPal)",
     "emptyCart": "Votre panier est vide.",
     "browseServices": "Voir les services"
+  },
+  "about": {
+    "eyebrow": "À propos",
+    "heroTitle": "E-commerce et SaaS, faits comme il faut.",
+    "heroLead": "Interquark met en relation les entreprises avec des développeurs et agences vérifiés qui créent et maintiennent des boutiques e-commerce et des logiciels sur mesure — sans les incertitudes d'une place de marché ouverte.",
+    "heroBody": "Nous travaillons avec Magento, Shopify, WooCommerce, WordPress et des plateformes SaaS sur mesure. Chaque freelance sur Interquark est vérifié avant de commencer un projet client, chaque service est facturé par palier annoncé à l'avance, et chaque projet se déroule en accès direct avec le développeur — sans chargé de compte qui relaie les messages.",
+    "solutionsTitle": "Nos solutions",
+    "solution1Title": "Interquark Marketplace",
+    "solution1Desc": "Les entreprises viennent sur Interquark pour trouver des développeurs et agences en développement web, intégration IA, sécurité, cloud et migrations — vérifiés à l'avance, pour ne jamais miser sur une offre anonyme.",
+    "solution2Title": "Interquark Croissance & Forfaits",
+    "solution2Desc": "Au-delà des projets ponctuels, Interquark vous connecte à un accompagnement continu : maintenance, surveillance de sécurité et développement en phase de croissance sur un forfait fixe, pour que votre boutique ou plateforme continue d'avancer après le lancement.",
+    "missionLabel": "Notre mission",
+    "missionText": "Rendre le travail logiciel sérieux accessible, sans la marge d'agence ni la loterie des places de marché.",
+    "valuesTitle": "Nos valeurs",
+    "value1Title": "La qualité avant le volume",
+    "value1Desc": "Nous restons volontairement une équipe petite et concentrée — ni grande agence, ni place de marché ouverte. C'est ainsi que nous maintenons des standards élevés et des prix justes.",
+    "value2Title": "La transparence avant tout",
+    "value2Desc": "Aucune surprise de facturation horaire. Chaque service est facturé par palier et affiché avant tout engagement.",
+    "value3Title": "Accès direct",
+    "value3Desc": "Vous parlez directement au développeur qui construit votre projet — sans intermédiaire.",
+    "value4Title": "Vérifié, pas ouvert",
+    "value4Desc": "Chaque freelance est vérifié avant de prendre en charge un projet client.",
+    "ctaBusiness": "Vous êtes une entreprise qui a besoin d'une boutique e-commerce ou d'une plateforme SaaS ?",
+    "ctaBusinessButton": "Nous contacter",
+    "ctaDeveloper": "Vous êtes développeur ou agence à la recherche de projets clients vérifiés ?",
+    "ctaDeveloperButton": "Connexion freelance"
   }
 }

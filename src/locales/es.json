@@ -47,5 +47,31 @@
     "payByPaypal": "Pagar ahora (tarjeta o PayPal)",
     "emptyCart": "Tu carrito está vacío.",
     "browseServices": "Ver servicios"
+  },
+  "about": {
+    "eyebrow": "Sobre nosotros",
+    "heroTitle": "Ecommerce y SaaS, hechos como se debe.",
+    "heroLead": "Interquark conecta a empresas con desarrolladores y agencias verificados que construyen y mantienen tiendas online y software a medida — sin la incertidumbre de un mercado abierto.",
+    "heroBody": "Trabajamos con Magento, Shopify, WooCommerce, WordPress y plataformas SaaS a medida. Cada freelancer en Interquark es evaluado antes de trabajar con clientes, cada servicio tiene un precio por nivel anunciado de antemano, y cada proyecto se desarrolla con acceso directo al desarrollador — sin gestores de cuenta que transmitan mensajes.",
+    "solutionsTitle": "Nuestras soluciones",
+    "solution1Title": "Interquark Marketplace",
+    "solution1Desc": "Las empresas acuden a Interquark para encontrar desarrolladores y agencias en desarrollo web, integración de IA, seguridad, nube y migraciones — verificados de antemano, para que nunca tengas que arriesgarte con una oferta anónima.",
+    "solution2Title": "Interquark para Crecimiento y Planes",
+    "solution2Desc": "Más allá de proyectos puntuales, Interquark te conecta con soporte continuo: mantenimiento, monitoreo de seguridad y desarrollo en fase de crecimiento con un plan fijo, para que tu tienda o plataforma siga avanzando después del lanzamiento.",
+    "missionLabel": "Nuestra misión",
+    "missionText": "Hacer que el trabajo de software serio sea accesible, sin el margen de una agencia ni la lotería de un mercado abierto.",
+    "valuesTitle": "Nuestros valores",
+    "value1Title": "Calidad sobre volumen",
+    "value1Desc": "Seguimos siendo un equipo pequeño y enfocado a propósito — ni una gran agencia, ni un mercado abierto. Así mantenemos altos estándares y precios justos.",
+    "value2Title": "Transparencia ante todo",
+    "value2Desc": "Sin sorpresas de facturación por hora. Cada servicio tiene un precio por nivel, mostrado antes de comprometerte a nada.",
+    "value3Title": "Acceso directo",
+    "value3Desc": "Hablas directamente con el desarrollador que construye tu proyecto — sin intermediarios.",
+    "value4Title": "Verificado, no abierto",
+    "value4Desc": "Cada freelancer es evaluado antes de asumir trabajo con clientes.",
+    "ctaBusiness": "¿Eres una empresa que necesita una tienda online o una plataforma SaaS?",
+    "ctaBusinessButton": "Contáctanos",
+    "ctaDeveloper": "¿Eres desarrollador o agencia buscando trabajo verificado con clientes?",
+    "ctaDeveloperButton": "Inicio de sesión freelance"
   }
 }

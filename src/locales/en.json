@@ -47,5 +47,31 @@
     "payByPaypal": "Pay now (card or PayPal)",
     "emptyCart": "Your cart is empty.",
     "browseServices": "Browse services"
+  },
+  "about": {
+    "eyebrow": "About us",
+    "heroTitle": "Ecommerce and SaaS, built properly.",
+    "heroLead": "Interquark connects businesses with vetted developers and agencies who build and maintain ecommerce stores and custom software — without the guesswork of an open marketplace.",
+    "heroBody": "We work across Magento, Shopify, WooCommerce, WordPress, and bespoke SaaS platforms. Every freelancer on Interquark is reviewed before they touch client work, every service is priced upfront by tier, and every project runs through direct developer access — no account managers relaying messages in between.",
+    "solutionsTitle": "Our solutions",
+    "solution1Title": "Interquark Marketplace",
+    "solution1Desc": "Businesses come to Interquark to find developers and agencies across web development, AI integration, security, cloud, and migrations — vetted in advance, so you're never gambling on an anonymous bid.",
+    "solution2Title": "Interquark for Growth & Retainers",
+    "solution2Desc": "Beyond one-off builds, Interquark connects you with ongoing support: maintenance, security monitoring, and growth-stage development on a fixed retainer, so your store or platform keeps moving after launch.",
+    "missionLabel": "Our mission",
+    "missionText": "Make serious software work accessible without the agency markup or the marketplace lottery.",
+    "valuesTitle": "Our values",
+    "value1Title": "Quality over volume",
+    "value1Desc": "We stay a small, focused team on purpose — not a large agency, not an open marketplace. That's how we keep standards high and pricing fair.",
+    "value2Title": "Transparency first",
+    "value2Desc": "No hourly billing surprises. Every service is priced by tier and shown before you commit to anything.",
+    "value3Title": "Direct access",
+    "value3Desc": "You talk to the developer building your project — not a relay.",
+    "value4Title": "Vetted, not open",
+    "value4Desc": "Every freelancer is reviewed before taking on client work.",
+    "ctaBusiness": "Are you a business needing an ecommerce store or SaaS platform built?",
+    "ctaBusinessButton": "Get in touch",
+    "ctaDeveloper": "Are you a developer or agency looking for vetted client work?",
+    "ctaDeveloperButton": "Freelancer sign in"
   }
 }
