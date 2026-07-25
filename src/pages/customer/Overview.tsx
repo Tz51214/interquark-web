@@ -54,19 +54,22 @@ export default function Overview() {
 
       {/* KPI cards */}
       <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-900">
+          <div className="mb-1 text-xl">📁</div>
           <div className="text-2xl font-bold text-signal">
             <AnimatedCounter end={activeProjects.length} />
           </div>
           <p className="text-xs text-slate-400">Active projects</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-900">
+          <div className="mb-1 text-xl">📄</div>
           <div className="text-2xl font-bold text-signal">{money(pendingTotal)}</div>
           <p className="text-xs text-slate-400">
             {pendingInvoices.length} invoice{pendingInvoices.length === 1 ? "" : "s"} pending
           </p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-900">
+          <div className="mb-1 text-xl">📦</div>
           <div className="text-2xl font-bold text-signal">
             <AnimatedCounter end={orders.length} />
           </div>
@@ -86,7 +89,7 @@ export default function Overview() {
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {activeProjects.map((p) => (
+              {activeProjects.slice(0, 3).map((p) => (
                 <div
                   key={p.id}
                   className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
@@ -97,12 +100,20 @@ export default function Overview() {
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                     <div
-                      className="h-full rounded-full bg-signal transition-all"
+                      className="h-full rounded-full bg-gradient-to-r from-signal to-blue-400 transition-[width] duration-700 ease-out"
                       style={{ width: `${p.progress ?? 0}%` }}
                     />
                   </div>
                 </div>
               ))}
+              {activeProjects.length > 3 && (
+                <Link
+                  to="/customer/projects"
+                  className="text-center text-xs font-semibold text-signal hover:underline"
+                >
+                  View all {activeProjects.length} projects →
+                </Link>
+              )}
             </div>
           )}
 
