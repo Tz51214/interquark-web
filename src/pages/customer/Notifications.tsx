@@ -30,7 +30,9 @@ export default function Notifications() {
       method: "PATCH",
       body: JSON.stringify({ [key]: value }),
     });
-    if (!ok) {
+    if (ok) {
+      showToast("Notification preferences updated", "success");
+    } else {
       showToast("Could not save preference", "error");
       setPrefs(prefs);
     }
@@ -42,23 +44,33 @@ export default function Notifications() {
 
   return (
     <div>
-      <h1 className="mb-8 text-2xl font-bold">Notification settings</h1>
-      <div className="rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+      <h1 className="mb-1 text-2xl font-bold">Notification settings</h1>
+      <p className="mb-8 text-sm text-slate-400">
+        Choose how you'd like Interquark to keep you informed.
+      </p>
+
+      <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
+        Email notifications
+      </h2>
+      <div className="rounded-xl border border-slate-200 bg-white px-4 dark:border-slate-700 dark:bg-slate-900">
         <NotificationToggle
+          icon="📦"
           label="Order updates"
-          description="Status changes on your orders and projects."
+          description="Receive updates when your order changes status."
           checked={prefs.orderUpdates}
           onChange={(v) => update("orderUpdates", v)}
         />
         <NotificationToggle
-          label="Invoices"
-          description="New invoices and payment reminders."
+          icon="📄"
+          label="Invoice alerts"
+          description="Get notified when invoices are issued or overdue."
           checked={prefs.invoices}
           onChange={(v) => update("invoices", v)}
         />
         <NotificationToggle
+          icon="💬"
           label="Project messages"
-          description="Emails when your developer sends you a message."
+          description="Receive messages from your assigned developer."
           checked={prefs.projectMessages}
           onChange={(v) => update("projectMessages", v)}
         />

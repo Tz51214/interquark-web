@@ -30,7 +30,9 @@ export default function Notifications() {
       method: "PATCH",
       body: JSON.stringify({ [key]: value }),
     });
-    if (!ok) {
+    if (ok) {
+      showToast("Notification preferences updated", "success");
+    } else {
       showToast("Could not save preference", "error");
       setPrefs(prefs);
     }
@@ -42,21 +44,31 @@ export default function Notifications() {
 
   return (
     <div>
-      <h1 className="mb-8 text-2xl font-bold">Notification settings</h1>
-      <div className="rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+      <h1 className="mb-1 text-2xl font-bold">Notification settings</h1>
+      <p className="mb-8 text-sm text-slate-400">
+        Choose how you'd like Interquark to keep you informed.
+      </p>
+
+      <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
+        Email notifications
+      </h2>
+      <div className="rounded-xl border border-slate-200 bg-white px-4 dark:border-slate-700 dark:bg-slate-900">
         <NotificationToggle
+          icon="📋"
           label="Project assignments"
           description="Emails when you're assigned to a new project."
           checked={prefs.projectAssignments}
           onChange={(v) => update("projectAssignments", v)}
         />
         <NotificationToggle
+          icon="💰"
           label="Payouts"
           description="Emails when a payout is processed."
           checked={prefs.payouts}
           onChange={(v) => update("payouts", v)}
         />
         <NotificationToggle
+          icon="💳"
           label="Billing"
           description="Subscription charges and receipts."
           checked={prefs.billing}
