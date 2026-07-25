@@ -126,6 +126,7 @@ const tabs = [
   "Freelancers",
   "Payouts",
   "Abandoned",
+  "Tasks",
 ] as const;
 type Tab = (typeof tabs)[number];
 
@@ -215,6 +216,15 @@ export default function Admin() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [abandonedCarts, setAbandonedCarts] = useState<any[]>([]);
   const [abandonedSignups, setAbandonedSignups] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [newTask, setNewTask] = useState({
+    title: "",
+    description: "",
+    projectId: "",
+    freelancerId: "",
+    priority: "medium",
+    dueDate: "",
+  });
   const [loading, setLoading] = useState(true);
 
   const [newFreelancer, setNewFreelancer] = useState({ name: "", email: "", password: "", tier: "core" });
@@ -224,7 +234,7 @@ export default function Admin() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [projectsRes, subsRes, usersRes, onlineRes, logsRes, ordersRes, invoicesRes, creditMemosRes, transactionsRes, payoutsRes, abandonedCartsRes, abandonedSignupsRes] = await Promise.all([
+    const [projectsRes, subsRes, usersRes, onlineRes, logsRes, ordersRes, invoicesRes, creditMemosRes, transactionsRes, payoutsRes, abandonedCartsRes, abandonedSignupsRes, tasksRes] = await Promise.all([
       authedFetch<Project[]>("/projects"),
       authedFetch<Subscription[]>("/subscriptions"),
       authedFetch<PlatformUser[]>("/users"),
@@ -237,6 +247,7 @@ export default function Admin() {
       authedFetch<Payout[]>("/payouts"),
       authedFetch<any[]>("/reminders/abandoned-carts"),
       authedFetch<any[]>("/reminders/abandoned-signups"),
+      authedFetch<any[]>("/tasks"),
     ]);
     if (projectsRes.ok && Array.isArray(projectsRes.data)) setProjects(projectsRes.data);
     if (payoutsRes.ok && Array.isArray(payoutsRes.data)) setPayouts(payoutsRes.data);
@@ -250,6 +261,7 @@ export default function Admin() {
     if (transactionsRes.ok && Array.isArray(transactionsRes.data)) setTransactions(transactionsRes.data);
     if (abandonedCartsRes.ok && Array.isArray(abandonedCartsRes.data)) setAbandonedCarts(abandonedCartsRes.data);
     if (abandonedSignupsRes.ok && Array.isArray(abandonedSignupsRes.data)) setAbandonedSignups(abandonedSignupsRes.data);
+    if (tasksRes.ok && Array.isArray(tasksRes.data)) setTasks(tasksRes.data);
     setLoading(false);
   }, [authedFetch]);
 
@@ -338,6 +350,31 @@ export default function Admin() {
       load();
     } else {
       showToast("Could not create payout", "error");
+    }
+  }
+
+  async function createTask() {
+    if (!newTask.title || !newTask.projectId || !newTask.freelancerId) {
+      showToast("Please fill in title, project, and freelancer", "error");
+      return;
+    }
+    const { ok } = await authedFetch("/tasks", {
+      method: "POST",
+      body: JSON.stringify({
+        title: newTask.title,
+        description: newTask.description || undefined,
+        projectId: Number(newTask.projectId),
+        freelancerId: Number(newTask.freelancerId),
+        priority: newTask.priority,
+        dueDate: newTask.dueDate || undefined,
+      }),
+    });
+    if (ok) {
+      showToast("Task created", "success");
+      setNewTask({ title: "", description: "", projectId: "", freelancerId: "", priority: "medium", dueDate: "" });
+      load();
+    } else {
+      showToast("Could not create task", "error");
     }
   }
 
@@ -1787,6 +1824,112 @@ export default function Admin() {
                     </div>
                   )}
                 </div>
+              </div>
+            )}
+            {tab === "Tasks" && (
+              <div>
+                <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+                  <h3 className="mb-3 text-sm font-semibold">Assign a new task</h3>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <input
+                      placeholder="Task title"
+                      value={newTask.title}
+                      onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                    <select
+                      value={newTask.freelancerId}
+                      onChange={(e) => setNewTask({ ...newTask, freelancerId: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    >
+                      <option value="">Select freelancer...</option>
+                      {freelancers.map((f) => (
+                        <option key={f.id} value={f.id}>
+                          {f.fullName}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={newTask.projectId}
+                      onChange={(e) => setNewTask({ ...newTask, projectId: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    >
+                      <option value="">Select project...</option>
+                      {projects
+                        .filter((p) => p.freelancerId === newTask.freelancerId)
+                        .map((p) => (
+                          <option key={p.id} value={p.id}>
+                            {p.name}
+                          </option>
+                        ))}
+                    </select>
+                    <select
+                      value={newTask.priority}
+                      onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    >
+                      <option value="low">Low priority</option>
+                      <option value="medium">Medium priority</option>
+                      <option value="high">High priority</option>
+                    </select>
+                    <input
+                      type="date"
+                      value={newTask.dueDate}
+                      onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                    <input
+                      placeholder="Description (optional)"
+                      value={newTask.description}
+                      onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                  </div>
+                  <button
+                    onClick={createTask}
+                    className="mt-3 rounded-lg bg-signal px-4 py-2 text-sm font-semibold text-white hover:bg-signal-dark"
+                  >
+                    Assign task
+                  </button>
+                </div>
+
+                <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
+                  All tasks
+                </h3>
+                {tasks.length === 0 ? (
+                  <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
+                    No tasks assigned yet.
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    {tasks.map((t: any) => (
+                      <div
+                        key={t.id}
+                        className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+                      >
+                        <div>
+                          <b className="text-sm">{t.title}</b>
+                          <p className="text-xs text-slate-400">
+                            {t.freelancer?.fullName} · {t.project?.name} ·{" "}
+                            {t.priority} priority
+                            {t.dueDate ? ` · due ${new Date(t.dueDate).toLocaleDateString()}` : ""}
+                          </p>
+                        </div>
+                        <span
+                          className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                            t.status === "completed"
+                              ? "bg-green-100 text-green-700"
+                              : t.status === "in_progress"
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-slate-100 text-slate-500"
+                          }`}
+                        >
+                          {t.status.replace("_", " ")}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
             {tab === "Sales" && (
