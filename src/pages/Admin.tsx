@@ -125,6 +125,7 @@ const tabs = [
   "Subscriptions",
   "Freelancers",
   "Payouts",
+  "Abandoned",
 ] as const;
 type Tab = (typeof tabs)[number];
 
@@ -212,6 +213,8 @@ export default function Admin() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [creditMemos, setCreditMemos] = useState<CreditMemo[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [abandonedCarts, setAbandonedCarts] = useState<any[]>([]);
+  const [abandonedSignups, setAbandonedSignups] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [newFreelancer, setNewFreelancer] = useState({ name: "", email: "", password: "", tier: "core" });
@@ -221,7 +224,7 @@ export default function Admin() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [projectsRes, subsRes, usersRes, onlineRes, logsRes, ordersRes, invoicesRes, creditMemosRes, transactionsRes, payoutsRes] = await Promise.all([
+    const [projectsRes, subsRes, usersRes, onlineRes, logsRes, ordersRes, invoicesRes, creditMemosRes, transactionsRes, payoutsRes, abandonedCartsRes, abandonedSignupsRes] = await Promise.all([
       authedFetch<Project[]>("/projects"),
       authedFetch<Subscription[]>("/subscriptions"),
       authedFetch<PlatformUser[]>("/users"),
@@ -232,6 +235,8 @@ export default function Admin() {
       authedFetch<CreditMemo[]>("/credit-memos"),
       authedFetch<Transaction[]>("/ledger/transactions"),
       authedFetch<Payout[]>("/payouts"),
+      authedFetch<any[]>("/reminders/abandoned-carts"),
+      authedFetch<any[]>("/reminders/abandoned-signups"),
     ]);
     if (projectsRes.ok && Array.isArray(projectsRes.data)) setProjects(projectsRes.data);
     if (payoutsRes.ok && Array.isArray(payoutsRes.data)) setPayouts(payoutsRes.data);
@@ -243,6 +248,8 @@ export default function Admin() {
     if (invoicesRes.ok && Array.isArray(invoicesRes.data)) setInvoices(invoicesRes.data);
     if (creditMemosRes.ok && Array.isArray(creditMemosRes.data)) setCreditMemos(creditMemosRes.data);
     if (transactionsRes.ok && Array.isArray(transactionsRes.data)) setTransactions(transactionsRes.data);
+    if (abandonedCartsRes.ok && Array.isArray(abandonedCartsRes.data)) setAbandonedCarts(abandonedCartsRes.data);
+    if (abandonedSignupsRes.ok && Array.isArray(abandonedSignupsRes.data)) setAbandonedSignups(abandonedSignupsRes.data);
     setLoading(false);
   }, [authedFetch]);
 
@@ -1725,6 +1732,61 @@ export default function Admin() {
                     ))}
                   </div>
                 )}
+              </div>
+            )}
+            {tab === "Abandoned" && (
+              <div>
+                <div className="mb-8">
+                  <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
+                    Abandoned carts
+                  </h3>
+                  {abandonedCarts.length === 0 ? (
+                    <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
+                      No abandoned carts right now.
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      {abandonedCarts.map((o: any) => (
+                        <div
+                          key={o.id}
+                          className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+                        >
+                          <b className="text-sm">{o.customer?.fullName || o.customer?.email}</b>
+                          <p className="text-xs text-slate-400">
+                            {o.items?.map((i: any) => i.name).join(", ")} ·{" "}
+                            {new Date(o.createdAt).toLocaleDateString()}
+                            {o.reminderSentAt ? " · reminder sent" : " · no reminder yet"}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
+                    Abandoned freelancer signups
+                  </h3>
+                  {abandonedSignups.length === 0 ? (
+                    <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
+                      No abandoned signups right now.
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      {abandonedSignups.map((u: any) => (
+                        <div
+                          key={u.id}
+                          className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+                        >
+                          <b className="text-sm">{u.fullName}</b>
+                          <p className="text-xs text-slate-400">
+                            {u.email} · {new Date(u.createdAt).toLocaleDateString()}
+                            {u.signupReminderSentAt ? " · reminder sent" : " · no reminder yet"}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             )}
             {tab === "Sales" && (
