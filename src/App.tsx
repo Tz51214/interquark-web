@@ -17,6 +17,7 @@ import FreelancerBilling from "./pages/freelancer/Billing";
 import FreelancerPayouts from "./pages/freelancer/Payouts";
 import FreelancerProjects from "./pages/freelancer/FreelancerProjects";
 import FreelancerNotifications from "./pages/freelancer/Notifications";
+import FreelancerTasks from "./pages/freelancer/Tasks";
 import Subscribe from "./pages/Subscribe";
 import Admin from "./pages/Admin";
 import ServiceDetail from "./pages/ServiceDetail";
@@ -65,6 +66,7 @@ function App() {
                 <Route path="payouts" element={<FreelancerPayouts />} />
                 <Route path="projects" element={<FreelancerProjects />} />
                 <Route path="notifications" element={<FreelancerNotifications />} />
+                <Route path="tasks" element={<FreelancerTasks />} />
               </Route>
               <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/admin" element={<Admin />} />

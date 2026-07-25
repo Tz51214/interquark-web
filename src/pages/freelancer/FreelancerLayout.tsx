@@ -7,6 +7,7 @@ import SupportWidget from "../../components/SupportWidget";
 
 const navItems = [
   { label: "Overview", to: "/freelancer" },
+  { label: "Tasks", to: "/freelancer/tasks" },
   { label: "Membership", to: "/freelancer/membership" },
   { label: "Billing history", to: "/freelancer/billing" },
   { label: "Payouts", to: "/freelancer/payouts" },

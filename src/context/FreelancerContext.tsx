@@ -35,11 +35,23 @@ export interface PaymentRecord {
   createdAt: string;
 }
 
+export interface Task {
+  id: number;
+  title: string;
+  description: string | null;
+  project: { id: string; name?: string };
+  status: "todo" | "in_progress" | "review" | "completed";
+  priority: "low" | "medium" | "high";
+  dueDate: string | null;
+  createdAt: string;
+}
+
 interface FreelancerContextValue {
   projects: Project[];
   subscription: Subscription | null;
   billingHistory: PaymentRecord[];
   payouts: Payout[];
+  tasks: Task[];
   loading: boolean;
   reload: () => Promise<void>;
 }
@@ -54,14 +66,16 @@ export function FreelancerProvider({ children }: { children: ReactNode }) {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [billingHistory, setBillingHistory] = useState<PaymentRecord[]>([]);
   const [payouts, setPayouts] = useState<Payout[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
   const reload = useCallback(async () => {
     setLoading(true);
-    const [projectsRes, subRes, payoutsRes] = await Promise.all([
+    const [projectsRes, subRes, payoutsRes, tasksRes] = await Promise.all([
       authedFetch<Project[]>("/projects/mine"),
       authedFetch<Subscription[]>("/subscriptions/mine"),
       authedFetch<Payout[]>("/payouts/mine"),
+      authedFetch<Task[]>("/tasks/mine"),
     ]);
     if (projectsRes.ok && Array.isArray(projectsRes.data)) setProjects(projectsRes.data);
     if (subRes.ok && Array.isArray(subRes.data) && subRes.data.length > 0) {
@@ -76,6 +90,7 @@ export function FreelancerProvider({ children }: { children: ReactNode }) {
       setBillingHistory([]);
     }
     if (payoutsRes.ok && Array.isArray(payoutsRes.data)) setPayouts(payoutsRes.data);
+    if (tasksRes.ok && Array.isArray(tasksRes.data)) setTasks(tasksRes.data);
     setLoading(false);
   }, [authedFetch]);
 
@@ -85,7 +100,7 @@ export function FreelancerProvider({ children }: { children: ReactNode }) {
 
   return (
     <FreelancerContext.Provider
-      value={{ projects, subscription, billingHistory, payouts, loading, reload }}
+      value={{ projects, subscription, billingHistory, payouts, tasks, loading, reload }}
     >
       {children}
     </FreelancerContext.Provider>
