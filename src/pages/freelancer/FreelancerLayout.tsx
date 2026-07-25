@@ -6,13 +6,13 @@ import FreelancerSignIn from "./FreelancerSignIn";
 import SupportWidget from "../../components/SupportWidget";
 
 const navItems = [
-  { label: "Overview", to: "/freelancer" },
-  { label: "Tasks", to: "/freelancer/tasks" },
-  { label: "Membership", to: "/freelancer/membership" },
-  { label: "Billing history", to: "/freelancer/billing" },
-  { label: "Payouts", to: "/freelancer/payouts" },
-  { label: "Projects", to: "/freelancer/projects" },
-  { label: "Notifications", to: "/freelancer/notifications" },
+  { label: "Dashboard", to: "/freelancer", icon: "🏠" },
+  { label: "Tasks", to: "/freelancer/tasks", icon: "📋" },
+  { label: "Membership", to: "/freelancer/membership", icon: "⭐" },
+  { label: "Billing history", to: "/freelancer/billing", icon: "💳" },
+  { label: "Payouts", to: "/freelancer/payouts", icon: "💰" },
+  { label: "Projects", to: "/freelancer/projects", icon: "📁" },
+  { label: "Notifications", to: "/freelancer/notifications", icon: "🔔" },
 ];
 
 export default function FreelancerLayout() {

@@ -6,11 +6,11 @@ import CustomerSignIn from "./CustomerSignIn";
 import SupportWidget from "../../components/SupportWidget";
 
 const navItems = [
-  { label: "Overview", to: "/customer" },
-  { label: "Orders", to: "/customer/orders" },
-  { label: "Invoices", to: "/customer/invoices" },
-  { label: "Projects", to: "/customer/projects" },
-  { label: "Notifications", to: "/customer/notifications" },
+  { label: "Dashboard", to: "/customer", icon: "🏠" },
+  { label: "Orders", to: "/customer/orders", icon: "📦" },
+  { label: "Invoices", to: "/customer/invoices", icon: "📄" },
+  { label: "Projects", to: "/customer/projects", icon: "📁" },
+  { label: "Notifications", to: "/customer/notifications", icon: "🔔" },
 ];
 
 export default function CustomerLayout() {

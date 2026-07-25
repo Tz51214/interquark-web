@@ -6,6 +6,7 @@ import logo from "../../assets/interquark-wordmark-navy.png";
 interface NavItem {
   label: string;
   to: string;
+  icon?: string;
 }
 
 interface PortalSidebarProps {
@@ -46,13 +47,14 @@ export default function PortalSidebar({ portalName, navItems }: PortalSidebarPro
             end
             onClick={() => setMobileOpen(false)}
             className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium ${
+              `flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium ${
                 isActive
-                  ? "bg-signal/10 text-signal"
-                  : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                  ? "border-l-2 border-signal bg-signal/10 text-signal"
+                  : "border-l-2 border-transparent text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
               }`
             }
           >
+            {item.icon && <span>{item.icon}</span>}
             {item.label}
           </NavLink>
         ))}
@@ -66,11 +68,12 @@ export default function PortalSidebar({ portalName, navItems }: PortalSidebarPro
           {dark ? "☀️ Light mode" : "🌙 Dark mode"}
         </button>
         <div className="flex items-center gap-2.5 px-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-signal text-xs font-bold text-white">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-signal text-xs font-bold text-white">
             {initial}
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-semibold">{user?.fullName || user?.email}</p>
+            <p className="text-[11px] text-slate-400">{portalName} · Verified ✓</p>
           </div>
         </div>
         <button
