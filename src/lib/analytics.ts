@@ -35,6 +35,8 @@ export function trackPurchase(params: {
   items: { name: string; sku: string; tier: string; price: number }[];
 }) {
   if (typeof window === "undefined" || !window.gtag) return;
+
+  // GA4 purchase event — powers Analytics ecommerce reports.
   window.gtag("event", "purchase", {
     transaction_id: params.transactionId,
     currency: "GBP",
@@ -46,5 +48,14 @@ export function trackPurchase(params: {
       price: item.price,
       quantity: 1,
     })),
+  });
+
+  // Google Ads conversion event — separate from the GA4 purchase event
+  // above, this is what actually tells Google Ads a conversion
+  // happened, so Performance Max can optimize spend toward it.
+  window.gtag("event", "conversion_event_purchase", {
+    value: params.value,
+    currency: "GBP",
+    transaction_id: params.transactionId,
   });
 }
