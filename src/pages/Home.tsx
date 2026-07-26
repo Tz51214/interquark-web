@@ -169,7 +169,7 @@ export default function Home() {
       <PlatformMarquee />
 
       {/* Technologies we trust */}
-      <section className="border-b border-slate-200 bg-white py-10">
+      <section className="light-section-depth border-b border-slate-200 bg-white py-10">
         <div className="mx-auto max-w-5xl px-6 text-center">
           <span className="mb-6 inline-block font-mono text-[11px] font-semibold tracking-wide text-slate-400">
             TECHNOLOGIES WE TRUST
@@ -215,7 +215,7 @@ export default function Home() {
       </section>
 
       {/* Comparison */}
-      <section className="border-b border-slate-200 bg-white">
+      <section className="light-section-depth border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
           <Reveal>
             <h2 className="mb-10 text-center font-display text-4xl font-bold text-ink">
@@ -291,7 +291,7 @@ export default function Home() {
       </section>
 
       {/* Product mockup */}
-      <section className="border-b border-slate-200 bg-white">
+      <section className="light-section-depth border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-4xl px-6 py-16 sm:py-20">
           <Reveal>
             <div className="mb-10 text-center">

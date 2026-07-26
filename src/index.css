@@ -134,6 +134,29 @@ body::before {
   transform: scaleX(1);
 }
 
+/* Subtle layered depth for light/white sections — very low opacity
+   radial gradient tints in brand colors, so sections feel layered
+   rather than flat, without ever reading as busy. */
+.light-section-depth {
+  position: relative;
+}
+
+.light-section-depth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(91,95,239,0.05), transparent 45%),
+    radial-gradient(circle at 90% 100%, rgba(52,211,153,0.05), transparent 45%);
+}
+
+.light-section-depth > * {
+  position: relative;
+  z-index: 1;
+}
+
 .card-gradient-border {
   position: relative;
 }
