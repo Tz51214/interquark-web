@@ -11,6 +11,7 @@ const navItems = [
   { label: "Invoices", to: "/customer/invoices", icon: "📄" },
   { label: "Projects", to: "/customer/projects", icon: "📁" },
   { label: "Notifications", to: "/customer/notifications", icon: "🔔" },
+  { label: "Refer a friend", to: "/customer/referrals", icon: "🎁" },
 ];
 
 export default function CustomerLayout() {
