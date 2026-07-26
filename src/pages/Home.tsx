@@ -145,7 +145,6 @@ export default function Home() {
               {[
                 "UK Registered Company",
                 "Fixed-Tier Pricing",
-                "Dedicated Project Manager",
                 "Ongoing Support",
               ].map((item) => (
                 <span key={item} className="flex items-center gap-1.5 font-body text-xs text-slate-400">
@@ -389,36 +388,6 @@ export default function Home() {
               <AnimatedCounter end={7} suffix="+" />
             </div>
             <p className="mt-1 font-body text-sm text-slate-400">Years of experience</p>
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section id="how-it-works" className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <h2 className="mb-12 text-center font-display text-4xl font-bold text-ink">
-            How it works
-          </h2>
-          <div className="flex flex-wrap items-stretch justify-center gap-2">
-            {[
-              { num: "1", title: "Discovery Call" },
-              { num: "2", title: "Proposal & Planning" },
-              { num: "3", title: "Design" },
-              { num: "4", title: "Development" },
-              { num: "5", title: "Testing" },
-              { num: "6", title: "Launch" },
-              { num: "7", title: "Support" },
-            ].map((step, i, arr) => (
-              <div key={step.num} className="flex items-center gap-2">
-                <div className="flex w-32 flex-col items-center gap-2 rounded-xl border border-slate-200 p-4 text-center">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-signal/10 font-mono text-sm font-bold text-signal">
-                    {step.num}
-                  </span>
-                  <p className="font-body text-xs font-semibold text-ink">{step.title}</p>
-                </div>
-                {i < arr.length - 1 && <span className="text-slate-300">→</span>}
-              </div>
-            ))}
           </div>
         </div>
       </section>
