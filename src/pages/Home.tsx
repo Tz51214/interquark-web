@@ -423,6 +423,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Customer portal selling point */}
+      <section className="border-b border-slate-200 bg-paper">
+        <div className="mx-auto max-w-5xl px-6 py-20">
+          <div className="mb-10 text-center">
+            <span className="mb-4 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
+              CUSTOMER PORTAL
+            </span>
+            <h2 className="mb-4 font-display text-4xl font-bold text-ink">
+              Track every project in real time
+            </h2>
+            <p className="mx-auto max-w-xl font-body text-base leading-relaxed text-slate-600">
+              No vague "weekly updates." Log in any time to see exactly where your project
+              stands.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {[
+              { icon: "📁", title: "Project progress", desc: "Real-time status on every active project." },
+              { icon: "📄", title: "Invoices", desc: "Download and track every invoice, paid or pending." },
+              { icon: "💬", title: "Direct messaging", desc: "Message your assigned developer directly." },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-xl border border-slate-200 bg-white p-6 text-center"
+              >
+                <div className="mb-2 text-2xl">{item.icon}</div>
+                <h3 className="mb-1 font-display text-sm font-semibold text-ink">{item.title}</h3>
+                <p className="font-body text-xs text-slate-500">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Freelancer network */}
       <section className="border-b border-slate-200 bg-paper">
         <div className="mx-auto max-w-7xl px-6 py-20">
