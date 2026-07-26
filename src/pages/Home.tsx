@@ -184,6 +184,32 @@ export default function Home() {
 
       <PlatformMarquee />
 
+      {/* Technologies we trust */}
+      <section className="border-b border-slate-200 bg-white py-10">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <span className="mb-6 inline-block font-mono text-[11px] font-semibold tracking-wide text-slate-400">
+            TECHNOLOGIES WE TRUST
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {[
+              "Companies House Registered",
+              "GDPR Compliant",
+              "React",
+              "NestJS",
+              "PostgreSQL",
+              "Cloudflare",
+            ].map((badge) => (
+              <span
+                key={badge}
+                className="rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 font-mono text-xs font-semibold text-slate-600"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Problem */}
       <section className="border-b border-slate-200 bg-paper">
         <div className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
