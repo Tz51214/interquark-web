@@ -127,6 +127,7 @@ const tabs = [
   "Payouts",
   "Abandoned",
   "Tasks",
+  "Discounts",
 ] as const;
 type Tab = (typeof tabs)[number];
 
@@ -217,6 +218,14 @@ export default function Admin() {
   const [abandonedCarts, setAbandonedCarts] = useState<any[]>([]);
   const [abandonedSignups, setAbandonedSignups] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
+  const [discounts, setDiscounts] = useState<any[]>([]);
+  const [newDiscount, setNewDiscount] = useState({
+    code: "",
+    type: "percentage",
+    value: "",
+    maxUses: "",
+    expiresAt: "",
+  });
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -234,7 +243,7 @@ export default function Admin() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [projectsRes, subsRes, usersRes, onlineRes, logsRes, ordersRes, invoicesRes, creditMemosRes, transactionsRes, payoutsRes, abandonedCartsRes, abandonedSignupsRes, tasksRes] = await Promise.all([
+    const [projectsRes, subsRes, usersRes, onlineRes, logsRes, ordersRes, invoicesRes, creditMemosRes, transactionsRes, payoutsRes, abandonedCartsRes, abandonedSignupsRes, tasksRes, discountsRes] = await Promise.all([
       authedFetch<Project[]>("/projects"),
       authedFetch<Subscription[]>("/subscriptions"),
       authedFetch<PlatformUser[]>("/users"),
@@ -248,6 +257,7 @@ export default function Admin() {
       authedFetch<any[]>("/reminders/abandoned-carts"),
       authedFetch<any[]>("/reminders/abandoned-signups"),
       authedFetch<any[]>("/tasks"),
+      authedFetch<any[]>("/discounts"),
     ]);
     if (projectsRes.ok && Array.isArray(projectsRes.data)) setProjects(projectsRes.data);
     if (payoutsRes.ok && Array.isArray(payoutsRes.data)) setPayouts(payoutsRes.data);
@@ -262,6 +272,7 @@ export default function Admin() {
     if (abandonedCartsRes.ok && Array.isArray(abandonedCartsRes.data)) setAbandonedCarts(abandonedCartsRes.data);
     if (abandonedSignupsRes.ok && Array.isArray(abandonedSignupsRes.data)) setAbandonedSignups(abandonedSignupsRes.data);
     if (tasksRes.ok && Array.isArray(tasksRes.data)) setTasks(tasksRes.data);
+    if (discountsRes.ok && Array.isArray(discountsRes.data)) setDiscounts(discountsRes.data);
     setLoading(false);
   }, [authedFetch]);
 
@@ -375,6 +386,43 @@ export default function Admin() {
       load();
     } else {
       showToast("Could not create task", "error");
+    }
+  }
+
+  async function createDiscount() {
+    if (!newDiscount.code || !newDiscount.value) {
+      showToast("Please enter a code and value", "error");
+      return;
+    }
+    const { ok } = await authedFetch("/discounts", {
+      method: "POST",
+      body: JSON.stringify({
+        code: newDiscount.code,
+        type: newDiscount.type,
+        value: Number(newDiscount.value),
+        maxUses: newDiscount.maxUses ? Number(newDiscount.maxUses) : undefined,
+        expiresAt: newDiscount.expiresAt || undefined,
+      }),
+    });
+    if (ok) {
+      showToast("Discount code created", "success");
+      setNewDiscount({ code: "", type: "percentage", value: "", maxUses: "", expiresAt: "" });
+      load();
+    } else {
+      showToast("Could not create discount code", "error");
+    }
+  }
+
+  async function toggleDiscountActive(id: string) {
+    const { ok } = await authedFetch(`/discounts/${id}/toggle`, { method: "PATCH" });
+    if (ok) load();
+  }
+
+  async function deleteDiscount(id: string) {
+    const { ok } = await authedFetch(`/discounts/${id}`, { method: "DELETE" });
+    if (ok) {
+      showToast("Discount code deleted", "success");
+      load();
     }
   }
 
@@ -1926,6 +1974,103 @@ export default function Admin() {
                         >
                           {t.status.replace("_", " ")}
                         </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+            {tab === "Discounts" && (
+              <div>
+                <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+                  <h3 className="mb-3 text-sm font-semibold">Create a discount code</h3>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <input
+                      placeholder="Code (e.g. SAVE10)"
+                      value={newDiscount.code}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, code: e.target.value.toUpperCase() })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                    <select
+                      value={newDiscount.type}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, type: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    >
+                      <option value="percentage">Percentage (%)</option>
+                      <option value="fixed">Fixed amount (£)</option>
+                    </select>
+                    <input
+                      type="number"
+                      placeholder={newDiscount.type === "percentage" ? "Value (e.g. 10 for 10%)" : "Amount (£)"}
+                      value={newDiscount.value}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, value: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Max uses (optional)"
+                      value={newDiscount.maxUses}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, maxUses: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                    <input
+                      type="date"
+                      value={newDiscount.expiresAt}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, expiresAt: e.target.value })}
+                      className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+                    />
+                  </div>
+                  <button
+                    onClick={createDiscount}
+                    className="mt-3 rounded-lg bg-signal px-4 py-2 text-sm font-semibold text-white hover:bg-signal-dark"
+                  >
+                    Create code
+                  </button>
+                </div>
+
+                <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
+                  All discount codes
+                </h3>
+                {discounts.length === 0 ? (
+                  <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
+                    No discount codes yet.
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    {discounts.map((d: any) => (
+                      <div
+                        key={d.id}
+                        className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
+                      >
+                        <div>
+                          <b className="font-mono text-sm">{d.code}</b>
+                          <p className="text-xs text-slate-400">
+                            {d.type === "percentage" ? `${d.value}% off` : `£${d.value} off`} ·{" "}
+                            {d.usedCount} used{d.maxUses ? ` / ${d.maxUses} max` : ""}
+                            {d.expiresAt ? ` · expires ${new Date(d.expiresAt).toLocaleDateString()}` : ""}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                              d.active ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
+                            }`}
+                          >
+                            {d.active ? "active" : "inactive"}
+                          </span>
+                          <button
+                            onClick={() => toggleDiscountActive(d.id)}
+                            className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                          >
+                            {d.active ? "Deactivate" : "Activate"}
+                          </button>
+                          <button
+                            onClick={() => deleteDiscount(d.id)}
+                            className="rounded-lg border border-red-300 px-3 py-1.5 text-xs font-semibold text-red-500 hover:bg-red-50"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
