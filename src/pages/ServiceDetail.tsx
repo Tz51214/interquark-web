@@ -112,6 +112,66 @@ export default function ServiceDetail() {
           {item.desc}
         </p>
 
+        {item.id === "mig-01" && (
+          <div className="mb-12 max-w-2xl">
+            <h2 className="mb-4 font-display text-lg font-semibold text-ink">
+              Gateways we can integrate
+            </h2>
+            <p className="mb-4 font-body text-sm text-slate-500">
+              We work with any well-documented payment API. This isn't a list of every gateway
+              we've personally integrated before — it's the breadth we can cover.
+            </p>
+            <div className="flex flex-col gap-4">
+              {[
+                {
+                  category: "Global gateways",
+                  items: ["Stripe", "PayPal", "Adyen", "Square", "Checkout.com", "Worldpay", "Braintree", "Authorize.net"],
+                },
+                {
+                  category: "UK payment providers",
+                  items: ["Revolut Business", "GoCardless", "SagePay (Opayo)", "Barclaycard Payments", "Lloyds Cardnet", "Elavon", "Trust Payments"],
+                },
+                {
+                  category: "Digital wallets",
+                  items: ["Apple Pay", "Google Pay", "Samsung Wallet", "PayPal Wallet"],
+                },
+                {
+                  category: "Buy now, pay later",
+                  items: ["Klarna", "Clearpay", "PayPal Pay in 3", "Affirm"],
+                },
+                {
+                  category: "Cryptocurrency",
+                  items: ["Coinbase Commerce", "BitPay", "NOWPayments", "CoinGate"],
+                },
+                {
+                  category: "Marketplace & platform payments",
+                  items: ["Stripe Connect", "PayPal Commerce Platform", "Mangopay", "Adyen for Platforms"],
+                },
+                {
+                  category: "Subscription & recurring billing",
+                  items: ["Stripe Billing", "Chargebee", "Paddle", "Recurly"],
+                },
+              ].map((group) => (
+                <div key={group.category}>
+                  <h3 className="mb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    {group.category}
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {group.items.map((g) => (
+                      <span
+                        key={g}
+                        className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-[11px] text-slate-600"
+                      >
+                        {g}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Mini process strip */}
         <div className="mb-12 grid grid-cols-1 gap-3 sm:grid-cols-3">
           {[
