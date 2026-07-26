@@ -23,6 +23,10 @@ export default function Checkout() {
 
   const [payingPaypal, setPayingPaypal] = useState(false);
   const [placeNote, setPlaceNote] = useState<{ text: string; error?: boolean } | null>(null);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discount, setDiscount] = useState<{ code: string; discountAmount: number; newTotal: number } | null>(null);
+  const [discountNote, setDiscountNote] = useState<{ text: string; error?: boolean } | null>(null);
+  const [applyingDiscount, setApplyingDiscount] = useState(false);
 
   const [signupName, setSignupName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
@@ -65,12 +69,41 @@ export default function Checkout() {
     setAuthNote(result.ok ? "" : result.message || "Account created — please sign in.");
   }
 
+  async function applyDiscount() {
+    if (!discountCode.trim() || !token) return;
+    setApplyingDiscount(true);
+    setDiscountNote(null);
+    const res = await apiFetch<{
+      code?: string;
+      discountAmount?: number;
+      newTotal?: number;
+      message?: string;
+    }>("/discounts/validate", {
+      method: "POST",
+      token,
+      body: JSON.stringify({ code: discountCode, orderTotal: total }),
+    });
+    setApplyingDiscount(false);
+    if (res.ok && res.data.discountAmount !== undefined) {
+      setDiscount({
+        code: res.data.code!,
+        discountAmount: res.data.discountAmount,
+        newTotal: res.data.newTotal!,
+      });
+      setDiscountNote({ text: `Code "${res.data.code}" applied!` });
+    } else {
+      setDiscount(null);
+      setDiscountNote({ text: res.data.message || "Invalid discount code.", error: true });
+    }
+  }
+
   async function createOrder() {
     const orderRes = await apiFetch<{ id?: number; message?: string }>("/orders", {
       method: "POST",
       token,
       body: JSON.stringify({
         items: items.map((c) => ({ sku: c.sku, name: c.name, tier: c.tier, price: c.price })),
+        discountCode: discount ? discount.code : undefined,
       }),
     });
     if (!orderRes.ok) {
@@ -342,10 +375,44 @@ export default function Checkout() {
                   <span>{t("checkout.subtotal")}</span>
                   <span>{money(total)}</span>
                 </div>
+
+                {discount && (
+                  <div className="flex justify-between py-1.5 text-[13.5px] text-mint">
+                    <span>Discount ({discount.code})</span>
+                    <span>-{money(discount.discountAmount)}</span>
+                  </div>
+                )}
+
                 <div className="mt-2 flex justify-between border-t border-slate-200 pt-3.5 text-lg font-bold">
                   <span>{t("checkout.total")}</span>
-                  <span className="font-mono text-signal">{money(total)}</span>
+                  <span className="font-mono text-signal">
+                    {money(discount ? discount.newTotal : total)}
+                  </span>
                 </div>
+
+                <div className="mt-4 flex gap-2">
+                  <input
+                    placeholder="Discount code"
+                    value={discountCode}
+                    onChange={(e) => setDiscountCode(e.target.value)}
+                    className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-signal focus:outline-none"
+                  />
+                  <button
+                    onClick={applyDiscount}
+                    disabled={applyingDiscount || !discountCode.trim()}
+                    className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 hover:border-signal hover:text-signal disabled:opacity-60"
+                  >
+                    Apply
+                  </button>
+                </div>
+                {discountNote && (
+                  <p
+                    className={`mt-2 text-xs ${discountNote.error ? "text-red-500" : "text-mint"}`}
+                  >
+                    {discountNote.text}
+                  </p>
+                )}
+
                 <button
                   onClick={placeOrderWithPaypal}
                   disabled={payingPaypal}
