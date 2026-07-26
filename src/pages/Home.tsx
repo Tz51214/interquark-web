@@ -105,8 +105,11 @@ export default function Home() {
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
               {[
                 "UK Registered Company",
+                "GDPR Compliant",
+                "Secure Development",
+                "NDA Available",
                 "Fixed-Tier Pricing",
-                "Ongoing Support",
+                "Post-launch Support",
               ].map((item) => (
                 <span key={item} className="flex items-center gap-1.5 font-body text-xs text-slate-400">
                   <span className="text-mint">✓</span>
