@@ -19,6 +19,7 @@ export default function Navbar({ onCartClick, onJoinClick }: NavbarProps) {
 
   const navLinks = [
     { href: "/services", label: t("nav.services"), id: "webdev" },
+    { href: "/showcase", label: "Showcase", id: "showcase" },
     { href: "/contact", label: t("nav.contact"), id: "contact" },
   ];
   const activeSection = useScrollSpy(navLinks.map((l) => l.id));
