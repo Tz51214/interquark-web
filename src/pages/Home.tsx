@@ -68,7 +68,15 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
-  const [contact, setContact] = useState({ name: "", email: "", message: "" });
+  const [contact, setContact] = useState({
+    name: "",
+    email: "",
+    company: "",
+    projectType: "",
+    budget: "",
+    timeline: "",
+    message: "",
+  });
 
   async function submitContact() {
     if (!contact.name || !contact.email || !contact.message) return;
@@ -525,6 +533,48 @@ export default function Home() {
                 onChange={(e) => setContact({ ...contact, email: e.target.value })}
                 className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm focus:border-signal focus:outline-none"
               />
+              <input
+                placeholder="Company (optional)"
+                value={contact.company}
+                onChange={(e) => setContact({ ...contact, company: e.target.value })}
+                className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm focus:border-signal focus:outline-none"
+              />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <select
+                  value={contact.projectType}
+                  onChange={(e) => setContact({ ...contact, projectType: e.target.value })}
+                  className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm text-slate-500 focus:border-signal focus:outline-none"
+                >
+                  <option value="">Project type</option>
+                  <option value="Website / Web app">Website / Web app</option>
+                  <option value="AI / Automation">AI / Automation</option>
+                  <option value="SaaS platform">SaaS platform</option>
+                  <option value="Ecommerce">Ecommerce</option>
+                  <option value="Other">Other</option>
+                </select>
+                <select
+                  value={contact.budget}
+                  onChange={(e) => setContact({ ...contact, budget: e.target.value })}
+                  className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm text-slate-500 focus:border-signal focus:outline-none"
+                >
+                  <option value="">Budget</option>
+                  <option value="Under £2,000">Under £2,000</option>
+                  <option value="£2,000 – £5,000">£2,000 – £5,000</option>
+                  <option value="£5,000 – £15,000">£5,000 – £15,000</option>
+                  <option value="£15,000+">£15,000+</option>
+                </select>
+                <select
+                  value={contact.timeline}
+                  onChange={(e) => setContact({ ...contact, timeline: e.target.value })}
+                  className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm text-slate-500 focus:border-signal focus:outline-none"
+                >
+                  <option value="">Timeline</option>
+                  <option value="ASAP">ASAP</option>
+                  <option value="1–4 weeks">1–4 weeks</option>
+                  <option value="1–3 months">1–3 months</option>
+                  <option value="Just exploring">Just exploring</option>
+                </select>
+              </div>
               <textarea
                 placeholder={t("contact.messagePlaceholder")}
                 rows={4}
