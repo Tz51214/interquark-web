@@ -19,6 +19,7 @@ import FreelancerPayouts from "./pages/freelancer/Payouts";
 import FreelancerProjects from "./pages/freelancer/FreelancerProjects";
 import FreelancerNotifications from "./pages/freelancer/Notifications";
 import FreelancerTasks from "./pages/freelancer/Tasks";
+import FreelancerReferrals from "./pages/freelancer/Referrals";
 import Subscribe from "./pages/Subscribe";
 import Admin from "./pages/Admin";
 import ServiceDetail from "./pages/ServiceDetail";
@@ -69,6 +70,7 @@ function App() {
                 <Route path="projects" element={<FreelancerProjects />} />
                 <Route path="notifications" element={<FreelancerNotifications />} />
                 <Route path="tasks" element={<FreelancerTasks />} />
+                <Route path="referrals" element={<FreelancerReferrals />} />
               </Route>
               <Route path="/subscribe" element={<Subscribe />} />
               <Route path="/admin" element={<Admin />} />

@@ -13,6 +13,7 @@ const navItems = [
   { label: "Payouts", to: "/freelancer/payouts", icon: "💰" },
   { label: "Projects", to: "/freelancer/projects", icon: "📁" },
   { label: "Notifications", to: "/freelancer/notifications", icon: "🔔" },
+  { label: "Refer a friend", to: "/freelancer/referrals", icon: "🎁" },
 ];
 
 export default function FreelancerLayout() {
