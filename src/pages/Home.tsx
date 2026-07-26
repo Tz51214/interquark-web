@@ -7,10 +7,8 @@ import PlatformMarquee from "../components/PlatformMarquee";
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
 import CartDrawer from "../components/CartDrawer";
-import ServiceCard from "../components/ServiceCard";
 import JoinModal from "../components/JoinModal";
 import Button from "../components/ui/Button";
-import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import AnimatedCounter from "../components/AnimatedCounter";
 import MagneticButton from "../components/MagneticButton";
 import RevealStagger from "../components/RevealStagger";
@@ -19,19 +17,6 @@ import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import SupportWidget from "../components/SupportWidget";
 const HeroSphere = lazy(() => import("../components/HeroSphere"));
-
-const sectionOrder: CatalogSection[] = [
-  "webdev",
-  "ai",
-  "software",
-  "security",
-  "cloud",
-  "migrations",
-  "growth",
-  "saas",
-  "maintenance",
-  "retainer",
-];
 
 const platforms = [
   "Magento",
@@ -131,7 +116,7 @@ export default function Home() {
                 </a>
               </MagneticButton>
               <MagneticButton>
-                <a href="#webdev">
+                <a href="/services">
                   <Button
                     variant="secondary"
                     className="!border-slate-600 !bg-transparent !text-white hover:!border-signal hover:!text-signal"
@@ -500,20 +485,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Catalog sections */}
-      {sectionOrder.map((section) => (
-        <section key={section} id={section} className="mx-auto max-w-7xl px-6 py-10">
-          <h2 className="mb-8 font-display text-3xl font-bold text-ink">
-            {sectionTitles[section]}
-          </h2>
-          <RevealStagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {catalog[section].map((item) => (
-              <ServiceCard key={item.id} item={item} />
-            ))}
-          </RevealStagger>
-        </section>
-      ))}
-
       {/* Contact */}
       <section id="contact" className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-2xl px-6 py-20">
@@ -807,7 +778,7 @@ export default function Home() {
             <p className="mb-7 font-body text-sm text-slate-300">
               Browse the full catalog and compare pricing across every tier.
             </p>
-            <a href="#webdev">
+            <a href="/services">
               <Button>{t("hero.browseServices")}</Button>
             </a>
           </div>

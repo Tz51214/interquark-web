@@ -11,10 +11,10 @@ const categoriesA = [
 ];
 
 const categoriesB = [
-  { label: "Cybersecurity", href: "/#security" },
-  { label: "Cloud & Migrations", href: "/#cloud" },
-  { label: "Website Maintenance", href: "/#maintenance" },
-  { label: "Retainers", href: "/#retainer" },
+  { label: "Cybersecurity", href: "/services#security" },
+  { label: "Cloud & Migrations", href: "/services#cloud" },
+  { label: "Website Maintenance", href: "/services#maintenance" },
+  { label: "Retainers", href: "/services#retainer" },
 ];
 
 export default function SiteFooter() {
