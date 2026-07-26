@@ -13,7 +13,6 @@ import AnimatedCounter from "../components/AnimatedCounter";
 import MagneticButton from "../components/MagneticButton";
 import RevealStagger from "../components/RevealStagger";
 import BrowserMockup, { AnimatedBarChart } from "../components/BrowserMockup";
-import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import SupportWidget from "../components/SupportWidget";
 const HeroSphere = lazy(() => import("../components/HeroSphere"));
@@ -50,29 +49,6 @@ export default function Home() {
   }, [showNewsletter]);
   const [cartOpen, setCartOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
-  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle",
-  );
-  const [contact, setContact] = useState({
-    name: "",
-    email: "",
-    company: "",
-    projectType: "",
-    budget: "",
-    timeline: "",
-    message: "",
-  });
-
-  async function submitContact() {
-    if (!contact.name || !contact.email || !contact.message) return;
-    setContactStatus("sending");
-    const { ok } = await apiFetch("/contact", {
-      method: "POST",
-      body: JSON.stringify(contact),
-    }).catch(() => ({ ok: false }));
-    setContactStatus(ok ? "sent" : "error");
-  }
-
   return (
     <div className="min-h-screen bg-paper text-ink">
       <Navbar onCartClick={() => setCartOpen(true)} onJoinClick={() => setJoinOpen(true)} />
@@ -111,7 +87,7 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <MagneticButton>
-                <a href="#contact">
+                <a href="/contact">
                   <Button>{t("hero.getInTouch")}</Button>
                 </a>
               </MagneticButton>
@@ -482,95 +458,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section id="contact" className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-2xl px-6 py-20">
-          <h2 className="mb-2 font-display text-3xl font-bold text-ink">{t("contact.title")}</h2>
-          <p className="mb-8 font-body text-sm text-slate-500">
-            {t("contact.subtitle")}
-          </p>
-
-          {contactStatus === "sent" ? (
-            <div className="rounded-xl border border-mint/30 bg-mint/10 p-6 text-center font-body text-mint">
-              {t("contact.sent")}
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4">
-              <input
-                placeholder={t("contact.namePlaceholder")}
-                value={contact.name}
-                onChange={(e) => setContact({ ...contact, name: e.target.value })}
-                className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm focus:border-signal focus:outline-none"
-              />
-              <input
-                type="email"
-                placeholder={t("contact.emailPlaceholder")}
-                value={contact.email}
-                onChange={(e) => setContact({ ...contact, email: e.target.value })}
-                className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm focus:border-signal focus:outline-none"
-              />
-              <input
-                placeholder="Company (optional)"
-                value={contact.company}
-                onChange={(e) => setContact({ ...contact, company: e.target.value })}
-                className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm focus:border-signal focus:outline-none"
-              />
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <select
-                  value={contact.projectType}
-                  onChange={(e) => setContact({ ...contact, projectType: e.target.value })}
-                  className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm text-slate-500 focus:border-signal focus:outline-none"
-                >
-                  <option value="">Project type</option>
-                  <option value="Website / Web app">Website / Web app</option>
-                  <option value="AI / Automation">AI / Automation</option>
-                  <option value="SaaS platform">SaaS platform</option>
-                  <option value="Ecommerce">Ecommerce</option>
-                  <option value="Other">Other</option>
-                </select>
-                <select
-                  value={contact.budget}
-                  onChange={(e) => setContact({ ...contact, budget: e.target.value })}
-                  className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm text-slate-500 focus:border-signal focus:outline-none"
-                >
-                  <option value="">Budget</option>
-                  <option value="Under £2,000">Under £2,000</option>
-                  <option value="£2,000 – £5,000">£2,000 – £5,000</option>
-                  <option value="£5,000 – £15,000">£5,000 – £15,000</option>
-                  <option value="£15,000+">£15,000+</option>
-                </select>
-                <select
-                  value={contact.timeline}
-                  onChange={(e) => setContact({ ...contact, timeline: e.target.value })}
-                  className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm text-slate-500 focus:border-signal focus:outline-none"
-                >
-                  <option value="">Timeline</option>
-                  <option value="ASAP">ASAP</option>
-                  <option value="1–4 weeks">1–4 weeks</option>
-                  <option value="1–3 months">1–3 months</option>
-                  <option value="Just exploring">Just exploring</option>
-                </select>
-              </div>
-              <textarea
-                placeholder={t("contact.messagePlaceholder")}
-                rows={4}
-                value={contact.message}
-                onChange={(e) => setContact({ ...contact, message: e.target.value })}
-                className="rounded-lg border border-slate-300 px-4 py-3 font-body text-sm focus:border-signal focus:outline-none"
-              />
-              <Button onClick={submitContact} disabled={contactStatus === "sending"}>
-                {contactStatus === "sending" ? t("contact.sending") : t("contact.send")}
-              </Button>
-              {contactStatus === "error" && (
-                <p className="font-body text-sm text-red-500">
-                  {t("contact.error")}
-                </p>
-              )}
-            </div>
-          )}
         </div>
       </section>
 

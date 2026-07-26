@@ -131,7 +131,7 @@ export default function PillarPage({
           <h2 className="mb-5 font-display text-2xl font-bold text-ink">
             Ready to talk about your project?
           </h2>
-          <a href="/#contact">
+          <a href="/contact">
             <Button>Get in touch</Button>
           </a>
           <p className="mt-4 font-body text-sm text-slate-500">

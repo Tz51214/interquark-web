@@ -4,6 +4,7 @@ import { CartProvider } from "./context/CartContext";
 import { ToastProvider } from "./context/ToastContext";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
+import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import CustomerLayout from "./pages/customer/CustomerLayout";
 import CustomerOverview from "./pages/customer/Overview";
@@ -55,6 +56,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/customer" element={<CustomerLayout />}>
                 <Route index element={<CustomerOverview />} />
