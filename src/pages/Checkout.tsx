@@ -173,7 +173,11 @@ export default function Checkout() {
           {t("checkout.subtitle")}
         </p>
 
-        {items.length === 0 ? (
+        {payingPaypal ? (
+          <div className="rounded-xl border border-slate-200 bg-white p-16 text-center text-slate-400">
+            <p>Redirecting you to PayPal to complete your payment...</p>
+          </div>
+        ) : items.length === 0 ? (
           <div className="rounded-xl border border-slate-200 bg-white p-16 text-center text-slate-400">
             <p className="mb-2">{t("checkout.emptyCart")}</p>
             <Link to="/" className="font-semibold text-signal">
