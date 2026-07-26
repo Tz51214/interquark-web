@@ -126,20 +126,33 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <MagneticButton>
-                <a href="#webdev">
-                  <Button>{t("hero.browseServices")}</Button>
+                <a href="#contact">
+                  <Button>{t("hero.getInTouch")}</Button>
                 </a>
               </MagneticButton>
               <MagneticButton>
-                <a href="#contact">
+                <a href="#webdev">
                   <Button
                     variant="secondary"
                     className="!border-slate-600 !bg-transparent !text-white hover:!border-signal hover:!text-signal"
                   >
-                    {t("hero.getInTouch")}
+                    {t("hero.browseServices")}
                   </Button>
                 </a>
               </MagneticButton>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+              {[
+                "UK Registered Company",
+                "Fixed-Tier Pricing",
+                "Dedicated Project Manager",
+                "Ongoing Support",
+              ].map((item) => (
+                <span key={item} className="flex items-center gap-1.5 font-body text-xs text-slate-400">
+                  <span className="text-mint">✓</span>
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
 
