@@ -112,6 +112,7 @@ export default function JoinModal({ open, onClose }: JoinModalProps) {
         password: joinPassword,
         role: "freelancer",
         tier: selectedTier,
+        referralCode: localStorage.getItem("interquark_referral") || undefined,
       }),
     });
 

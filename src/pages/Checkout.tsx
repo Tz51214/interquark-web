@@ -57,6 +57,7 @@ export default function Checkout() {
         email: signupEmail,
         password: signupPassword,
         role: "client",
+        referralCode: localStorage.getItem("interquark_referral") || undefined,
       }),
     });
     if (!ok) {
