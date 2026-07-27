@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import SiteFooter from "../components/layout/SiteFooter";
@@ -6,15 +6,80 @@ import SupportWidget from "../components/SupportWidget";
 import CartDrawer from "../components/CartDrawer";
 import JoinModal from "../components/JoinModal";
 import NewsletterModal from "../components/NewsletterModal";
+import Button from "../components/ui/Button";
 import PageMeta from "../components/PageMeta";
 import BrowserMockup, { AnimatedBarChart } from "../components/BrowserMockup";
 import Reveal from "../components/Reveal";
 
-function Badge({ children }: { children: React.ReactNode }) {
+const accentColors: Record<string, { text: string; bg: string; border: string }> = {
+  signal: { text: "text-signal", bg: "bg-signal/10", border: "border-signal/30" },
+  mint: { text: "text-mint", bg: "bg-mint/10", border: "border-mint/30" },
+  amber: { text: "text-amber-600", bg: "bg-amber-100", border: "border-amber-300" },
+  purple: { text: "text-purple-600", bg: "bg-purple-100", border: "border-purple-300" },
+  blue: { text: "text-blue-600", bg: "bg-blue-100", border: "border-blue-300" },
+  teal: { text: "text-teal-600", bg: "bg-teal-100", border: "border-teal-300" },
+  green: { text: "text-green-600", bg: "bg-green-100", border: "border-green-300" },
+  orange: { text: "text-orange-600", bg: "bg-orange-100", border: "border-orange-300" },
+  rose: { text: "text-rose-600", bg: "bg-rose-100", border: "border-rose-300" },
+  yellow: { text: "text-yellow-700", bg: "bg-yellow-100", border: "border-yellow-300" },
+};
+
+function ShowcaseCard({
+  title,
+  sentence,
+  chips,
+  color,
+  ctaLink,
+  ctaText,
+  children,
+}: {
+  title: string;
+  sentence: string;
+  chips: string[];
+  color: keyof typeof accentColors;
+  ctaLink: string;
+  ctaText: string;
+  children: ReactNode;
+}) {
+  const c = accentColors[color];
   return (
-    <span className="mb-3 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
+    <Reveal>
+      <h2 className="mb-2 font-display text-2xl font-bold text-ink">{title}</h2>
+      <p className="mb-3 max-w-xl font-body text-sm text-slate-500">{sentence}</p>
+      <div className="mb-5 flex flex-wrap gap-1.5">
+        {chips.map((chip) => (
+          <span
+            key={chip}
+            className={`rounded-full border ${c.border} ${c.bg} px-2.5 py-1 font-mono text-[10px] font-semibold ${c.text}`}
+          >
+            {chip}
+          </span>
+        ))}
+      </div>
       {children}
-    </span>
+      {ctaLink && (
+        <Link
+          to={ctaLink}
+          className={`mt-4 inline-block text-sm font-semibold ${c.text} hover:underline`}
+        >
+          {ctaText} →
+        </Link>
+      )}
+    </Reveal>
+  );
+}
+
+function MidCta() {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center">
+      <h3 className="mb-2 font-display text-xl font-bold text-ink">
+        Ready to build something similar?
+      </h3>
+      <p className="mb-5 font-body text-sm text-slate-500">Let's discuss your project.</p>
+      <Link to="/contact">
+        <Button>Book a consultation</Button>
+      </Link>
+    </div>
   );
 }
 
@@ -28,31 +93,38 @@ export default function Showcase() {
       <PageMeta
         path="/showcase"
         title="Showcase | Interquark"
-        description="Illustrative examples of what our flagship services look like when delivered — Magento builds, SaaS platforms, custom web applications, and AI automation."
+        description="Realistic examples of enterprise software we can build for your business — across ecommerce, SaaS, healthcare, logistics, and more."
       />
       <Navbar onCartClick={() => setCartOpen(true)} onJoinClick={() => setJoinOpen(true)} />
 
       <section className="border-b border-slate-200 bg-white py-14 text-center">
         <div className="mx-auto max-w-3xl px-6">
-          <h1 className="mb-3 font-display text-4xl font-bold text-ink">Showcase</h1>
-          <p className="font-body text-base text-slate-500">
-            Illustrative examples of what these builds look like when delivered — not real
-            client screenshots.
+          <h1 className="mb-3 font-display text-4xl font-bold text-ink">
+            Realistic examples of enterprise software we can build
+          </h1>
+          <p className="mb-4 font-body text-base text-slate-500">
+            Custom software concepts across multiple industries. Illustrative examples of what
+            these builds look like when delivered — not real client screenshots.
           </p>
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-1.5 font-mono text-[11px] text-slate-400">
+            <span>✓ Scalable architecture</span>
+            <span>✓ Security-first development</span>
+            <span>✓ Cloud-ready deployments</span>
+            <span>✓ UK-based project management</span>
+          </div>
         </div>
       </section>
 
-      <div className="mx-auto flex max-w-5xl flex-col gap-20 px-6 py-16">
-        {/* Magento build — realistic storefront */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">
-            Magento 2 / Adobe Commerce Build
-          </h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            A full enterprise storefront — custom theme, multiple payment gateways, and cloud
-            infrastructure.
-          </p>
+      <div className="mx-auto flex max-w-5xl flex-col gap-16 px-6 py-16">
+        {/* Magento build */}
+        <ShowcaseCard
+          title="Magento 2 / Adobe Commerce Build"
+          sentence="Turn browsers into buyers with a fast, secure storefront built to handle real sales volume."
+          chips={["🛒 Multi-gateway checkout", "⚡ Performance-tuned", "🔒 PCI-ready"]}
+          color="yellow"
+          ctaLink="/services/mg-01"
+          ctaText="Build this for my business"
+        >
           <BrowserMockup url="yourstore.example.com">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -88,23 +160,17 @@ export default function Showcase() {
               </div>
             </div>
           </BrowserMockup>
-          <Link
-            to="/services/mg-01"
-            className="mt-4 inline-block text-sm font-semibold text-signal hover:underline"
-          >
-            View this service →
-          </Link>
-        </Reveal>
+        </ShowcaseCard>
 
-        {/* SaaS platform — realistic dashboard */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">
-            Multi-Tenant SaaS / ERP Platform
-          </h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            RBAC, ledger and invoicing, admin dashboard, and full API layer.
-          </p>
+        {/* SaaS platform */}
+        <ShowcaseCard
+          title="Multi-Tenant SaaS / ERP Platform"
+          sentence="Launch a subscription platform with billing, role-based access, and multi-tenant data isolation built in from day one."
+          chips={["🔑 RBAC", "💳 Billing built-in", "🏢 Multi-tenant"]}
+          color="blue"
+          ctaLink="/services/saas-01"
+          ctaText="Learn how we build this"
+        >
           <BrowserMockup url="app.yourplatform.example.com">
             <div className="flex gap-4">
               <div className="flex w-20 flex-shrink-0 flex-col gap-2 border-r border-slate-100 pr-3">
@@ -147,23 +213,17 @@ export default function Showcase() {
               </div>
             </div>
           </BrowserMockup>
-          <Link
-            to="/services/saas-01"
-            className="mt-4 inline-block text-sm font-semibold text-signal hover:underline"
-          >
-            View this service →
-          </Link>
-        </Reveal>
+        </ShowcaseCard>
 
-        {/* Full-stack web app — realistic app layout */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">
-            Full-Stack Web Application
-          </h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            A custom-built application from the ground up — not a template, not a page builder.
-          </p>
+        {/* Full-stack web app */}
+        <ShowcaseCard
+          title="Full-Stack Web Application"
+          sentence="A custom-built application designed around your exact workflow — not a template, not a page builder."
+          chips={["🧩 Fully custom", "📈 Built to scale", "🔗 API-first"]}
+          color="signal"
+          ctaLink="/services/sw-01"
+          ctaText="Request a similar solution"
+        >
           <BrowserMockup url="yourapp.example.com">
             <div className="flex gap-3">
               <div className="flex w-28 flex-shrink-0 flex-col gap-1.5">
@@ -201,24 +261,17 @@ export default function Showcase() {
               </div>
             </div>
           </BrowserMockup>
-          <Link
-            to="/services/sw-01"
-            className="mt-4 inline-block text-sm font-semibold text-signal hover:underline"
-          >
-            View this service →
-          </Link>
-        </Reveal>
+        </ShowcaseCard>
 
-        {/* AI automation — realistic agent/chat interface */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">
-            Store Automation & AI Agents
-          </h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Automate repetitive operations — inventory alerts, order triage, customer
-            follow-ups.
-          </p>
+        {/* AI automation */}
+        <ShowcaseCard
+          title="Store Automation & AI Agents"
+          sentence="Cut manual busywork with agents that triage orders, flag low stock, and follow up with customers automatically."
+          chips={["🤖 AI agents", "⏱ Real-time triggers", "📩 Automated follow-ups"]}
+          color="purple"
+          ctaLink="/services/ai-02"
+          ctaText="Build this for my business"
+        >
           <BrowserMockup url="automation.example.com">
             <div className="flex flex-col gap-2.5">
               {[
@@ -245,21 +298,19 @@ export default function Showcase() {
               ))}
             </div>
           </BrowserMockup>
-          <Link
-            to="/services/ai-02"
-            className="mt-4 inline-block text-sm font-semibold text-signal hover:underline"
-          >
-            View this service →
-          </Link>
-        </Reveal>
+        </ShowcaseCard>
+
+        <MidCta />
 
         {/* Healthcare dashboard */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Healthcare Dashboard</h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Patient scheduling, records access, and care team coordination.
-          </p>
+        <ShowcaseCard
+          title="Healthcare Dashboard"
+          sentence="Give care teams one place to manage scheduling, records, and coordination — securely and reliably."
+          chips={["🏥 HIPAA-aware design", "📅 Scheduling", "💬 Care team messaging"]}
+          color="green"
+          ctaLink=""
+          ctaText=""
+        >
           <BrowserMockup url="portal.healthexample.com">
             <div className="grid grid-cols-2 gap-3">
               {[
@@ -278,21 +329,23 @@ export default function Showcase() {
                   key={r}
                   className="flex items-center gap-2 rounded-md bg-slate-50 px-2.5 py-1.5 font-mono text-[10px] text-slate-500"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                   {r}
                 </div>
               ))}
             </div>
           </BrowserMockup>
-        </Reveal>
+        </ShowcaseCard>
 
         {/* E-commerce admin */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">E-commerce Admin</h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Order management, inventory, and fulfillment at a glance.
-          </p>
+        <ShowcaseCard
+          title="E-commerce Admin"
+          sentence="See orders, inventory, and fulfillment status in one dashboard instead of five different tabs."
+          chips={["📊 Sales analytics", "📦 Inventory sync", "🚚 Fulfillment tracking"]}
+          color="rose"
+          ctaLink=""
+          ctaText=""
+        >
           <BrowserMockup url="admin.storeexample.com">
             <AnimatedBarChart
               data={[
@@ -308,15 +361,17 @@ export default function Showcase() {
               <span className="rounded-full bg-mint/10 px-2 py-0.5 text-mint">Fulfilled</span>
             </div>
           </BrowserMockup>
-        </Reveal>
+        </ShowcaseCard>
 
         {/* Logistics tracking */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Logistics Tracking</h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Real-time shipment status across a delivery fleet.
-          </p>
+        <ShowcaseCard
+          title="Logistics Tracking"
+          sentence="Reduce delivery delays with real-time fleet visibility, automated status updates, and customer tracking."
+          chips={["📍 Live tracking", "🔔 Automated alerts", "🚛 Fleet visibility"]}
+          color="teal"
+          ctaLink=""
+          ctaText=""
+        >
           <BrowserMockup url="track.logisticsexample.com">
             <div className="flex flex-col gap-2">
               {[
@@ -330,21 +385,25 @@ export default function Showcase() {
                     <span>{s.status}</span>
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-signal" style={{ width: `${s.pct}%` }} />
+                    <div className="h-full rounded-full bg-teal-500" style={{ width: `${s.pct}%` }} />
                   </div>
                 </div>
               ))}
             </div>
           </BrowserMockup>
-        </Reveal>
+        </ShowcaseCard>
+
+        <MidCta />
 
         {/* Restaurant ordering */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Restaurant Ordering</h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Table-side ordering with live kitchen ticket sync.
-          </p>
+        <ShowcaseCard
+          title="Restaurant Ordering"
+          sentence="Speed up service with table-side ordering that syncs straight to the kitchen — no relayed tickets, no mistakes."
+          chips={["🍽 Table-side ordering", "👨‍🍳 Live kitchen sync", "💳 Integrated payments"]}
+          color="orange"
+          ctaLink=""
+          ctaText=""
+        >
           <BrowserMockup url="order.restaurantexample.com">
             <div className="grid grid-cols-2 gap-2">
               {[
@@ -356,20 +415,22 @@ export default function Showcase() {
                 <div key={item.name} className="rounded-md border border-slate-100 p-2">
                   <div className="mb-1 h-10 rounded bg-gradient-to-br from-amber-100 to-amber-50" />
                   <p className="font-body text-[10px] font-semibold text-ink">{item.name}</p>
-                  <p className="font-mono text-[10px] text-signal">{item.price}</p>
+                  <p className="font-mono text-[10px] text-orange-600">{item.price}</p>
                 </div>
               ))}
             </div>
           </BrowserMockup>
-        </Reveal>
+        </ShowcaseCard>
 
         {/* Property management */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Property Management</h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Tenant portal, maintenance requests, and rent tracking.
-          </p>
+        <ShowcaseCard
+          title="Property Management"
+          sentence="Cut down on phone-tag with a tenant portal for rent, maintenance requests, and building updates."
+          chips={["🏠 Tenant portal", "🔧 Maintenance requests", "💰 Rent tracking"]}
+          color="amber"
+          ctaLink=""
+          ctaText=""
+        >
           <BrowserMockup url="portal.propertyexample.com">
             <div className="flex flex-col gap-2">
               {[
@@ -393,15 +454,17 @@ export default function Showcase() {
               ))}
             </div>
           </BrowserMockup>
-        </Reveal>
+        </ShowcaseCard>
 
         {/* Manufacturing ERP */}
-        <Reveal>
-          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
-          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Manufacturing ERP</h2>
-          <p className="mb-6 font-body text-sm text-slate-500">
-            Production line status, inventory, and supplier orders.
-          </p>
+        <ShowcaseCard
+          title="Manufacturing ERP"
+          sentence="Keep production lines, inventory, and supplier orders visible in one system instead of scattered spreadsheets."
+          chips={["🏭 Production tracking", "📦 Inventory control", "🤝 Supplier orders"]}
+          color="blue"
+          ctaLink=""
+          ctaText=""
+        >
           <BrowserMockup url="erp.manufacturingexample.com">
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -416,7 +479,9 @@ export default function Showcase() {
               ))}
             </div>
           </BrowserMockup>
-        </Reveal>
+        </ShowcaseCard>
+
+        <MidCta />
       </div>
 
       <SiteFooter />
