@@ -9,6 +9,7 @@ import NewsletterModal from "../components/NewsletterModal";
 import Button from "../components/ui/Button";
 import PageMeta from "../components/PageMeta";
 import { apiFetch } from "../lib/api";
+import Reveal from "../components/Reveal";
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -48,19 +49,32 @@ export default function Contact() {
       />
       <Navbar onCartClick={() => setCartOpen(true)} onJoinClick={() => setJoinOpen(true)} />
 
-      <section id="contact" className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-2xl px-6 py-20">
-          <h2 className="mb-2 font-display text-3xl font-bold text-ink">{t("contact.title")}</h2>
-          <p className="mb-8 font-body text-sm text-slate-500">
-            {t("contact.subtitle")}
-          </p>
+      <section className="relative overflow-hidden border-b border-slate-200 bg-ink py-24">
+        <div className="hero-grid opacity-40" />
+        <div className="hero-blob h-72 w-72 bg-signal/30" style={{ top: "10%", left: "5%" }} />
+        <div
+          className="hero-blob h-96 w-96 bg-mint/20"
+          style={{ bottom: "5%", right: "10%", animationDelay: "3s" }}
+        />
+        <div
+          className="hero-glow h-64 w-64 bg-signal/40"
+          style={{ top: "40%", left: "50%", animationDelay: "1.5s" }}
+        />
+        <div className="relative mx-auto max-w-2xl px-6 text-center">
+          <h1 className="mb-3 font-display text-5xl font-bold text-white">{t("contact.title")}</h1>
+          <p className="font-body text-base text-slate-400">{t("contact.subtitle")}</p>
+        </div>
+      </section>
 
+      <section id="contact" className="light-section-depth border-b border-slate-200 bg-paper">
+        <div className="mx-auto max-w-2xl px-6 py-16">
           {contactStatus === "sent" ? (
             <div className="rounded-xl border border-mint/30 bg-mint/10 p-6 text-center font-body text-mint">
               {t("contact.sent")}
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
+            <Reveal>
+            <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
               <input
                 placeholder={t("contact.namePlaceholder")}
                 value={contact.name}
@@ -132,6 +146,7 @@ export default function Contact() {
                 </p>
               )}
             </div>
+            </Reveal>
           )}
         </div>
       </section>
