@@ -37,12 +37,22 @@ export default function Services() {
       />
       <Navbar onCartClick={() => setCartOpen(true)} onJoinClick={() => setJoinOpen(true)} />
 
-      <section className="border-b border-slate-200 bg-white py-14 text-center">
-        <div className="mx-auto max-w-3xl px-6">
-          <h1 className="mb-3 font-display text-4xl font-bold text-ink">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-ink py-24 text-center">
+        <div className="hero-grid opacity-40" />
+        <div className="hero-blob h-72 w-72 bg-signal/30" style={{ top: "10%", left: "5%" }} />
+        <div
+          className="hero-blob h-96 w-96 bg-mint/20"
+          style={{ bottom: "5%", right: "10%", animationDelay: "3s" }}
+        />
+        <div
+          className="hero-glow h-64 w-64 bg-signal/40"
+          style={{ top: "40%", left: "50%", animationDelay: "1.5s" }}
+        />
+        <div className="relative mx-auto max-w-3xl px-6">
+          <h1 className="mb-3 font-display text-5xl font-bold text-white">
             Services & pricing
           </h1>
-          <p className="font-body text-base text-slate-500">
+          <p className="font-body text-base text-slate-400">
             Every service, priced upfront by tier. No hourly guesswork.
           </p>
         </div>
