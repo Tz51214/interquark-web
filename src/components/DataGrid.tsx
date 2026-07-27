@@ -65,6 +65,7 @@ export default function DataGrid<T>({
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(pageSize);
   const [filter, setFilter] = useState("all");
   const [visibleCols, setVisibleCols] = useState<Set<string>>(new Set(columns.map((c) => c.key)));
   const [columnsOpen, setColumnsOpen] = useState(false);
@@ -97,9 +98,14 @@ export default function DataGrid<T>({
     return copy;
   }, [filtered, sortKey, sortDir, columns]);
 
-  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const totalPages = Math.max(1, Math.ceil(sorted.length / rowsPerPage));
   const currentPage = Math.min(page, totalPages);
-  const pageData = sorted.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const pageData = sorted.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const rangeStart = sorted.length === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
+  const rangeEnd = Math.min(currentPage * rowsPerPage, sorted.length);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1).filter(
+    (n) => n === 1 || n === totalPages || Math.abs(n - currentPage) <= 1,
+  );
   const activeColumns = columns.filter((c) => visibleCols.has(c.key));
 
   function toggleSort(key: string) {
@@ -330,29 +336,67 @@ export default function DataGrid<T>({
         </table>
       </div>
 
-      {totalPages > 1 && (
-        <div className="mt-3 flex items-center justify-between text-xs text-slate-400">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+        <div className="flex items-center gap-2">
+          <select
+            value={rowsPerPage}
+            onChange={(e) => {
+              setRowsPerPage(Number(e.target.value));
+              setPage(1);
+            }}
+            className="rounded-lg border border-slate-300 px-2 py-1.5 text-xs dark:border-slate-600 dark:bg-slate-800"
+          >
+            {[10, 20, 50, 100].map((n) => (
+              <option key={n} value={n}>
+                {n} per page
+              </option>
+            ))}
+          </select>
           <span>
-            Page {currentPage} of {totalPages}
+            {sorted.length === 0
+              ? "0 results"
+              : `${rangeStart}–${rangeEnd} of ${sorted.length} results`}
           </span>
-          <div className="flex gap-2">
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center gap-1">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 font-semibold text-slate-600 hover:border-signal hover:text-signal disabled:opacity-40 dark:border-slate-600 dark:text-slate-300"
+              className="rounded-lg border border-slate-300 px-2.5 py-1.5 font-semibold text-slate-600 hover:border-signal hover:text-signal disabled:opacity-40 dark:border-slate-600 dark:text-slate-300"
             >
-              Previous
+              ‹
             </button>
+            {pageNumbers.map((n, i) => {
+              const prev = pageNumbers[i - 1];
+              const gap = prev !== undefined && n - prev > 1;
+              return (
+                <span key={n} className="flex items-center gap-1">
+                  {gap && <span className="px-1">…</span>}
+                  <button
+                    onClick={() => setPage(n)}
+                    className={`rounded-lg border px-2.5 py-1.5 font-semibold ${
+                      n === currentPage
+                        ? "border-signal bg-signal text-white"
+                        : "border-slate-300 text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                </span>
+              );
+            })}
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 font-semibold text-slate-600 hover:border-signal hover:text-signal disabled:opacity-40 dark:border-slate-600 dark:text-slate-300"
+              className="rounded-lg border border-slate-300 px-2.5 py-1.5 font-semibold text-slate-600 hover:border-signal hover:text-signal disabled:opacity-40 dark:border-slate-600 dark:text-slate-300"
             >
-              Next
+              ›
             </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
