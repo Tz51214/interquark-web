@@ -1832,35 +1832,93 @@ export default function Admin() {
                     data={abandonedCarts}
                     rowKey={(o: any) => o.id}
                     searchFields={(o: any) =>
-                      `${o.customer?.fullName || ""} ${o.customer?.email || ""} ${o.items?.map((i: any) => i.name).join(" ") || ""}`
+                      `${o.customer?.fullName || ""} ${o.customer?.email || ""} ${o.items?.map((i: any) => i.name).join(" ") || ""} ${o.discountCode || ""} ${o.ipAddress || ""}`
                     }
                     emptyMessage="No abandoned carts right now."
                     columns={[
                       {
                         key: "customer",
                         header: "Customer",
-                        sortValue: (o: any) => o.customer?.fullName || o.customer?.email || "",
+                        sortValue: (o: any) => o.customer?.fullName || "",
                         render: (o: any) => (
-                          <b className="text-sm">{o.customer?.fullName || o.customer?.email}</b>
+                          <b className="text-sm">{o.customer?.fullName || "—"}</b>
                         ),
                       },
                       {
-                        key: "items",
-                        header: "Items",
+                        key: "email",
+                        header: "Email",
+                        sortValue: (o: any) => o.customer?.email || "",
+                        render: (o: any) => (
+                          <span className="text-xs text-slate-400">{o.customer?.email || "—"}</span>
+                        ),
+                      },
+                      {
+                        key: "products",
+                        header: "Products",
                         render: (o: any) => (
                           <span className="text-xs text-slate-400">
-                            {o.items?.map((i: any) => i.name).join(", ")}
+                            {o.items?.map((i: any) => i.name).join(", ") || "—"}
                           </span>
                         ),
                       },
                       {
-                        key: "date",
-                        header: "Date",
+                        key: "quantity",
+                        header: "Quantity",
+                        sortValue: (o: any) => o.items?.length || 0,
+                        render: (o: any) => (
+                          <span className="text-xs text-slate-400">{o.items?.length || 0}</span>
+                        ),
+                      },
+                      {
+                        key: "subtotal",
+                        header: "Subtotal",
+                        sortValue: (o: any) => o.totalAmount ?? 0,
+                        render: (o: any) =>
+                          typeof o.totalAmount !== "undefined" ? (
+                            <span className="font-mono text-xs">£{Number(o.totalAmount).toLocaleString()}</span>
+                          ) : (
+                            "—"
+                          ),
+                      },
+                      {
+                        key: "coupon",
+                        header: "Applied Coupon",
+                        sortValue: (o: any) => o.discountCode || "",
+                        render: (o: any) =>
+                          o.discountCode ? (
+                            <span className="rounded-full bg-signal/10 px-2 py-0.5 font-mono text-[11px] text-signal">
+                              {o.discountCode}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-slate-300">—</span>
+                          ),
+                      },
+                      {
+                        key: "created",
+                        header: "Created",
                         sortValue: (o: any) => new Date(o.createdAt).getTime(),
                         render: (o: any) => (
                           <span className="text-xs text-slate-400">
                             {new Date(o.createdAt).toLocaleDateString()}
                           </span>
+                        ),
+                      },
+                      {
+                        key: "updated",
+                        header: "Updated",
+                        sortValue: (o: any) => (o.updatedAt ? new Date(o.updatedAt).getTime() : 0),
+                        render: (o: any) => (
+                          <span className="text-xs text-slate-400">
+                            {o.updatedAt ? new Date(o.updatedAt).toLocaleDateString() : "—"}
+                          </span>
+                        ),
+                      },
+                      {
+                        key: "ip",
+                        header: "IP Address",
+                        sortValue: (o: any) => o.ipAddress || "",
+                        render: (o: any) => (
+                          <span className="font-mono text-xs text-slate-400">{o.ipAddress || "—"}</span>
                         ),
                       },
                       {
