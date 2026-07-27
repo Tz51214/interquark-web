@@ -35,6 +35,7 @@ interface DataGridProps<T> {
   filterValue?: (row: T) => string;
   bulkActions?: BulkAction<T>[];
   onRefresh?: () => void;
+  rowActions?: (row: T) => { label: string; onClick: () => void; danger?: boolean }[];
 }
 
 function downloadCsv(filename: string, rows: string[][]) {
@@ -66,6 +67,7 @@ export default function DataGrid<T>({
   filterValue,
   bulkActions,
   onRefresh,
+  rowActions,
 }: DataGridProps<T>) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -78,6 +80,7 @@ export default function DataGrid<T>({
   const [selected, setSelected] = useState<Set<string | number>>(new Set());
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
+  const [openMenuKey, setOpenMenuKey] = useState<string | number | null>(null);
 
   const filtered = useMemo(() => {
     let rows = data;
@@ -309,6 +312,7 @@ export default function DataGrid<T>({
                   {sortKey === col.key && (sortDir === "asc" ? " ↑" : " ↓")}
                 </th>
               ))}
+              {rowActions && <th className="w-10 px-4 py-2.5" />}
             </tr>
             {filtersOpen && (
               <tr className="border-t border-slate-200 dark:border-slate-700">
@@ -376,6 +380,36 @@ export default function DataGrid<T>({
                         {col.render(row)}
                       </td>
                     ))}
+                    {rowActions && (
+                      <td className="relative px-4 py-3 text-right">
+                        <button
+                          onClick={() => setOpenMenuKey(openMenuKey === key ? null : key)}
+                          className="rounded-md px-2 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800"
+                        >
+                          ⋮
+                        </button>
+                        {openMenuKey === key && (
+                          <div className="absolute right-4 top-full z-20 mt-1 w-40 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                            {rowActions(row).map((action) => (
+                              <button
+                                key={action.label}
+                                onClick={() => {
+                                  action.onClick();
+                                  setOpenMenuKey(null);
+                                }}
+                                className={`block w-full rounded px-3 py-1.5 text-left text-xs font-medium ${
+                                  action.danger
+                                    ? "text-red-500 hover:bg-red-50"
+                                    : "text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                                }`}
+                              >
+                                {action.label}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 );
               })
