@@ -1945,14 +1945,8 @@ export default function Admin() {
                         header: "Reminder",
                         sortValue: (o: any) => (o.reminderSentAt ? 1 : 0),
                         render: (o: any) => (
-                          <span
-                            className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-                              o.reminderSentAt
-                                ? "bg-green-100 text-green-700"
-                                : "bg-slate-100 text-slate-500"
-                            }`}
-                          >
-                            {o.reminderSentAt ? "sent" : "not yet"}
+                          <span className="text-xs font-semibold text-slate-600">
+                            {o.reminderSentAt ? "🟢 Reminder sent" : "🟡 Pending"}
                           </span>
                         ),
                       },
@@ -2251,7 +2245,20 @@ export default function Admin() {
                           key: "status",
                           header: "Status",
                           sortValue: (o: any) => o.status,
-                          render: (o: any) => <span className="text-xs text-slate-400">{o.status}</span>,
+                          render: (o: any) => {
+                            const dot: Record<string, string> = {
+                              pending: "🟡",
+                              active: "🟢",
+                              completed: "🟢",
+                              cancelled: "🔴",
+                              refunded: "🟠",
+                            };
+                            return (
+                              <span className="text-xs text-slate-500">
+                                {dot[o.status] || "⚪"} {o.status}
+                              </span>
+                            );
+                          },
                         },
                         {
                           key: "total",
