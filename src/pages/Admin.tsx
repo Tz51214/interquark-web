@@ -342,6 +342,20 @@ export default function Admin() {
     }
   }
 
+  async function bulkDeleteOrders(rows: any[]) {
+    if (!confirm(`Delete ${rows.length} order${rows.length === 1 ? "" : "s"}?`)) return;
+    const results = await Promise.all(
+      rows.map((r) => authedFetch(`/orders/${r.id}`, { method: "DELETE" })),
+    );
+    const failed = results.filter((r) => !r.ok).length;
+    if (failed === 0) {
+      showToast(`${rows.length} order${rows.length === 1 ? "" : "s"} deleted`, "success");
+    } else {
+      showToast(`${rows.length - failed} deleted, ${failed} failed`, "error");
+    }
+    load();
+  }
+
   async function createPayout() {
     if (!newPayout.freelancerId || !newPayout.amount) {
       showToast("Please select a freelancer and enter an amount", "error");
@@ -1835,6 +1849,11 @@ export default function Admin() {
                       `${o.customer?.fullName || ""} ${o.customer?.email || ""} ${o.items?.map((i: any) => i.name).join(" ") || ""} ${o.discountCode || ""} ${o.ipAddress || ""}`
                     }
                     emptyMessage="No abandoned carts right now."
+                    exportFilename="abandoned-carts.csv"
+                    onRefresh={load}
+                    bulkActions={[
+                      { label: "Delete selected", onClick: bulkDeleteOrders, danger: true },
+                    ]}
                     columns={[
                       {
                         key: "customer",
