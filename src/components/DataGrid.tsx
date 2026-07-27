@@ -26,6 +26,9 @@ interface DataGridProps<T> {
   pageSize?: number;
   loading?: boolean;
   emptyMessage?: string;
+  emptyIcon?: string;
+  emptySubtitle?: string;
+  resultLabel?: string;
   rowKey: (row: T) => string | number;
   exportFilename?: string;
   filterOptions?: FilterOption[];
@@ -54,6 +57,9 @@ export default function DataGrid<T>({
   pageSize = 10,
   loading = false,
   emptyMessage = "No results.",
+  emptyIcon,
+  emptySubtitle,
+  resultLabel = "results",
   rowKey,
   exportFilename = "export.csv",
   filterOptions,
@@ -341,9 +347,11 @@ export default function DataGrid<T>({
               <tr>
                 <td
                   colSpan={activeColumns.length + (bulkActions ? 1 : 0)}
-                  className="px-4 py-10 text-center text-sm text-slate-400"
+                  className="px-4 py-14 text-center"
                 >
-                  {emptyMessage}
+                  {emptyIcon && <div className="mb-2 text-3xl">{emptyIcon}</div>}
+                  <p className="text-sm font-semibold text-slate-500">{emptyMessage}</p>
+                  {emptySubtitle && <p className="mt-1 text-xs text-slate-400">{emptySubtitle}</p>}
                 </td>
               </tr>
             ) : (
@@ -352,7 +360,7 @@ export default function DataGrid<T>({
                 return (
                   <tr
                     key={key}
-                    className="border-t border-slate-100 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
+                    className="cursor-default border-t border-slate-100 transition-all hover:z-10 hover:-translate-y-px hover:bg-slate-100 hover:shadow-sm dark:border-slate-800 dark:hover:bg-slate-800"
                   >
                     {bulkActions && bulkActions.length > 0 && (
                       <td className="px-4 py-3">
@@ -394,8 +402,8 @@ export default function DataGrid<T>({
           </select>
           <span>
             {sorted.length === 0
-              ? "0 results"
-              : `${rangeStart}–${rangeEnd} of ${sorted.length} results`}
+              ? `0 ${resultLabel}`
+              : `Showing ${rangeStart}–${rangeEnd} of ${sorted.length} ${resultLabel}`}
           </span>
         </div>
 

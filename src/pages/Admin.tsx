@@ -1848,7 +1848,10 @@ export default function Admin() {
                     searchFields={(o: any) =>
                       `${o.customer?.fullName || ""} ${o.customer?.email || ""} ${o.items?.map((i: any) => i.name).join(" ") || ""} ${o.discountCode || ""} ${o.ipAddress || ""}`
                     }
-                    emptyMessage="No abandoned carts right now."
+                    emptyMessage="No abandoned carts"
+                    emptyIcon="🛒"
+                    emptySubtitle="Everything looks good — customers are completing checkout."
+                    resultLabel="carts"
                     exportFilename="abandoned-carts.csv"
                     onRefresh={load}
                     bulkActions={[
