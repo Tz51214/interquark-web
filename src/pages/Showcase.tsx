@@ -252,6 +252,171 @@ export default function Showcase() {
             View this service →
           </Link>
         </Reveal>
+
+        {/* Healthcare dashboard */}
+        <Reveal>
+          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
+          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Healthcare Dashboard</h2>
+          <p className="mb-6 font-body text-sm text-slate-500">
+            Patient scheduling, records access, and care team coordination.
+          </p>
+          <BrowserMockup url="portal.healthexample.com">
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: "Today's appointments", value: "14" },
+                { label: "Pending results", value: "3" },
+              ].map((s) => (
+                <div key={s.label} className="rounded-lg border border-slate-100 p-2.5">
+                  <p className="font-mono text-[9px] text-slate-400">{s.label}</p>
+                  <p className="font-mono text-lg font-bold text-ink">{s.value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 flex flex-col gap-1.5">
+              {["9:00 — J. Carter", "9:30 — M. Hendricks", "10:15 — R. Osei"].map((r) => (
+                <div
+                  key={r}
+                  className="flex items-center gap-2 rounded-md bg-slate-50 px-2.5 py-1.5 font-mono text-[10px] text-slate-500"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+                  {r}
+                </div>
+              ))}
+            </div>
+          </BrowserMockup>
+        </Reveal>
+
+        {/* E-commerce admin */}
+        <Reveal>
+          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
+          <h2 className="mb-2 font-display text-2xl font-bold text-ink">E-commerce Admin</h2>
+          <p className="mb-6 font-body text-sm text-slate-500">
+            Order management, inventory, and fulfillment at a glance.
+          </p>
+          <BrowserMockup url="admin.storeexample.com">
+            <AnimatedBarChart
+              data={[
+                { label: "Mon", value: 12 },
+                { label: "Tue", value: 18 },
+                { label: "Wed", value: 9 },
+                { label: "Thu", value: 22 },
+                { label: "Fri", value: 27 },
+              ]}
+            />
+            <div className="mt-3 flex items-center justify-between rounded-md bg-slate-50 px-3 py-2 font-mono text-[10px] text-slate-500">
+              <span>Order #4821 — Shipped</span>
+              <span className="rounded-full bg-mint/10 px-2 py-0.5 text-mint">Fulfilled</span>
+            </div>
+          </BrowserMockup>
+        </Reveal>
+
+        {/* Logistics tracking */}
+        <Reveal>
+          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
+          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Logistics Tracking</h2>
+          <p className="mb-6 font-body text-sm text-slate-500">
+            Real-time shipment status across a delivery fleet.
+          </p>
+          <BrowserMockup url="track.logisticsexample.com">
+            <div className="flex flex-col gap-2">
+              {[
+                { id: "SHP-3021", status: "In transit", pct: 65 },
+                { id: "SHP-3022", status: "Out for delivery", pct: 90 },
+                { id: "SHP-3023", status: "Delivered", pct: 100 },
+              ].map((s) => (
+                <div key={s.id} className="rounded-md border border-slate-100 p-2">
+                  <div className="mb-1 flex items-center justify-between font-mono text-[10px] text-slate-500">
+                    <span>{s.id}</span>
+                    <span>{s.status}</span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                    <div className="h-full rounded-full bg-signal" style={{ width: `${s.pct}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </BrowserMockup>
+        </Reveal>
+
+        {/* Restaurant ordering */}
+        <Reveal>
+          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
+          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Restaurant Ordering</h2>
+          <p className="mb-6 font-body text-sm text-slate-500">
+            Table-side ordering with live kitchen ticket sync.
+          </p>
+          <BrowserMockup url="order.restaurantexample.com">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { name: "Margherita Pizza", price: "£12" },
+                { name: "Caesar Salad", price: "£8" },
+                { name: "Grilled Salmon", price: "£18" },
+                { name: "Tiramisu", price: "£6" },
+              ].map((item) => (
+                <div key={item.name} className="rounded-md border border-slate-100 p-2">
+                  <div className="mb-1 h-10 rounded bg-gradient-to-br from-amber-100 to-amber-50" />
+                  <p className="font-body text-[10px] font-semibold text-ink">{item.name}</p>
+                  <p className="font-mono text-[10px] text-signal">{item.price}</p>
+                </div>
+              ))}
+            </div>
+          </BrowserMockup>
+        </Reveal>
+
+        {/* Property management */}
+        <Reveal>
+          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
+          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Property Management</h2>
+          <p className="mb-6 font-body text-sm text-slate-500">
+            Tenant portal, maintenance requests, and rent tracking.
+          </p>
+          <BrowserMockup url="portal.propertyexample.com">
+            <div className="flex flex-col gap-2">
+              {[
+                { unit: "Unit 4B", status: "Rent paid", ok: true },
+                { unit: "Unit 2A", status: "Maintenance requested", ok: false },
+                { unit: "Unit 6C", status: "Rent paid", ok: true },
+              ].map((u) => (
+                <div
+                  key={u.unit}
+                  className="flex items-center justify-between rounded-md bg-slate-50 px-3 py-2 font-mono text-[10px] text-slate-500"
+                >
+                  <span>{u.unit}</span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 ${
+                      u.ok ? "bg-mint/10 text-mint" : "bg-amber-100 text-amber-700"
+                    }`}
+                  >
+                    {u.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </BrowserMockup>
+        </Reveal>
+
+        {/* Manufacturing ERP */}
+        <Reveal>
+          <Badge>ILLUSTRATIVE EXAMPLE</Badge>
+          <h2 className="mb-2 font-display text-2xl font-bold text-ink">Manufacturing ERP</h2>
+          <p className="mb-6 font-body text-sm text-slate-500">
+            Production line status, inventory, and supplier orders.
+          </p>
+          <BrowserMockup url="erp.manufacturingexample.com">
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { label: "Line A", pct: 82 },
+                { label: "Line B", pct: 45 },
+                { label: "Line C", pct: 97 },
+              ].map((l) => (
+                <div key={l.label} className="rounded-md border border-slate-100 p-2 text-center">
+                  <p className="mb-1 font-mono text-[9px] text-slate-400">{l.label}</p>
+                  <p className="font-mono text-sm font-bold text-ink">{l.pct}%</p>
+                </div>
+              ))}
+            </div>
+          </BrowserMockup>
+        </Reveal>
       </div>
 
       <SiteFooter />
