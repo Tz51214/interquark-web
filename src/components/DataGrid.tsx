@@ -70,6 +70,8 @@ export default function DataGrid<T>({
   const [visibleCols, setVisibleCols] = useState<Set<string>>(new Set(columns.map((c) => c.key)));
   const [columnsOpen, setColumnsOpen] = useState(false);
   const [selected, setSelected] = useState<Set<string | number>>(new Set());
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
 
   const filtered = useMemo(() => {
     let rows = data;
@@ -80,8 +82,15 @@ export default function DataGrid<T>({
       const q = search.toLowerCase();
       rows = rows.filter((row) => searchFields(row).toLowerCase().includes(q));
     }
+    for (const [key, query] of Object.entries(columnFilters)) {
+      if (!query.trim()) continue;
+      const col = columns.find((c) => c.key === key);
+      if (!col?.sortValue) continue;
+      const q = query.toLowerCase();
+      rows = rows.filter((row) => String(col.sortValue!(row)).toLowerCase().includes(q));
+    }
     return rows;
-  }, [data, search, filter, filterValue, searchFields]);
+  }, [data, search, filter, filterValue, searchFields, columnFilters, columns]);
 
   const sorted = useMemo(() => {
     if (!sortKey) return filtered;
@@ -230,6 +239,17 @@ export default function DataGrid<T>({
           </button>
         )}
 
+        <button
+          onClick={() => setFiltersOpen((o) => !o)}
+          className={`rounded-lg border px-3 py-2 text-xs font-semibold ${
+            filtersOpen
+              ? "border-signal bg-signal/10 text-signal"
+              : "border-slate-300 text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+          }`}
+        >
+          Filters
+        </button>
+
         <span className="ml-auto whitespace-nowrap text-xs text-slate-400">
           {sorted.length} result{sorted.length === 1 ? "" : "s"}
         </span>
@@ -284,6 +304,26 @@ export default function DataGrid<T>({
                 </th>
               ))}
             </tr>
+            {filtersOpen && (
+              <tr className="border-t border-slate-200 dark:border-slate-700">
+                {bulkActions && bulkActions.length > 0 && <th className="px-4 py-1.5" />}
+                {activeColumns.map((col) => (
+                  <th key={col.key} className="px-2 py-1.5">
+                    {col.sortValue && (
+                      <input
+                        value={columnFilters[col.key] || ""}
+                        onChange={(e) => {
+                          setColumnFilters((prev) => ({ ...prev, [col.key]: e.target.value }));
+                          setPage(1);
+                        }}
+                        placeholder="Filter..."
+                        className="w-full rounded border border-slate-200 px-2 py-1 text-[11px] font-normal focus:border-signal focus:outline-none dark:border-slate-700 dark:bg-slate-800"
+                      />
+                    )}
+                  </th>
+                ))}
+              </tr>
+            )}
           </thead>
           <tbody>
             {loading ? (
