@@ -9,6 +9,7 @@ import { exportToCsv } from "../lib/csv";
 import DashboardHeader from "../components/layout/DashboardHeader";
 import Toolbar from "../components/admin/Toolbar";
 import Pagination from "../components/admin/Pagination";
+import DataGrid from "../components/DataGrid";
 import RevenueChart from "../components/admin/RevenueChart";
 import LineChart from "../components/admin/LineChart";
 import PieChart from "../components/admin/PieChart";
@@ -2113,24 +2114,49 @@ export default function Admin() {
                       }
                       searchPlaceholder="Search orders..."
                     />
-                    {ordersTable.paged.length === 0 ? (
-                      <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
-                        No orders match.
-                      </div>
-                    ) : (
-                      <div className="flex flex-col gap-3">
-                        {ordersTable.paged.map((o) => (
-                          <div
-                            key={o.id}
-                            className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
-                          >
-                            <div>
-                              <b className="text-sm">{o.customerName || "—"}</b>
-                              <p className="text-xs text-slate-400">
-                                {new Date(o.createdAt).toLocaleDateString()} · {o.status}
-                                {typeof o.total === "number" && ` · ${money(o.total)}`}
-                              </p>
-                            </div>
+                    <DataGrid
+                      data={ordersTable.filtered}
+                      rowKey={(o: any) => o.id}
+                      searchFields={(o: any) => `${o.customerName || ""} ${o.status}`}
+                      emptyMessage="No orders match."
+                      columns={[
+                        {
+                          key: "customer",
+                          header: "Customer",
+                          sortValue: (o: any) => o.customerName || "",
+                          render: (o: any) => <b className="text-sm">{o.customerName || "—"}</b>,
+                        },
+                        {
+                          key: "date",
+                          header: "Date",
+                          sortValue: (o: any) => new Date(o.createdAt).getTime(),
+                          render: (o: any) => (
+                            <span className="text-xs text-slate-400">
+                              {new Date(o.createdAt).toLocaleDateString()}
+                            </span>
+                          ),
+                        },
+                        {
+                          key: "status",
+                          header: "Status",
+                          sortValue: (o: any) => o.status,
+                          render: (o: any) => <span className="text-xs text-slate-400">{o.status}</span>,
+                        },
+                        {
+                          key: "total",
+                          header: "Total",
+                          sortValue: (o: any) => o.total ?? 0,
+                          render: (o: any) =>
+                            typeof o.total === "number" ? (
+                              <span className="font-mono text-xs">{money(o.total)}</span>
+                            ) : (
+                              "—"
+                            ),
+                        },
+                        {
+                          key: "actions",
+                          header: "",
+                          render: (o: any) => (
                             <div className="flex gap-2">
                               {o.status !== "refunded" && o.status !== "cancelled" && (
                                 <button
@@ -2147,14 +2173,9 @@ export default function Admin() {
                                 Delete
                               </button>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <Pagination
-                      page={ordersTable.page}
-                      totalPages={ordersTable.totalPages}
-                      onChange={ordersTable.setPage}
+                          ),
+                        },
+                      ]}
                     />
                   </div>
                 )}
