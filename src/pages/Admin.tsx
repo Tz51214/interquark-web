@@ -897,20 +897,43 @@ export default function Admin() {
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
         <h1 className="mb-6 text-2xl font-bold">Admin dashboard</h1>
 
-        <div className="mb-8 flex gap-1 overflow-x-auto rounded-lg bg-slate-100 p-1 dark:bg-slate-800">
-          {tabs.map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`whitespace-nowrap rounded-md px-4 py-2 text-sm font-semibold transition-colors ${
-                tab === t
-                  ? "bg-white text-signal shadow-sm dark:bg-slate-900"
-                  : "text-slate-500"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
+        <div className="mb-8 flex flex-wrap gap-2">
+          {tabs.map((t) => {
+            const counts: Partial<Record<Tab, number>> = {
+              Sales: orders.length,
+              Customers: allUsers.length,
+              Projects: projects.length,
+              Subscriptions: subscriptions.length,
+              Freelancers: freelancers.length,
+              Payouts: payouts.length,
+              Abandoned: abandonedCarts.length,
+              Tasks: tasks.length,
+              Discounts: discounts.length,
+            };
+            const count = counts[t];
+            return (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                  tab === t
+                    ? "border-signal bg-signal text-white shadow-sm"
+                    : "border-slate-200 text-slate-500 hover:border-signal hover:text-signal dark:border-slate-700"
+                }`}
+              >
+                {t}
+                {typeof count === "number" && (
+                  <span
+                    className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                      tab === t ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500 dark:bg-slate-800"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {loading ? (
