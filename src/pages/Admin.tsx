@@ -1378,35 +1378,37 @@ export default function Admin() {
                       }
                       searchPlaceholder="Search customers..."
                     />
-                    {customersTable.paged.length === 0 ? (
-                      <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
-                        No customers match.
-                      </div>
-                    ) : (
-                      <div className="flex flex-col gap-2">
-                        {customersTable.paged.map((c) => (
-                          <div
-                            key={c.id}
-                            className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
-                          >
-                            <div>
-                              <b className="text-sm">{c.fullName}</b>
-                              <p className="text-xs text-slate-400">{c.email}</p>
-                            </div>
+                    <DataGrid
+                      data={customersTable.filtered}
+                      rowKey={(c: any) => c.id}
+                      searchFields={(c: any) => `${c.fullName} ${c.email}`}
+                      emptyMessage="No customers match."
+                      columns={[
+                        {
+                          key: "name",
+                          header: "Name",
+                          sortValue: (c: any) => c.fullName,
+                          render: (c: any) => <b className="text-sm">{c.fullName}</b>,
+                        },
+                        {
+                          key: "email",
+                          header: "Email",
+                          sortValue: (c: any) => c.email,
+                          render: (c: any) => <span className="text-xs text-slate-400">{c.email}</span>,
+                        },
+                        {
+                          key: "actions",
+                          header: "",
+                          render: (c: any) => (
                             <button
                               onClick={() => handleLoginAsCustomer(c.id)}
                               className="rounded-lg border border-blue-200 px-2.5 py-1.5 text-xs font-semibold text-signal hover:bg-blue-50"
                             >
                               Login as customer
                             </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <Pagination
-                      page={customersTable.page}
-                      totalPages={customersTable.totalPages}
-                      onChange={customersTable.setPage}
+                          ),
+                        },
+                      ]}
                     />
                   </div>
                 )}
