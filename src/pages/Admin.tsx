@@ -1828,27 +1828,59 @@ export default function Admin() {
                   <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
                     Abandoned carts
                   </h3>
-                  {abandonedCarts.length === 0 ? (
-                    <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
-                      No abandoned carts right now.
-                    </div>
-                  ) : (
-                    <div className="flex flex-col gap-3">
-                      {abandonedCarts.map((o: any) => (
-                        <div
-                          key={o.id}
-                          className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
-                        >
+                  <DataGrid
+                    data={abandonedCarts}
+                    rowKey={(o: any) => o.id}
+                    searchFields={(o: any) =>
+                      `${o.customer?.fullName || ""} ${o.customer?.email || ""} ${o.items?.map((i: any) => i.name).join(" ") || ""}`
+                    }
+                    emptyMessage="No abandoned carts right now."
+                    columns={[
+                      {
+                        key: "customer",
+                        header: "Customer",
+                        sortValue: (o: any) => o.customer?.fullName || o.customer?.email || "",
+                        render: (o: any) => (
                           <b className="text-sm">{o.customer?.fullName || o.customer?.email}</b>
-                          <p className="text-xs text-slate-400">
-                            {o.items?.map((i: any) => i.name).join(", ")} ·{" "}
+                        ),
+                      },
+                      {
+                        key: "items",
+                        header: "Items",
+                        render: (o: any) => (
+                          <span className="text-xs text-slate-400">
+                            {o.items?.map((i: any) => i.name).join(", ")}
+                          </span>
+                        ),
+                      },
+                      {
+                        key: "date",
+                        header: "Date",
+                        sortValue: (o: any) => new Date(o.createdAt).getTime(),
+                        render: (o: any) => (
+                          <span className="text-xs text-slate-400">
                             {new Date(o.createdAt).toLocaleDateString()}
-                            {o.reminderSentAt ? " · reminder sent" : " · no reminder yet"}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                          </span>
+                        ),
+                      },
+                      {
+                        key: "reminder",
+                        header: "Reminder",
+                        sortValue: (o: any) => (o.reminderSentAt ? 1 : 0),
+                        render: (o: any) => (
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                              o.reminderSentAt
+                                ? "bg-green-100 text-green-700"
+                                : "bg-slate-100 text-slate-500"
+                            }`}
+                          >
+                            {o.reminderSentAt ? "sent" : "not yet"}
+                          </span>
+                        ),
+                      },
+                    ]}
+                  />
                 </div>
                 <div>
                   <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-slate-400">
