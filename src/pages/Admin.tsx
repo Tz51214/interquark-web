@@ -1857,6 +1857,22 @@ export default function Admin() {
                     bulkActions={[
                       { label: "Delete selected", onClick: bulkDeleteOrders, danger: true },
                     ]}
+                    rowActions={(o: any) => [
+                      {
+                        label: "Copy email",
+                        onClick: () => {
+                          if (o.customer?.email) {
+                            navigator.clipboard.writeText(o.customer.email);
+                            showToast("Email copied", "success");
+                          }
+                        },
+                      },
+                      {
+                        label: "Delete",
+                        onClick: () => deleteOrder(o.id),
+                        danger: true,
+                      },
+                    ]}
                     columns={[
                       {
                         key: "customer",
