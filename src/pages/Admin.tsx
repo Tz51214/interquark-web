@@ -2287,9 +2287,40 @@ export default function Admin() {
                     <DataGrid
                       data={ordersTable.filtered}
                       rowKey={(o: any) => o.id}
-                      searchFields={(o: any) => `${o.customerName || ""} ${o.status}`}
+                      searchFields={(o: any) =>
+                        `${o.customer?.fullName || ""} ${o.customer?.email || ""} ${o.status} ${o.id}`
+                      }
                       emptyMessage="No orders match."
+                      emptyIcon="📦"
+                      resultLabel="orders"
+                      exportFilename="orders.csv"
+                      onRefresh={load}
+                      rowActions={(o: any) => [
+                        {
+                          label: "Copy email",
+                          onClick: () => {
+                            if (o.customer?.email) {
+                              navigator.clipboard.writeText(o.customer.email);
+                              showToast("Email copied", "success");
+                            }
+                          },
+                        },
+                        ...(o.status !== "refunded" && o.status !== "cancelled"
+                          ? [{ label: "Refund", onClick: () => refundOrder(o.id) }]
+                          : []),
+                        { label: "Delete", onClick: () => deleteOrder(o.id), danger: true },
+                      ]}
                       columns={[
+                        {
+                          key: "id",
+                          header: "Order ID",
+                          sortValue: (o: any) => o.id,
+                          render: (o: any) => (
+                            <span className="font-mono text-xs text-slate-400">
+                              #{String(o.id).padStart(6, "0")}
+                            </span>
+                          ),
+                        },
                         {
                           key: "customer",
                           header: "Customer",
@@ -2339,26 +2370,9 @@ export default function Admin() {
                             ),
                         },
                         {
-                          key: "actions",
-                          header: "",
-                          render: (o: any) => (
-                            <div className="flex gap-2">
-                              {o.status !== "refunded" && o.status !== "cancelled" && (
-                                <button
-                                  onClick={() => refundOrder(o.id)}
-                                  className="rounded-lg border border-amber-200 px-2.5 py-1.5 text-xs font-semibold text-amber-600 hover:bg-amber-50"
-                                >
-                                  Refund
-                                </button>
-                              )}
-                              <button
-                                onClick={() => deleteOrder(o.id)}
-                                className="rounded-lg border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-500 hover:bg-red-50"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          ),
+                          key: "payment",
+                          header: "Payment Method",
+                          render: () => <span className="text-xs text-slate-400">PayPal</span>,
                         },
                       ]}
                     />
