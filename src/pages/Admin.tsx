@@ -332,6 +332,25 @@ export default function Admin() {
     }
   }
 
+  async function createInvoiceForOrder(order: any) {
+    const { ok } = await authedFetch("/invoices", {
+      method: "POST",
+      body: JSON.stringify({
+        customerId: String(order.customer?.id),
+        orderId: String(order.id),
+        amount: Number(order.totalAmount),
+        status: "sent",
+      }),
+    });
+    if (ok) {
+      showToast("Invoice created and sent to customer", "success");
+      setViewingOrder(null);
+      load();
+    } else {
+      showToast("Could not create invoice", "error");
+    }
+  }
+
   async function deleteOrder(id: string) {
     if (!confirm("Delete this order?")) return;
     const { ok } = await authedFetch(`/orders/${id}`, { method: "DELETE" });
@@ -2696,6 +2715,21 @@ export default function Admin() {
                 <span>Grand Total</span>
                 <span className="font-mono">{money(Number(viewingOrder.totalAmount))}</span>
               </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-2 border-t border-slate-200 pt-4 dark:border-slate-700">
+              <button
+                onClick={() => setViewingOrder(null)}
+                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 dark:border-slate-600 dark:text-slate-300"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => createInvoiceForOrder(viewingOrder)}
+                className="rounded-lg bg-signal px-4 py-2 text-sm font-semibold text-white hover:bg-signal-dark"
+              >
+                Create & Send Invoice
+              </button>
             </div>
           </div>
         </div>
