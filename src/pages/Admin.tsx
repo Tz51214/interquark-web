@@ -2293,8 +2293,10 @@ export default function Admin() {
                         {
                           key: "customer",
                           header: "Customer",
-                          sortValue: (o: any) => o.customerName || "",
-                          render: (o: any) => <b className="text-sm">{o.customerName || "—"}</b>,
+                          sortValue: (o: any) => o.customer?.fullName || o.customer?.email || "",
+                          render: (o: any) => (
+                            <b className="text-sm">{o.customer?.fullName || o.customer?.email || "—"}</b>
+                          ),
                         },
                         {
                           key: "date",
@@ -2328,10 +2330,10 @@ export default function Admin() {
                         {
                           key: "total",
                           header: "Total",
-                          sortValue: (o: any) => o.total ?? 0,
+                          sortValue: (o: any) => Number(o.totalAmount) || 0,
                           render: (o: any) =>
-                            typeof o.total === "number" ? (
-                              <span className="font-mono text-xs">{money(o.total)}</span>
+                            o.totalAmount !== undefined && o.totalAmount !== null ? (
+                              <span className="font-mono text-xs">{money(Number(o.totalAmount))}</span>
                             ) : (
                               "—"
                             ),
