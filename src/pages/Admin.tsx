@@ -220,6 +220,7 @@ export default function Admin() {
   const [abandonedSignups, setAbandonedSignups] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
   const [discounts, setDiscounts] = useState<any[]>([]);
+  const [viewingOrder, setViewingOrder] = useState<any | null>(null);
   const [newDiscount, setNewDiscount] = useState({
     code: "",
     type: "percentage",
@@ -2296,6 +2297,7 @@ export default function Admin() {
                       exportFilename="orders.csv"
                       onRefresh={load}
                       rowActions={(o: any) => [
+                        { label: "View", onClick: () => setViewingOrder(o) },
                         {
                           label: "Copy email",
                           onClick: () => {
@@ -2590,6 +2592,114 @@ export default function Admin() {
           </>
         )}
       </main>
+
+      {viewingOrder && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+          onClick={() => setViewingOrder(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl dark:bg-slate-900"
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-display text-xl font-bold">
+                Order #{String(viewingOrder.id).padStart(6, "0")}
+              </h2>
+              <button
+                onClick={() => setViewingOrder(null)}
+                className="rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mb-5 grid grid-cols-2 gap-4 rounded-xl border border-slate-200 p-4 text-sm dark:border-slate-700">
+              <div>
+                <p className="text-xs text-slate-400">Order Date</p>
+                <p className="font-semibold">{new Date(viewingOrder.createdAt).toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Status</p>
+                <p className="font-semibold">
+                  {(() => {
+                    const dot: Record<string, string> = {
+                      pending: "🟡",
+                      active: "🟢",
+                      completed: "🟢",
+                      cancelled: "🔴",
+                      refunded: "🟠",
+                    };
+                    return `${dot[viewingOrder.status] || "⚪"} ${viewingOrder.status}`;
+                  })()}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Customer</p>
+                <p className="font-semibold">
+                  {viewingOrder.customer?.fullName || viewingOrder.customer?.email || "—"}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Email</p>
+                <p className="font-semibold">{viewingOrder.customer?.email || "—"}</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Placed from IP</p>
+                <p className="font-mono font-semibold">{viewingOrder.ipAddress || "—"}</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Payment Method</p>
+                <p className="font-semibold">PayPal</p>
+              </div>
+              <div className="col-span-2">
+                <p className="text-xs text-slate-400">Transaction ID</p>
+                <p className="font-mono font-semibold">{viewingOrder.paypalOrderId || "—"}</p>
+              </div>
+            </div>
+
+            <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
+              Items Ordered
+            </h3>
+            <div className="mb-5 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 dark:bg-slate-800">
+                  <tr>
+                    <th className="px-3 py-2 text-xs font-semibold text-slate-500">Product</th>
+                    <th className="px-3 py-2 text-xs font-semibold text-slate-500">Tier</th>
+                    <th className="px-3 py-2 text-right text-xs font-semibold text-slate-500">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(viewingOrder.items || []).map((item: any) => (
+                    <tr key={item.id} className="border-t border-slate-100 dark:border-slate-800">
+                      <td className="px-3 py-2">
+                        <p className="font-semibold">{item.name}</p>
+                        <p className="text-xs text-slate-400">SKU: {item.sku}</p>
+                      </td>
+                      <td className="px-3 py-2 text-slate-500">{item.tier}</td>
+                      <td className="px-3 py-2 text-right font-mono">{money(Number(item.price))}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="ml-auto max-w-xs space-y-1.5 text-sm">
+              {viewingOrder.discountCode && (
+                <div className="flex justify-between text-mint">
+                  <span>Discount ({viewingOrder.discountCode})</span>
+                  <span>applied</span>
+                </div>
+              )}
+              <div className="flex justify-between border-t border-slate-200 pt-1.5 text-base font-bold dark:border-slate-700">
+                <span>Grand Total</span>
+                <span className="font-mono">{money(Number(viewingOrder.totalAmount))}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
