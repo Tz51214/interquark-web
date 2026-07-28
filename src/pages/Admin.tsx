@@ -2001,20 +2001,43 @@ export default function Admin() {
                   </h3>
                   {abandonedSignups.length === 0 ? (
                     <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-700 dark:bg-slate-900">
-                      No abandoned signups right now.
+                      <div className="mb-2 text-3xl">👋</div>
+                      <p className="font-semibold text-slate-500">No abandoned signups</p>
+                      <p className="mt-1 text-xs text-slate-400">
+                        Every freelancer who signed up has completed the process.
+                      </p>
                     </div>
                   ) : (
-                    <div className="flex flex-col gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {abandonedSignups.map((u: any) => (
                         <div
                           key={u.id}
                           className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
                         >
-                          <b className="text-sm">{u.fullName}</b>
-                          <p className="text-xs text-slate-400">
-                            {u.email} · {new Date(u.createdAt).toLocaleDateString()}
-                            {u.signupReminderSentAt ? " · reminder sent" : " · no reminder yet"}
+                          <div className="mb-2 flex items-center gap-2">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-signal/10 text-sm">
+                              👤
+                            </span>
+                            <b className="text-sm">{u.fullName}</b>
+                          </div>
+                          <p className="mb-1 text-xs text-slate-400">{u.email}</p>
+                          <p className="mb-3 text-xs text-slate-400">
+                            Started: {new Date(u.createdAt).toLocaleDateString()}
                           </p>
+                          <div className="mb-3">
+                            <span className="text-xs font-semibold text-slate-600">
+                              {u.signupReminderSentAt ? "🟢 Reminder sent" : "🟡 Pending"}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(u.email);
+                              showToast("Email copied", "success");
+                            }}
+                            className="w-full rounded-lg border border-slate-300 py-1.5 text-xs font-semibold text-slate-600 hover:border-signal hover:text-signal dark:border-slate-600 dark:text-slate-300"
+                          >
+                            Copy email
+                          </button>
                         </div>
                       ))}
                     </div>
