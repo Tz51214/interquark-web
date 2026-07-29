@@ -79,12 +79,35 @@ export default function HeroSphere() {
     const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(lines);
 
+    // Mouse position (normalized -1..1), smoothed toward its target
+    // each frame so the sphere drifts to follow the cursor rather than
+    // snapping — subtle parallax, not a jarring reaction.
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    function handleMouseMove(e: MouseEvent) {
+      if (!mount) return;
+      const rect = mount.getBoundingClientRect();
+      targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      targetY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    }
+    window.addEventListener("mousemove", handleMouseMove);
+
     let frameId: number;
     function animate() {
-      points.rotation.y += 0.0018;
-      points.rotation.x += 0.0006;
-      lines.rotation.y += 0.0018;
-      lines.rotation.x += 0.0006;
+      currentX += (targetX - currentX) * 0.04;
+      currentY += (targetY - currentY) * 0.04;
+
+      const autoY = points.rotation.y + 0.0018;
+      const autoX = points.rotation.x + 0.0006;
+
+      points.rotation.y = autoY + currentX * 0.3;
+      points.rotation.x = autoX + currentY * 0.2;
+      lines.rotation.y = autoY + currentX * 0.3;
+      lines.rotation.x = autoX + currentY * 0.2;
+
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
     }
@@ -103,6 +126,7 @@ export default function HeroSphere() {
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
       mount.removeChild(renderer.domElement);
       geometry.dispose();
       material.dispose();
