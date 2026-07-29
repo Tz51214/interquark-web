@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { useParallax } from "../hooks/useParallax";
 import Reveal from "../components/Reveal";
+import ChapterReveal from "../components/ChapterReveal";
 import NewsletterModal from "../components/NewsletterModal";
 import { useScrollTrigger } from "../hooks/useScrollTrigger";
 import PlatformMarquee from "../components/PlatformMarquee";
@@ -208,7 +209,7 @@ export default function Home() {
       {/* Problem */}
       <section className="border-b border-slate-200 bg-paper">
         <div className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
-          <Reveal>
+          <ChapterReveal>
             <span className="mb-4 inline-block rounded-full border border-slate-300 bg-white px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-slate-500">
               THE PROBLEM
             </span>
@@ -221,7 +222,7 @@ export default function Home() {
               anonymous bid with no real vetting. Neither gets you a straight line to someone who
               actually knows your platform.
             </p>
-          </Reveal>
+          </ChapterReveal>
         </div>
       </section>
 
