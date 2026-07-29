@@ -49,10 +49,10 @@ export default function HeroSphere() {
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.035,
+      size: 0.028,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.6,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -74,7 +74,7 @@ export default function HeroSphere() {
     const lineMaterial = new THREE.LineBasicMaterial({
       color: "#5b5fef",
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.08,
     });
     const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(lines);
@@ -95,18 +95,28 @@ export default function HeroSphere() {
     }
     window.addEventListener("mousemove", handleMouseMove);
 
+    // Occasionally pauses the auto-rotation entirely for a beat —
+    // reads as calm and intentional (Apple-style) rather than a
+    // sci-fi object that never stops spinning.
+    let paused = false;
+    let pauseTimer = setTimeout(function cyclePause() {
+      paused = !paused;
+      pauseTimer = setTimeout(cyclePause, paused ? 1400 : 6000);
+    }, 6000);
+
     let frameId: number;
     function animate() {
       currentX += (targetX - currentX) * 0.04;
       currentY += (targetY - currentY) * 0.04;
 
-      const autoY = points.rotation.y + 0.0006;
-      const autoX = points.rotation.x + 0.0002;
+      const spin = paused ? 0 : 1;
+      const autoY = points.rotation.y + 0.0002 * spin;
+      const autoX = points.rotation.x + 0.00007 * spin;
 
-      points.rotation.y = autoY + currentX * 0.12;
-      points.rotation.x = autoX + currentY * 0.08;
-      lines.rotation.y = autoY + currentX * 0.12;
-      lines.rotation.x = autoX + currentY * 0.08;
+      points.rotation.y = autoY + currentX * 0.1;
+      points.rotation.x = autoX + currentY * 0.07;
+      lines.rotation.y = autoY + currentX * 0.1;
+      lines.rotation.x = autoX + currentY * 0.07;
 
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
@@ -125,6 +135,7 @@ export default function HeroSphere() {
 
     return () => {
       cancelAnimationFrame(frameId);
+      clearTimeout(pauseTimer);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       mount.removeChild(renderer.domElement);
