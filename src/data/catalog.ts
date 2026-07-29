@@ -151,7 +151,7 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
     {
       id: "sec-01",
       sku: "ZWS-SEC-01",
-      name: "Magecart Remediation & Audit",
+      name: "Security Audit & Magecart Remediation",
       badge: "flagship",
       desc: "Full skimmer detection, malicious code removal, checkout integrity check, and hardening report.",
       tiers: {
@@ -264,7 +264,7 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
     {
       id: "mig-02",
       sku: "ZWS-MIG-02",
-      name: "Platform Migration & SEO Preservation",
+      name: "Legacy Store Modernization & Platform Migration",
       badge: "flagship",
       desc: "Move between WooCommerce, Shopify, or WordPress with full 301 redirects and a URL mapping file, so rankings survive the move.",
       tiers: {
@@ -574,7 +574,7 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
     {
       id: "sw-01",
       sku: "ZWS-SW-01",
-      name: "Full-Stack Web Application",
+      name: "SaaS MVP Development & Full-Stack Web Applications",
       badge: "flagship",
       desc: "A custom-built web application from the ground up — not a template, not a page builder. Built to your exact spec.",
       tiers: {
