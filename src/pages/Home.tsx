@@ -231,11 +231,11 @@ export default function Home() {
       {/* Comparison */}
       <section className="light-section-depth border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
-          <Reveal>
+          <ChapterReveal>
             <h2 className="mb-10 text-center font-display text-4xl font-bold text-ink">
               How it compares
             </h2>
-          </Reveal>
+          </ChapterReveal>
           <RevealStagger className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
               {
@@ -548,12 +548,14 @@ export default function Home() {
       {/* Why Interquark */}
       <section className="border-t border-slate-200 bg-ink">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:py-24">
-          <span className="mb-3 block font-mono text-[11px] font-semibold tracking-wide text-signal">
-            WHY INTERQUARK
-          </span>
-          <h2 className="mb-16 max-w-xl font-display text-4xl font-bold leading-tight text-white">
-            Built like a product team, not a freelance marketplace.
-          </h2>
+          <ChapterReveal>
+            <span className="mb-3 block font-mono text-[11px] font-semibold tracking-wide text-signal">
+              WHY INTERQUARK
+            </span>
+            <h2 className="mb-16 max-w-xl font-display text-4xl font-bold leading-tight text-white">
+              Built like a product team, not a freelance marketplace.
+            </h2>
+          </ChapterReveal>
 
           <div className="flex flex-col gap-6">
             {/* Row 1 */}
