@@ -115,17 +115,22 @@ export default function SiteFooter() {
             </ul>
           </div>
         </div>
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-2 border-t border-line pt-8">
-          {["GDPR Compliant", "UK Registered", "Secure Payments", "PayPal", "Visa", "Mastercard", "SSL Secured"].map(
-            (badge) => (
-              <span
-                key={badge}
-                className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[10px] font-semibold text-slate-500"
-              >
-                {badge}
-              </span>
-            ),
-          )}
+        <div className="mt-12 rounded-2xl border border-mint/20 bg-mint/5 px-6 py-5">
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            {["GDPR Compliant", "UK Registered", "Secure Payments", "PayPal", "Visa", "Mastercard", "SSL Secured"].map(
+              (badge) => (
+                <span
+                  key={badge}
+                  className="flex items-center gap-1.5 rounded-full border border-mint/30 bg-white px-3 py-1.5 font-mono text-[11px] font-semibold text-mint shadow-sm"
+                >
+                  <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-mint text-[9px] text-white">
+                    ✓
+                  </span>
+                  {badge}
+                </span>
+              ),
+            )}
+          </div>
         </div>
         <div className="mt-6 flex flex-col items-center justify-between gap-3 border-t border-line pt-8 sm:flex-row">
           <span className="font-mono text-xs font-semibold tracking-wide text-signal">
