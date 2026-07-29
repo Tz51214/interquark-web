@@ -97,10 +97,12 @@ export default function Home() {
             <p className="mt-6 max-w-lg font-body text-lg text-slate-400">
               {t("hero.subhead")}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <MagneticButton>
                 <a href="/contact">
-                  <Button>{t("hero.getInTouch")}</Button>
+                  <Button className="!px-7 !py-3.5 !text-base shadow-lg shadow-signal/20">
+                    {t("hero.getInTouch")}
+                  </Button>
                 </a>
               </MagneticButton>
               <MagneticButton>
@@ -113,6 +115,12 @@ export default function Home() {
                   </Button>
                 </a>
               </MagneticButton>
+              <a
+                href="tel:+447438269993"
+                className="flex items-center gap-1.5 font-body text-sm font-semibold text-slate-300 hover:text-signal"
+              >
+                📞 Or call now — no form needed
+              </a>
             </div>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
               {[
