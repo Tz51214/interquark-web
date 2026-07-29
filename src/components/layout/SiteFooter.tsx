@@ -69,7 +69,7 @@ export default function SiteFooter() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-3 font-mono text-[11px] font-semibold tracking-wide text-slate-500 sm:invisible">
+            <h4 className="mb-3 font-mono text-[11px] font-semibold tracking-wide text-slate-500 invisible" aria-hidden="true">
               SERVICES
             </h4>
             <ul className="flex flex-col gap-2 font-body text-sm text-slate-400">
