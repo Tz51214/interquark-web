@@ -441,9 +441,9 @@ export default function Home() {
               <div className="mb-4 text-slate-400">freelancer.status</div>
               <div className="flex flex-col gap-3">
                 {[
-                  { name: "M. Ali", tier: "Magento", status: "verified" },
-                  { name: "S. Khan", tier: "Shopify", status: "verified" },
-                  { name: "R. Ahmed", tier: "Full-stack", status: "verified" },
+                  { name: "Martha", tier: "Developer", status: "verified" },
+                  { name: "Zel", tier: "Developer", status: "verified" },
+                  { name: "Ali", tier: "Developer", status: "verified" },
                 ].map((f) => (
                   <div
                     key={f.name}
