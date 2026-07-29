@@ -13,6 +13,7 @@ export default function ServiceCard({ item }: { item: CatalogItem }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [spotlight, setSpotlight] = useState({ x: 50, y: 50 });
+  const [hovering, setHovering] = useState(false);
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
     const el = cardRef.current;
@@ -28,6 +29,7 @@ export default function ServiceCard({ item }: { item: CatalogItem }) {
 
   function handleMouseLeave() {
     setTilt({ x: 0, y: 0 });
+    setHovering(false);
   }
 
   useEffect(() => {
@@ -52,13 +54,14 @@ export default function ServiceCard({ item }: { item: CatalogItem }) {
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setHovering(true)}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transform: `perspective(800px) translateY(${hovering ? -4 : 0}px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         backgroundImage: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(91,95,239,0.06), transparent 60%)`,
-        transition: "transform 0.15s ease-out",
+        transition: "transform 0.2s ease-out",
       }}
-      className="card-gradient-border relative flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:border-signal/40 hover:shadow-lg hover:shadow-signal/10 [transform-style:preserve-3d]"
+      className="card-gradient-border relative flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:border-signal/40 hover:shadow-xl hover:shadow-signal/15 [transform-style:preserve-3d]"
     >
       <div className="mb-3 flex items-center justify-between">
         <span className="font-mono text-[11px] text-slate-400">{item.sku}</span>
