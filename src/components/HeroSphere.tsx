@@ -49,10 +49,10 @@ export default function HeroSphere() {
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.028,
+      size: 0.035,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -74,50 +74,17 @@ export default function HeroSphere() {
     const lineMaterial = new THREE.LineBasicMaterial({
       color: "#5b5fef",
       transparent: true,
-      opacity: 0.08,
+      opacity: 0.15,
     });
     const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(lines);
 
-    // Mouse position (normalized -1..1), smoothed toward its target
-    // each frame so the sphere drifts to follow the cursor rather than
-    // snapping — subtle parallax, not a jarring reaction.
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    function handleMouseMove(e: MouseEvent) {
-      if (!mount) return;
-      const rect = mount.getBoundingClientRect();
-      targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      targetY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-    }
-    window.addEventListener("mousemove", handleMouseMove);
-
-    // Occasionally pauses the auto-rotation entirely for a beat —
-    // reads as calm and intentional (Apple-style) rather than a
-    // sci-fi object that never stops spinning.
-    let paused = false;
-    let pauseTimer = setTimeout(function cyclePause() {
-      paused = !paused;
-      pauseTimer = setTimeout(cyclePause, paused ? 1400 : 6000);
-    }, 6000);
-
     let frameId: number;
     function animate() {
-      currentX += (targetX - currentX) * 0.04;
-      currentY += (targetY - currentY) * 0.04;
-
-      const spin = paused ? 0 : 1;
-      const autoY = points.rotation.y + 0.0002 * spin;
-      const autoX = points.rotation.x + 0.00007 * spin;
-
-      points.rotation.y = autoY + currentX * 0.1;
-      points.rotation.x = autoX + currentY * 0.07;
-      lines.rotation.y = autoY + currentX * 0.1;
-      lines.rotation.x = autoX + currentY * 0.07;
-
+      points.rotation.y += 0.0018;
+      points.rotation.x += 0.0006;
+      lines.rotation.y += 0.0018;
+      lines.rotation.x += 0.0006;
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
     }
@@ -135,9 +102,7 @@ export default function HeroSphere() {
 
     return () => {
       cancelAnimationFrame(frameId);
-      clearTimeout(pauseTimer);
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
       mount.removeChild(renderer.domElement);
       geometry.dispose();
       material.dispose();

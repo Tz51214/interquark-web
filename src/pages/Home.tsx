@@ -115,12 +115,6 @@ export default function Home() {
                   </Button>
                 </a>
               </MagneticButton>
-              <a
-                href="tel:+447438269993"
-                className="flex items-center gap-1.5 font-body text-sm font-semibold text-slate-300 hover:text-signal"
-              >
-                📞 Or call now — no form needed
-              </a>
             </div>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
               {[
