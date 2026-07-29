@@ -600,6 +600,59 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
       },
     },
     {
+      id: "sw-03",
+      sku: "ZWS-SW-03",
+      name: "Technical Discovery Workshop",
+      badge: null,
+      desc: "Not sure what to build yet? A structured session to scope your project — requirements, architecture, timeline, and a clear quote before any code is written.",
+      tiers: {
+        "Half-day workshop": {
+          price: 350,
+          features: [
+            "3-hour scoping session",
+            "Requirements and architecture outline",
+            "Written summary and recommendations",
+          ],
+        },
+        "Full-day workshop": {
+          price: 650,
+          features: [
+            "Full-day deep-dive session",
+            "Detailed technical specification",
+            "Architecture diagram",
+            "Fixed-price project quote",
+          ],
+        },
+      },
+    },
+    {
+      id: "sw-04",
+      sku: "ZWS-SW-04",
+      name: "CRM Development",
+      badge: null,
+      desc: "A custom CRM built around how your team actually works — contacts, pipelines, and activity tracking, without paying for features you don't need.",
+      tiers: {
+        "Core CRM": {
+          price: 2500,
+          features: [
+            "Contact and company records",
+            "Deal/pipeline tracking",
+            "Basic reporting dashboard",
+            "Role-based user access",
+          ],
+        },
+        "Advanced CRM": {
+          price: 6000,
+          features: [
+            "Everything in Core CRM",
+            "Custom workflow automation",
+            "Email/calendar integration",
+            "Advanced reporting and exports",
+          ],
+        },
+      },
+    },
+    {
       id: "sw-02",
       sku: "ZWS-SW-02",
       name: "Custom API & Third-Party Integrations",
