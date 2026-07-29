@@ -87,8 +87,7 @@ export default function SiteFooter() {
               FOR CLIENTS
             </h4>
             <ul className="flex flex-col gap-2 font-body text-sm text-slate-400">
-              <li><Link to="/#how-it-works" className="hover:text-signal">How it works</Link></li>
-              <li><Link to="/guide" className="hover:text-signal">Interquark Guide</Link></li>
+              <li><Link to="/services" className="hover:text-signal">How it works</Link></li>
               <li><Link to="/help" className="hover:text-signal">Interquark Answers</Link></li>
               <li><Link to="/contact" className="hover:text-signal">Contact</Link></li>
             </ul>
