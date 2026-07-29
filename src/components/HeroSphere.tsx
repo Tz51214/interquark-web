@@ -100,13 +100,13 @@ export default function HeroSphere() {
       currentX += (targetX - currentX) * 0.04;
       currentY += (targetY - currentY) * 0.04;
 
-      const autoY = points.rotation.y + 0.0018;
-      const autoX = points.rotation.x + 0.0006;
+      const autoY = points.rotation.y + 0.0006;
+      const autoX = points.rotation.x + 0.0002;
 
-      points.rotation.y = autoY + currentX * 0.3;
-      points.rotation.x = autoX + currentY * 0.2;
-      lines.rotation.y = autoY + currentX * 0.3;
-      lines.rotation.x = autoX + currentY * 0.2;
+      points.rotation.y = autoY + currentX * 0.12;
+      points.rotation.x = autoX + currentY * 0.08;
+      lines.rotation.y = autoY + currentX * 0.12;
+      lines.rotation.x = autoX + currentY * 0.08;
 
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
