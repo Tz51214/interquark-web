@@ -43,10 +43,21 @@ export default function Home() {
   const consoleParallax = useParallax(6);
   const showNewsletter = useScrollTrigger(40);
   const [newsletterOpen, setNewsletterOpen] = useState(false);
+  const [visibleLines, setVisibleLines] = useState(0);
 
   useEffect(() => {
     if (showNewsletter) setNewsletterOpen(true);
   }, [showNewsletter]);
+
+  // Cinematic deploy log — lines stream in one at a time rather than
+  // appearing all at once, so the terminal feels like it's actually
+  // running rather than sitting static.
+  useEffect(() => {
+    if (visibleLines >= deployLines.length) return;
+    const delay = visibleLines === 0 ? 400 : 550;
+    const timer = setTimeout(() => setVisibleLines((n) => n + 1), delay);
+    return () => clearTimeout(timer);
+  }, [visibleLines]);
   const [cartOpen, setCartOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
   return (
@@ -131,22 +142,22 @@ export default function Home() {
               <span className="h-2.5 w-2.5 rounded-full bg-mint/70" />
             </div>
             <div className="flex flex-col gap-2.5 p-5">
-              {deployLines.map((line, i) => (
+              {deployLines.slice(0, visibleLines).map((line, i) => (
                 <div
                   key={i}
-                  className={
-                    line.type === "cmd"
-                      ? "text-white"
-                      : "text-mint"
-                  }
+                  className={`animate-[fadeInScale_0.4s_ease-out] ${
+                    line.type === "cmd" ? "text-white" : "text-mint"
+                  }`}
                 >
                   {line.text}
                 </div>
               ))}
-              <div className="mt-1 flex items-center gap-1 text-white">
-                <span>❯</span>
-                <span className="h-4 w-2 animate-pulse bg-signal" />
-              </div>
+              {visibleLines >= deployLines.length && (
+                <div className="mt-1 flex items-center gap-1 text-white">
+                  <span>❯</span>
+                  <span className="h-4 w-2 animate-pulse bg-signal" />
+                </div>
+              )}
             </div>
           </div>
         </div>
