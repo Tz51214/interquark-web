@@ -546,24 +546,25 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
     {
       id: "ai-02",
       sku: "ZWS-AI-02",
-      name: "Store Automation & AI Agents",
+      name: "AI Workflow Automation",
       badge: "flagship",
-      desc: "Automate repetitive store operations — inventory alerts, order triage, customer follow-ups — with AI agents built around your workflow.",
+      desc: "Connect your existing tools together — a new order triggers a CRM sync, a form submission triggers a follow-up email, and more. Built around a webhook you plug into whatever system you already use, no code required on your end.",
       tiers: {
-        "Single automation": {
+        "Single workflow": {
           price: 600,
           features: [
-            "One automated workflow (e.g. inventory alerts or order triage)",
+            "One automated workflow (e.g. CRM sync or order triage)",
+            "A dedicated webhook URL for your existing tools to call",
             "Integration with your existing platform",
-            "Basic monitoring dashboard",
+            "Basic run history dashboard",
           ],
         },
-        "Multi-agent setup": {
+        "Multi-workflow setup": {
           price: 1500,
           features: [
             "Multiple automated workflows",
-            "Integration across platform and email/messaging",
-            "Monitoring dashboard with alerts",
+            "Integration across platform, CRM, and email/messaging",
+            "Run history dashboard with failure alerts",
             "One month of tuning included",
           ],
         },
