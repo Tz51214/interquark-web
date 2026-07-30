@@ -551,7 +551,7 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
       desc: "Connect your existing tools together — a new order triggers a CRM sync, a form submission triggers a follow-up email, and more. Built around a webhook you plug into whatever system you already use, no code required on your end.",
       tiers: {
         "Single workflow": {
-          price: 600,
+          price: 900,
           features: [
             "One automated workflow (e.g. CRM sync or order triage)",
             "A dedicated webhook URL for your existing tools to call",
@@ -560,7 +560,7 @@ export const catalog: Record<CatalogSection, CatalogItem[]> = {
           ],
         },
         "Multi-workflow setup": {
-          price: 1500,
+          price: 2500,
           features: [
             "Multiple automated workflows",
             "Integration across platform, CRM, and email/messaging",
