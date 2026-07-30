@@ -8,6 +8,8 @@ import JoinModal from "../components/JoinModal";
 import { catalog, sectionTitles, type CatalogSection } from "../data/catalog";
 import { useCart } from "../context/CartContext";
 import PageMeta from "../components/PageMeta";
+import Reveal from "../components/Reveal";
+import RevealStagger from "../components/RevealStagger";
 
 export default function ServiceDetail() {
   const { t } = useTranslation();
@@ -98,6 +100,7 @@ export default function ServiceDetail() {
           &larr; {sectionTitles[section]}
         </Link>
 
+        <Reveal>
         <div className="mb-3 flex items-center gap-3">
           <span className="font-mono text-xs text-slate-400">{item.sku}</span>
           {item.badge === "flagship" && (
@@ -111,6 +114,7 @@ export default function ServiceDetail() {
         <p className="mb-8 max-w-2xl font-body text-base leading-relaxed text-slate-600">
           {item.desc}
         </p>
+        </Reveal>
 
         {item.id === "mig-01" && (
           <div className="mb-12 max-w-2xl">
@@ -187,6 +191,7 @@ export default function ServiceDetail() {
           ))}
         </div>
 
+        <Reveal delay={100}>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.4fr_1fr]">
           <div>
             <h2 className="mb-4 font-display text-lg font-semibold text-ink">
@@ -240,6 +245,7 @@ export default function ServiceDetail() {
             </button>
           </div>
         </div>
+        </Reveal>
       </div>
 
       {related.length > 0 && (
@@ -248,7 +254,7 @@ export default function ServiceDetail() {
             <h2 className="mb-6 font-display text-lg font-semibold text-ink">
               Frequently added together
             </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <RevealStagger className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               {related.map((r) => {
                 return (
                   <Link
@@ -267,7 +273,7 @@ export default function ServiceDetail() {
                   </Link>
                 );
               })}
-            </div>
+            </RevealStagger>
           </div>
         </div>
       )}
