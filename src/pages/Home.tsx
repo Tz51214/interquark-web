@@ -407,20 +407,56 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {[
-              { icon: "📁", title: "Project progress", desc: "Real-time status on every active project." },
-              { icon: "📄", title: "Invoices", desc: "Download and track every invoice, paid or pending." },
-              { icon: "💬", title: "Direct messaging", desc: "Message your assigned developer directly." },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-slate-200 bg-white p-6 text-center"
-              >
-                <div className="mb-2 text-2xl">{item.icon}</div>
-                <h3 className="mb-1 font-display text-sm font-semibold text-ink">{item.title}</h3>
-                <p className="font-body text-xs text-slate-500">{item.desc}</p>
+            {/* Project progress mini-preview */}
+            <div className="rounded-xl border border-slate-200 bg-white p-5">
+              <div className="mb-3 rounded-lg bg-slate-50 p-4">
+                <p className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                  Project Status
+                </p>
+                <div className="mb-2 h-2 w-full overflow-hidden rounded-full bg-slate-200">
+                  <div className="h-full w-[82%] rounded-full bg-signal" />
+                </div>
+                <p className="mb-1 font-display text-sm font-semibold text-ink">WooCommerce Store</p>
+                <p className="font-mono text-[11px] text-slate-400">Sprint 4 / 6</p>
               </div>
-            ))}
+              <h3 className="mb-1 font-display text-sm font-semibold text-ink">Project progress</h3>
+              <p className="font-body text-xs text-slate-500">Real-time status on every active project.</p>
+            </div>
+
+            {/* Invoice mini-preview */}
+            <div className="rounded-xl border border-slate-200 bg-white p-5">
+              <div className="mb-3 rounded-lg bg-slate-50 p-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="font-mono text-[11px] font-semibold text-ink">Invoice #1023</p>
+                  <span className="rounded-full bg-mint/15 px-2 py-0.5 text-[10px] font-semibold text-mint">
+                    Paid ✓
+                  </span>
+                </div>
+                <p className="font-display text-xl font-bold text-ink">£1,250</p>
+              </div>
+              <h3 className="mb-1 font-display text-sm font-semibold text-ink">Invoices</h3>
+              <p className="font-body text-xs text-slate-500">Download and track every invoice, paid or pending.</p>
+            </div>
+
+            {/* Messaging mini-preview */}
+            <div className="rounded-xl border border-slate-200 bg-white p-5">
+              <div className="mb-3 rounded-lg bg-slate-50 p-4">
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-signal/15 text-[10px] font-semibold text-signal">
+                    A
+                  </span>
+                  <p className="font-mono text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                    Developer — Ali
+                  </p>
+                </div>
+                <p className="mb-1.5 rounded-lg bg-white px-2.5 py-1.5 text-xs text-slate-600 shadow-sm">
+                  Can you approve this deployment?
+                </p>
+                <p className="text-right font-mono text-[10px] text-slate-400">✓ Seen</p>
+              </div>
+              <h3 className="mb-1 font-display text-sm font-semibold text-ink">Direct messaging</h3>
+              <p className="font-body text-xs text-slate-500">Message your assigned developer directly.</p>
+            </div>
           </div>
         </div>
       </section>
