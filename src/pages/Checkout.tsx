@@ -6,6 +6,7 @@ import { apiFetch } from "../lib/api";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/interquark-wordmark-navy.png";
 import SiteFooter from "../components/layout/SiteFooter";
+import Reveal from "../components/Reveal";
 
 function money(n: number) {
   return "£" + n.toLocaleString();
@@ -185,6 +186,7 @@ export default function Checkout() {
             </Link>
           </div>
         ) : (
+          <Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_380px]">
             <div>
               <div className="mb-5 rounded-xl border border-slate-200 bg-white p-6">
@@ -437,6 +439,7 @@ export default function Checkout() {
               </div>
             </div>
           </div>
+          </Reveal>
         )}
       </main>
       <SiteFooter />
