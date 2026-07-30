@@ -167,6 +167,11 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link to="/faq" className="inline-block transition-transform hover:translate-x-0.5 hover:text-signal">
+                  FAQ
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="inline-block transition-transform hover:translate-x-0.5 hover:text-signal">
                   Contact
                 </Link>

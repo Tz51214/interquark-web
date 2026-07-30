@@ -5,6 +5,7 @@ import { ToastProvider } from "./context/ToastContext";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
+import Faq from "./pages/Faq";
 import Showcase from "./pages/Showcase";
 import Checkout from "./pages/Checkout";
 import CustomerLayout from "./pages/customer/CustomerLayout";
@@ -58,6 +59,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<Faq />} />
               <Route path="/showcase" element={<Showcase />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/customer" element={<CustomerLayout />}>
