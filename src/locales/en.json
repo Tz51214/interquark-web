@@ -9,8 +9,11 @@
   },
   "hero": {
     "eyebrow": "AI, SaaS & Software Engineering",
-    "headline1": "Custom software that helps",
-    "headline2": "businesses scale faster.",
+    "headline1": "Custom",
+    "headline2": "software",
+    "headline3": "that helps",
+    "headline4": "businesses",
+    "headline5": "scale.",
     "subhead": "From AI-powered platforms to business automation and enterprise web applications, Interquark builds software designed to increase efficiency, improve customer experience, and support long-term growth.",
     "browseServices": "View our work",
     "getInTouch": "Book a free strategy call",

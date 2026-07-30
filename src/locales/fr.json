@@ -9,8 +9,11 @@
   },
   "hero": {
     "eyebrow": "IA, SaaS et ingénierie logicielle",
-    "headline1": "Des logiciels qui se lancent,",
-    "headline2": "et qui continuent d'évoluer.",
+    "headline1": "Des logiciels",
+    "headline2": "qui se lancent,",
+    "headline3": "et qui continuent",
+    "headline4": "d'évoluer.",
+    "headline5": "",
     "subhead": "Solutions IA, logiciels sur mesure, plateformes SaaS, applications web et systèmes d'entreprise — conçus, sécurisés et maintenus par Interquark.",
     "browseServices": "Voir les services",
     "getInTouch": "Nous contacter",

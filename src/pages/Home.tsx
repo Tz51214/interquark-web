@@ -90,9 +90,20 @@ export default function Home() {
             <span className="mb-5 inline-block rounded-full border border-signal/30 bg-signal/10 px-3 py-1 font-mono text-[11px] font-semibold tracking-wide text-signal">
               {t("hero.eyebrow").toUpperCase()}
             </span>
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl sm:leading-[1] lg:text-6xl lg:leading-[1.05] xl:text-7xl">
-              <span className="block whitespace-nowrap">{t("hero.headline1")}</span>
-              <span className="block whitespace-nowrap">{t("hero.headline2")}</span>
+            <h1 className="font-display text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl sm:leading-[0.95] lg:text-7xl lg:leading-[0.95] xl:text-8xl">
+              {[
+                t("hero.headline1"),
+                t("hero.headline2"),
+                t("hero.headline3"),
+                t("hero.headline4"),
+                t("hero.headline5"),
+              ]
+                .filter(Boolean)
+                .map((line, i) => (
+                  <span key={i} className="block whitespace-nowrap">
+                    {line}
+                  </span>
+                ))}
             </h1>
             <p className="mt-6 max-w-lg font-body text-lg text-slate-400">
               {t("hero.subhead")}
@@ -246,8 +257,9 @@ export default function Home() {
       <section className="light-section-depth border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
           <ChapterReveal>
-            <h2 className="mb-10 text-center font-display text-4xl font-bold text-ink">
-              How it compares
+            <h2 className="mb-10 text-center font-display text-5xl font-bold leading-[0.95] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+              <span className="block">Not another</span>
+              <span className="block">agency.</span>
             </h2>
           </ChapterReveal>
           <RevealStagger className="grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -735,8 +747,9 @@ export default function Home() {
       <section className="bg-ink">
         <div className="mx-auto max-w-3xl px-6 pb-24 text-center">
           <div className="rounded-2xl bg-signal/10 border border-signal/20 px-8 py-14">
-            <h2 className="mb-3 font-display text-3xl font-bold text-white">
-              Not sure which service fits?
+            <h2 className="mb-4 font-display text-4xl font-bold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              <span className="block">Ready to build</span>
+              <span className="block">something that lasts?</span>
             </h2>
             <p className="mb-7 font-body text-sm text-slate-300">
               Browse the full catalog and compare pricing across every tier.
