@@ -178,6 +178,20 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Industries trust strip */}
+        <div className="border-t border-line">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-3 px-6 py-5">
+            <span className="font-mono text-[11px] font-semibold tracking-wide text-slate-500">
+              TRUSTED FOR
+            </span>
+            {["AI", "SaaS", "FinTech", "Healthcare", "E-commerce", "Education"].map((industry) => (
+              <span key={industry} className="font-mono text-[13px] text-slate-300">
+                {industry}
+              </span>
+            ))}
+          </div>
+        </div>
       </section>
 
       <PlatformMarquee />
@@ -267,14 +281,20 @@ export default function Home() {
                 ],
               },
             ].map((col) => (
-              <div
-                key={col.title}
-                className={`rounded-xl border p-6 ${
-                  col.highlight
-                    ? "border-signal bg-signal/5 shadow-lg"
-                    : "border-slate-200 bg-white"
-                }`}
-              >
+              <div key={col.title} className="relative">
+                {col.highlight && (
+                  <div
+                    className="pointer-events-none absolute -inset-3 rounded-2xl bg-signal/15 opacity-70 blur-2xl"
+                    aria-hidden="true"
+                  />
+                )}
+                <div
+                  className={`relative rounded-xl border p-6 ${
+                    col.highlight
+                      ? "border-signal bg-signal/5 shadow-lg"
+                      : "border-slate-200 bg-white"
+                  }`}
+                >
                 <h3
                   className={`mb-4 font-display text-base font-semibold ${
                     col.highlight ? "text-signal" : "text-ink"
@@ -298,6 +318,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
+                </div>
               </div>
             ))}
           </RevealStagger>
