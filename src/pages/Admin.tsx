@@ -681,10 +681,7 @@ export default function Admin() {
   }
 
   const ordersTable = useTableControls({
-    // Only genuinely paid orders belong in the Orders tab — orders
-    // stuck at pending (payment never completed) live exclusively in
-    // the Abandoned Carts tab instead.
-    data: orders.filter((o: any) => o.status !== "pending"),
+    data: orders,
     searchFields: (o) => [o.customerName || "", o.customerEmail || ""],
     filterValue: (o) => o.status,
   });
