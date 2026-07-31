@@ -49,6 +49,7 @@ export default function Navbar({ onCartClick, onJoinClick }: NavbarProps) {
           <LanguageSwitcher />
           {onCartClick && (
             <button
+              type="button"
               onClick={onCartClick}
               className="relative rounded-lg border border-slate-300 px-3 py-2 font-body text-sm font-semibold text-slate-700 transition-colors hover:border-signal hover:text-signal"
               aria-label="Open cart"
@@ -73,6 +74,7 @@ export default function Navbar({ onCartClick, onJoinClick }: NavbarProps) {
         <div className="flex items-center gap-2 md:hidden">
           {onCartClick && (
             <button
+              type="button"
               onClick={onCartClick}
               className="relative rounded-lg border border-slate-300 px-3 py-2 font-body text-sm font-semibold text-slate-700"
               aria-label="Open cart"
