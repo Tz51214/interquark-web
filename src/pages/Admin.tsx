@@ -332,6 +332,21 @@ export default function Admin() {
     }
   }
 
+  async function reconcileOrderWithPaypal(order: any) {
+    if (!confirm("Check PayPal's actual status for this order and capture the payment if it's genuinely approved?")) return;
+    const { ok, data } = await authedFetch<{ message?: string }>(
+      `/payments/paypal/order/${order.id}/reconcile`,
+      { method: "POST" },
+    );
+    if (ok) {
+      showToast("Order reconciled with PayPal — payment captured", "success");
+      setViewingOrder(null);
+      load();
+    } else {
+      showToast(data?.message || "Could not reconcile with PayPal", "error");
+    }
+  }
+
   async function createInvoiceForOrder(order: any) {
     const { ok } = await authedFetch("/invoices", {
       method: "POST",
@@ -2724,6 +2739,14 @@ export default function Admin() {
               >
                 Close
               </button>
+              {viewingOrder.status === "pending" && viewingOrder.paypalOrderId && (
+                <button
+                  onClick={() => reconcileOrderWithPaypal(viewingOrder)}
+                  className="rounded-lg border border-signal px-4 py-2 text-sm font-semibold text-signal hover:bg-signal/5"
+                >
+                  Check & Capture with PayPal
+                </button>
+              )}
               <button
                 onClick={() => createInvoiceForOrder(viewingOrder)}
                 className="rounded-lg bg-signal px-4 py-2 text-sm font-semibold text-white hover:bg-signal-dark"
