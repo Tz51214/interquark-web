@@ -359,8 +359,12 @@ export default function DataGrid<T>({
                 </td>
               </tr>
             ) : (
-              pageData.map((row) => {
+              pageData.map((row, rowIndex) => {
                 const key = rowKey(row);
+                // Flip the action menu upward for rows near the bottom
+                // of the page, so it doesn't get clipped by the table's
+                // scroll container with no way to scroll and see it.
+                const openUpward = rowIndex >= pageData.length - 2;
                 return (
                   <tr
                     key={key}
@@ -389,7 +393,11 @@ export default function DataGrid<T>({
                           ⋮
                         </button>
                         {openMenuKey === key && (
-                          <div className="absolute right-4 top-full z-20 mt-1 w-40 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <div
+                            className={`absolute right-4 z-20 w-40 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900 ${
+                              openUpward ? "bottom-full mb-1" : "top-full mt-1"
+                            }`}
+                          >
                             {rowActions(row).map((action) => (
                               <button
                                 key={action.label}
