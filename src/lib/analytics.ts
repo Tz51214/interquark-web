@@ -7,6 +7,14 @@ declare global {
   }
 }
 
+export function trackPageView(pagePath: string) {
+  if (typeof window === "undefined" || !window.gtag) return;
+  window.gtag("event", "page_view", {
+    page_path: pagePath,
+    page_location: window.location.href,
+  });
+}
+
 export function trackAddToCart(item: {
   name: string;
   sku: string;

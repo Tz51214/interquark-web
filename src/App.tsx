@@ -40,6 +40,7 @@ import WebApplicationDevelopment from "./pages/pillars/WebApplicationDevelopment
 import MvpDevelopment from "./pages/pillars/MvpDevelopment";
 import ErrorBoundary from "./components/ErrorBoundary";
 import HashScroll from "./components/HashScroll";
+import PageViewTracker from "./components/PageViewTracker";
 import About from "./pages/About";
 import HelpCenter from "./pages/HelpCenter";
 import Careers from "./pages/Careers";
@@ -54,6 +55,7 @@ function App() {
           <CustomCursor />
           <BrowserRouter>
             <HashScroll />
+            <PageViewTracker />
             <CookieBanner />
             <Routes>
               <Route path="/" element={<Home />} />
