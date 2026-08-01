@@ -1,4 +1,5 @@
-import { useState, useMemo, type ReactNode } from "react";
+import { useState, useMemo, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 export interface DataGridColumn<T> {
   key: string;
@@ -81,6 +82,28 @@ export default function DataGrid<T>({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const [openMenuKey, setOpenMenuKey] = useState<string | number | null>(null);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number; openUpward: boolean } | null>(null);
+  const menuButtonRefs = useRef<Map<string | number, HTMLButtonElement>>(new Map());
+
+  function toggleMenu(key: string | number) {
+    if (openMenuKey === key) {
+      setOpenMenuKey(null);
+      setMenuPos(null);
+      return;
+    }
+    const btn = menuButtonRefs.current.get(key);
+    if (btn) {
+      const rect = btn.getBoundingClientRect();
+      const menuHeight = 160; // rough max height estimate for positioning
+      const openUpward = window.innerHeight - rect.bottom < menuHeight;
+      setMenuPos({
+        top: openUpward ? rect.top - 4 : rect.bottom + 4,
+        left: rect.right - 160, // right-align to a 160px-wide menu (w-40)
+        openUpward,
+      });
+    }
+    setOpenMenuKey(key);
+  }
 
   const filtered = useMemo(() => {
     let rows = data;
@@ -359,12 +382,8 @@ export default function DataGrid<T>({
                 </td>
               </tr>
             ) : (
-              pageData.map((row, rowIndex) => {
+              pageData.map((row) => {
                 const key = rowKey(row);
-                // Flip the action menu upward for rows near the bottom
-                // of the page, so it doesn't get clipped by the table's
-                // scroll container with no way to scroll and see it.
-                const openUpward = rowIndex >= pageData.length - 2;
                 return (
                   <tr
                     key={key}
@@ -387,35 +406,48 @@ export default function DataGrid<T>({
                     {rowActions && (
                       <td className="relative px-4 py-3 text-right">
                         <button
-                          onClick={() => setOpenMenuKey(openMenuKey === key ? null : key)}
+                          ref={(el) => {
+                            if (el) menuButtonRefs.current.set(key, el);
+                          }}
+                          onClick={() => toggleMenu(key)}
                           className="rounded-md px-2 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800"
                         >
                           ⋮
                         </button>
-                        {openMenuKey === key && (
-                          <div
-                            className={`absolute right-4 z-20 w-40 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900 ${
-                              openUpward ? "bottom-full mb-1" : "top-full mt-1"
-                            }`}
-                          >
-                            {rowActions(row).map((action) => (
-                              <button
-                                key={action.label}
-                                onClick={() => {
-                                  action.onClick();
-                                  setOpenMenuKey(null);
-                                }}
-                                className={`block w-full rounded px-3 py-1.5 text-left text-xs font-medium ${
-                                  action.danger
-                                    ? "text-red-500 hover:bg-red-50"
-                                    : "text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
-                                }`}
-                              >
-                                {action.label}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                        {openMenuKey === key &&
+                          menuPos &&
+                          createPortal(
+                            <div
+                              style={{
+                                position: "fixed",
+                                top: menuPos.openUpward ? undefined : menuPos.top,
+                                bottom: menuPos.openUpward
+                                  ? window.innerHeight - menuPos.top
+                                  : undefined,
+                                left: menuPos.left,
+                              }}
+                              className="z-50 w-40 rounded-lg border border-slate-200 bg-white p-1 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900"
+                            >
+                              {rowActions(row).map((action) => (
+                                <button
+                                  key={action.label}
+                                  onClick={() => {
+                                    action.onClick();
+                                    setOpenMenuKey(null);
+                                    setMenuPos(null);
+                                  }}
+                                  className={`block w-full rounded px-3 py-1.5 text-left text-xs font-medium ${
+                                    action.danger
+                                      ? "text-red-500 hover:bg-red-50"
+                                      : "text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                                  }`}
+                                >
+                                  {action.label}
+                                </button>
+                              ))}
+                            </div>,
+                            document.body,
+                          )}
                       </td>
                     )}
                   </tr>
